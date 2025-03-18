@@ -149,9 +149,9 @@ export default function OverviewPage() {
               <Example data={pieData} />
             </div>
             <ul className="h-1/2 flex flex-col items-center gap-2 w-full">
-              <li>20 Good Passwords</li>
-              <li>20 Dubious Passwords</li>
-              <li>20 Bad Passwords</li>
+              <li>40 Good Passwords</li>
+              <li>25 Dubious Passwords</li>
+              <li>15 Bad Passwords</li>
               <li>20 Critical Passwords</li>
             </ul>
           </div>

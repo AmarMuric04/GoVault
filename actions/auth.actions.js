@@ -100,6 +100,11 @@ export async function signin(prevState, formData) {
   redirect("/dashboard");
 }
 
+export async function signout() {
+  (await cookies()).set("token", "", { maxAge: 0, path: "/" });
+  redirect("/?mode=signin");
+}
+
 export async function auth(prevState, formData, options) {
   const { remember, mode } = options;
 
