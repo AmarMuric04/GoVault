@@ -1,15 +1,16 @@
 import { isAuthenticated } from "@/actions/auth.actions";
 import AuthForm from "@/components/form/auth-form";
-import { redirect } from "next/navigation";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function AuthPage({ searchParams }) {
   const params = await searchParams;
 
   const mode = params?.mode || "signin";
 
-  const isAuth = await isAuthenticated();
-  if (isAuth) return redirect("/dashboard");
+  const user = await isAuthenticated();
+
+  if (user) return redirect("/dashboard");
 
   return (
     <main className="w-screen h-screen grid place-items-center">
