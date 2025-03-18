@@ -9,11 +9,13 @@ export default async function DashboardLayout({ children }) {
   if (!user) redirect("/?mode=signin");
 
   return (
-    <main className="flex text-white">
+    <main className="flex text-white h-screen">
       <Sidebar user={user} />
-      <main className="w-full flex flex-col">
+      <main className="w-full flex flex-col h-screen max-h-screen overflow-hidden">
         <Header />
-        <section className="p-10 flex flex-col flex-grow">{children}</section>
+        <section className="p-10 flex flex-col ml-10 h-9/10 max-h-9/10">
+          {children}
+        </section>
       </main>
     </main>
   );

@@ -1,6 +1,7 @@
 ## Next.js Password Manager
 
 ![Project Screenshot](./Capture.PNG)
+![Project Screenshot](./2.PNG)
 
 # It's just a practice project!
 

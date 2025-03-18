@@ -47,10 +47,6 @@ export default function Sidebar({ user }) {
         <IoSettingsSharp />
         <p>Settings</p>
       </button>
-      <button className="w-full py-2 my-2 font-medium hover:bg-red-400/40 transition-all rounded-sm flex items-center justify-center gap-2 border-1 border-red-400 bg-red-400/20 text-red-400">
-        <IoLogOut />
-        <p>Logout</p>
-      </button>
     </aside>
   );
 }

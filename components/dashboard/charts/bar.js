@@ -31,21 +31,24 @@ export default class BarChartComp extends PureComponent {
             left: 20,
             bottom: 5,
           }}
+          barCategoryGap="50%"
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#111" />
           <XAxis dataKey="date" />
-          <YAxis />
+          <YAxis axisLine={false} />
           <Tooltip />
           <Legend />
           <Bar
-            dataKey="userPasswords"
-            fill="#8884d8"
-            activeBar={<Rectangle fill="pink" stroke="blue" />}
+            dataKey="Your passwords"
+            fill="#fff"
+            activeBar={<Rectangle fill="#000" stroke="#000" />}
+            barSize={20}
           />
           <Bar
-            dataKey="avgPasswords"
-            fill="#82ca9d"
-            activeBar={<Rectangle fill="gold" stroke="purple" />}
+            dataKey="Others' passwords"
+            fill="#aaa"
+            activeBar={<Rectangle fill="#555" stroke="#555" />}
+            barSize={20}
           />
         </BarChart>
       </ResponsiveContainer>

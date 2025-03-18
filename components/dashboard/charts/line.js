@@ -2,30 +2,32 @@
 
 import {
   CartesianGrid,
-  Line,
-  LineChart,
   XAxis,
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  AreaChart,
+  Area,
 } from "recharts";
 
 export default function Chart({ data }) {
   return (
     <ResponsiveContainer width="100%">
-      <LineChart data={data}>
-        <CartesianGrid stroke="#0a0a0a" />
-        <XAxis dataKey="date" name="Date" stoke="#0a0a0a" />
-        <YAxis dataKey="value" name="Value" stoke="#0a0a0a" />
+      <AreaChart data={data}>
+        <CartesianGrid stroke="#111" />
+        <XAxis dataKey="date" name="Date" />
+        <YAxis dataKey="value" name="Value" axisLine={false} />
         <Tooltip labelClassName="text-black" />
-        <Line
-          dataKey="value"
+        <Area
           type="monotone"
+          dataKey="value"
           name="Total passwords"
           stroke="#fff"
+          fill="#ffffff40"
           dot={false}
+          strokeWidth={2}
         />
-      </LineChart>
+      </AreaChart>
     </ResponsiveContainer>
   );
 }
