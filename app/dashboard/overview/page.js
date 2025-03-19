@@ -11,6 +11,7 @@ import Example from "@/components/dashboard/charts/pie";
 import BarChartComp from "@/components/dashboard/charts/bar";
 import { formatMongoDate } from "@/formatters/date";
 import BetterPie from "@/components/dashboard/charts/betterPie";
+import Container from "@/components/container";
 
 export default function OverviewPage() {
   const data = [
@@ -58,8 +59,7 @@ export default function OverviewPage() {
         description="Generated"
         icon={<PiKeyFill />}
       />
-
-      <div className="col-span-3 row-span-3 border-1 border-zinc-900 bg-zinc-950 rounded-md shadow-md flex flex-col">
+      <Container className="col-span-3 row-span-3">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
           Your vs. Others' Passwords
         </h1>
@@ -79,28 +79,28 @@ export default function OverviewPage() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
 
-      <div className="col-span-1 row-span-3 border-1 border-zinc-900 bg-zinc-950 rounded-md shadow-md flex flex-col">
+      <Container className="col-span-1 row-span-3">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
           Password Strength
         </h1>
         <div className="w-full h-full">
           <Example data={pieData} />
         </div>
-      </div>
+      </Container>
 
-      <div className="col-span-2 row-span-3 border-1 border-zinc-900 bg-zinc-950 rounded-md shadow-md flex flex-col">
+      <Container className="col-span-2 row-span-3">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
-          Your vs. Other's Activity
+          Your vs. Others' Activity
         </h1>
         <div className="w-full h-full">
           <Chart
             data={data.map((d) => ({ ...d, date: formatMongoDate(d.date) }))}
           />
         </div>
-      </div>
-      <div className="col-span-1 row-span-3 border-1 border-zinc-900 bg-zinc-950 rounded-md shadow-md flex flex-col">
+      </Container>
+      <Container className="col-span-1 row-span-3">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
           Overall Statistics
         </h1>
@@ -122,7 +122,7 @@ export default function OverviewPage() {
             <span className="text-gray-200 text-sm">Top 20%</span>
           </li>
         </ul>
-      </div>
+      </Container>
       <div className="col-span-1 row-span-3 bg-[#ee6711] p-8 rounded-md shadow-md flex flex-col">
         <h1 className="text-4xl font-medium">4,923</h1>
         <p className="text-sm text-gray-100">Active Users</p>

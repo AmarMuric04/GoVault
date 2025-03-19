@@ -1,7 +1,12 @@
 ## Next.js Password Manager
 
-![Project Screenshot](./Capture.PNG)
-![Project Screenshot](./2.PNG)
+# Statistics & General Overview design
+
+![Project Screenshot](./asd.PNG)
+
+# Generating a password design
+
+![Project Screenshot](./ccc.PNG)
 
 # It's just a practice project!
 

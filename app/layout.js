@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata = {
@@ -10,7 +11,10 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-[#0a0a0a]">
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          {children}
+          <Toaster />
+        </ReactQueryProvider>
       </body>
     </html>
   );

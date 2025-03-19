@@ -5,6 +5,7 @@ import { SiManageiq } from "react-icons/si";
 import { IoIosCreate } from "react-icons/io";
 import { IoSettingsSharp, IoLogOut } from "react-icons/io5";
 import { MdOutlineSecurity } from "react-icons/md";
+import SidebarLink from "./sidebar-link";
 
 export default function Sidebar({ user }) {
   return (
@@ -22,31 +23,30 @@ export default function Sidebar({ user }) {
         />
         <h2 className="text-lg font-medium mt-4">{user.email}</h2>
       </div>
-      <button className="w-full py-2 font-medium bg-zinc-900 hover:bg-zinc-800 border-1 border-zinc-700 transition-all rounded-sm mt-4 flex items-center justify-center gap-2">
-        <FaEdit />
+      <button className="w-full py-2 font-medium bg-zinc-900 hover:bg-zinc-800 border-1 border-zinc-700 transition-all rounded-sm mt-4 flex items-center justify-center gap-2 mb-10">
+        <FaEdit size={22} />
         <p>Edit profile</p>
       </button>
-      <button className="w-full py-2 mt-10 font-medium hover:bg-zinc-900 transition-all rounded-sm flex items-center justify-center gap-2 ">
-        <FaChartPie />
+      <SidebarLink href="/dashboard/overview">
+        <FaChartPie size={22} />
         <p>Overview</p>
-      </button>
-      <button className="w-full py-2 my-2 font-medium hover:bg-zinc-900 transition-all rounded-sm flex items-center justify-center gap-2 ">
-        <SiManageiq />
+      </SidebarLink>
+      <SidebarLink href="/dashboard/manage">
+        <SiManageiq size={22} />
         <p>Manage</p>
-      </button>
-      <button className="w-full py-2 my-2 font-medium hover:bg-zinc-900 transition-all rounded-sm flex items-center justify-center gap-2 ">
-        <IoIosCreate />
+      </SidebarLink>
+      <SidebarLink href="/dashboard/generate">
+        <IoIosCreate size={22} />
         <p>Generate</p>
-      </button>
-
-      <button className="w-full py-2 my-2 font-medium hover:bg-zinc-900 transition-all rounded-sm flex items-center justify-center gap-2 ">
-        <MdOutlineSecurity />
+      </SidebarLink>
+      <SidebarLink href="/dashboard/security">
+        <MdOutlineSecurity size={22} />
         <p>Security</p>
-      </button>
-      <button className="w-full py-2 my-2 font-medium hover:bg-zinc-900 transition-all rounded-sm flex items-center justify-center gap-2 ">
-        <IoSettingsSharp />
+      </SidebarLink>
+      <SidebarLink href="/dashboard/settings">
+        <IoSettingsSharp size={22} />
         <p>Settings</p>
-      </button>
+      </SidebarLink>
     </aside>
   );
 }

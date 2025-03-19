@@ -6,14 +6,14 @@ import { redirect } from "next/navigation";
 export default async function DashboardLayout({ children }) {
   const user = await isAuthenticated();
 
-  if (!user) redirect("/?mode=signin");
+  if (!user) return redirect("/?mode=signin");
 
   return (
     <main className="flex text-white h-screen">
       <Sidebar user={user} />
       <main className="w-full flex flex-col h-screen max-h-screen overflow-hidden">
         <Header />
-        <section className="p-10 flex flex-col ml-10 h-9/10 max-h-9/10">
+        <section className="p-10 flex flex-col ml-10 h-9/10 max-h-9/10 text-white">
           {children}
         </section>
       </main>
