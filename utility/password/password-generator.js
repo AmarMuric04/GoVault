@@ -7,7 +7,7 @@ import {
 
 export const generatePassword = (length) => {
   let password = "";
-  if (length < 5) return;
+  if (length > 30) length = 30;
 
   for (let i = 0; i < length; i++) {
     password +=

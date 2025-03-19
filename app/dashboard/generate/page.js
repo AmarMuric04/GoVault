@@ -3,19 +3,25 @@
 import Container from "@/components/container";
 import { IoCopy } from "react-icons/io5";
 import { FiRefreshCcw } from "react-icons/fi";
-import { Input } from "@/components/ui/input";
 import { generatePassword } from "@/utility/password/password-generator";
 import { useState } from "react";
 import { copyToClipboard } from "@/utility/copy-text";
 import { toast } from "sonner";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { FaCircleInfo } from "react-icons/fa6";
+import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
+
 export default function GeneratePage() {
-  const [password, setPassword] = useState(generatePassword(10));
+  const [length, setLength] = useState(10);
+  const [password, setPassword] = useState(generatePassword(length));
   const [strength, setStrength] = useState(getPasswordStrength(password));
 
   const handleRegenerate = () => {
-    const newPassword = generatePassword(10);
+    const newPassword = generatePassword(length);
     setPassword(newPassword);
     setStrength(getPasswordStrength(newPassword));
   };
@@ -64,16 +70,102 @@ export default function GeneratePage() {
           className={`h-2 transition-all absolute left-0 bottom-0 ${strengthClasses}`}
         ></div>
       </Container>
-      <Container className="col-span-3 row-span-2"></Container>
+      <Container className="col-span-3 row-span-2 gap-2 items-center justify-center flex-row">
+        <div className="w-1/2">
+          <Slider
+            value={[length]}
+            max={30}
+            step={1}
+            onValueChange={(value) => {
+              setLength(Number(value[0]));
+              const newPassword = generatePassword(Number(value[0]));
+              setPassword(newPassword);
+              setStrength(getPasswordStrength(newPassword));
+            }}
+          />
+        </div>
+        <input
+          className="w-12"
+          type="number"
+          step={1}
+          max={30}
+          min={0}
+          value={length}
+          onChange={(e) => {
+            setLength(Number(e.target.value));
+            const newPassword = generatePassword(Number(e.target.value));
+            setPassword(newPassword);
+            setStrength(getPasswordStrength(newPassword));
+          }}
+        />
+      </Container>
       <Container className="col-span-1 row-span-4">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
           Modify visual experience
         </h1>
+        <RadioGroup
+          defaultValue="easy-to-say"
+          className="px-10 py-8 flex flex-col justify-between h-full"
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="easy-to-say" id="r1" />
+            <Label htmlFor="r1">Easy to say</Label>
+            <FaCircleInfo />
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="easy-to-read" id="r2" />
+            <Label htmlFor="r2">Easy to read</Label>
+            <FaCircleInfo />
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="all-character" id="r3" />
+            <Label htmlFor="r3">All Characters</Label>
+            <FaCircleInfo />
+          </div>
+        </RadioGroup>
       </Container>
       <Container className="col-span-1 row-span-4">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
           Manually choose
         </h1>
+        <div className="px-10 py-8 flex flex-col justify-between h-full">
+          <div className="flex items-center space-x-2">
+            <Checkbox id="terms" />
+            <label
+              htmlFor="terms"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Uppercase
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="terms" />
+            <label
+              htmlFor="terms"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Lowercase
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="terms" />
+            <label
+              htmlFor="terms"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Digits
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="terms" />
+            <label
+              htmlFor="terms"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Symbols
+            </label>
+          </div>
+        </div>
       </Container>
       <Container className="col-span-1 row-span-4">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
