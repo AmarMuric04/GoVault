@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import validator from "validator";
 
-export async function signup(prevState, formData) {
+export async function signup(formData) {
   await connectToDatabase();
 
   const email = formData.get("email");
@@ -28,7 +28,7 @@ export async function signup(prevState, formData) {
   }
 
   if (Object.keys(errors).length) {
-    return { errors };
+    throw { errors };
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -56,7 +56,7 @@ export async function signup(prevState, formData) {
   redirect("/dashboard");
 }
 
-export async function signin(prevState, formData) {
+export async function signin(formData) {
   await connectToDatabase();
 
   const email = formData.get("email");
@@ -65,7 +65,7 @@ export async function signin(prevState, formData) {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return {
+    throw {
       errors: {
         password: "Invalid credentials",
         email: "Invalid credentials",
@@ -76,7 +76,7 @@ export async function signin(prevState, formData) {
   const correctPassword = await bcrypt.compare(password, user.password);
 
   if (!correctPassword) {
-    return {
+    throw {
       errors: {
         password: "Invalid credentials",
         email: "Invalid credentials",
@@ -105,15 +105,15 @@ export async function signout() {
   redirect("/?mode=signin");
 }
 
-export async function auth(prevState, formData, options) {
+export async function auth(formData, options) {
   const { remember, mode } = options;
 
   formData.set("remember", remember);
   if (mode === "signin") {
-    return signin(prevState, formData);
+    return signin(formData);
   }
   if (mode === "signup") {
-    return signup(prevState, formData);
+    return signup(formData);
   }
 }
 

@@ -1,11 +1,12 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { useActionState, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { auth } from "@/actions/auth.actions";
-import AuthButton from "./auth-button";
 import AuthInput from "./auth-input";
-import useAuthStore from "@/store/useStore";
+import { useMutation } from "@tanstack/react-query";
+import { BeatLoader } from "react-spinners";
 
 const INITIAL_VALUES = {
   email: "",
@@ -13,37 +14,31 @@ const INITIAL_VALUES = {
 };
 
 export default function AuthForm({ mode }) {
-  const { setUser } = useAuthStore();
-
-  const [formState, formAction] = useActionState(
-    async (prevState, formData) => {
-      const user = await auth(prevState, formData, { remember, mode });
-      setUser(user);
-      return user;
-    },
-    {}
-  );
   const [formValues, setFormValues] = useState(INITIAL_VALUES);
   const [remember, setRemember] = useState(false);
   const [errors, setErrors] = useState({});
+
+  const {
+    mutate: authenticate,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: (formData) => auth(formData, { remember, mode }),
+  });
+
+  console.log(error);
 
   useEffect(() => {
     setFormValues(INITIAL_VALUES);
     setErrors({});
   }, [mode]);
 
-  useEffect(() => {
-    if (formState.errors) {
-      setErrors(formState.errors);
-    }
-  }, [formState?.errors]);
-
   const handleFocus = (field) => {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
   return (
-    <form action={formAction} className="mt-8 flex flex-col w-full gap-4">
+    <form action={authenticate} className="mt-8 flex flex-col w-full gap-4">
       <AuthInput
         value={formValues.email}
         onChange={(e) =>
@@ -87,7 +82,10 @@ export default function AuthForm({ mode }) {
           <p className="hover:underline cursor-pointer">Forgot password</p>
         </div>
       )}
-      <AuthButton mode={mode} />
+      <Button disabled={isPending} className="w-full">
+        {isPending && <BeatLoader color="white" size={5} />}
+        {!isPending && <>{mode === "signin" ? "Sign In" : "Sign Up"}</>}
+      </Button>
     </form>
   );
 }
