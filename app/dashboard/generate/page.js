@@ -20,6 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { DialogDemo } from "@/components/dialog";
 
 export default function GeneratePage() {
   const [length, setLength] = useState(10);
@@ -33,6 +34,15 @@ export default function GeneratePage() {
   const [strength, setStrength] = useState(getPasswordStrength(password));
 
   useEffect(() => {
+    if (
+      !config.upperCase &&
+      !config.lowerCase &&
+      !config.symbols &&
+      !config.digits
+    ) {
+      setConfig({ ...config, upperCase: true });
+    }
+
     const newPassword = generatePassword(length, config);
     setPassword(newPassword);
     setStrength(getPasswordStrength(newPassword));
@@ -68,6 +78,7 @@ export default function GeneratePage() {
             value={password}
             onChange={(e) => {
               setPassword(e.target.value, config);
+              setLength(Number(e.target.value.length));
               setStrength(getPasswordStrength(e.target.value));
             }}
           />
@@ -75,12 +86,14 @@ export default function GeneratePage() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <button
-                  onClick={handleCopy}
-                  className="p-4 rounded-full hover:bg-white/10 transition-all"
-                >
-                  <IoCopy size={30} />
-                </button>
+                <DialogDemo>
+                  <button
+                    onClick={handleCopy}
+                    className="p-4 rounded-full hover:bg-white/10 transition-all"
+                  >
+                    <IoCopy size={30} />
+                  </button>
+                </DialogDemo>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Copy to clipboard</p>
@@ -148,9 +161,27 @@ export default function GeneratePage() {
           defaultValue="easy-to-say"
           className="px-10 py-8 flex flex-col justify-between h-full"
         >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="easy-to-say" id="r1" />
-            <Label htmlFor="r1">Easy to say</Label>
+          <div
+            onClick={() =>
+              setConfig({
+                upperCase: true,
+                lowerCase: true,
+                digits: false,
+                symbols: false,
+              })
+            }
+            className="flex items-center space-x-2"
+          >
+            <RadioGroupItem
+              checked={
+                config.upperCase &&
+                config.lowerCase &&
+                !config.symbols &&
+                !config.digits
+              }
+              value="easy-to-say"
+            />
+            <Label className="cursor-pointer">Easy to say</Label>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -162,9 +193,27 @@ export default function GeneratePage() {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="easy-to-read" id="r2" />
-            <Label htmlFor="r2">Easy to read</Label>
+          <div
+            onClick={() =>
+              setConfig({
+                upperCase: true,
+                lowerCase: true,
+                digits: true,
+                symbols: false,
+              })
+            }
+            className="flex items-center space-x-2"
+          >
+            <RadioGroupItem
+              checked={
+                config.upperCase &&
+                config.lowerCase &&
+                !config.symbols &&
+                config.digits
+              }
+              value="easy-to-read"
+            />
+            <Label>Easy to read</Label>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -176,8 +225,27 @@ export default function GeneratePage() {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="all-character" id="r3" />
+          <div
+            onClick={() =>
+              setConfig({
+                upperCase: true,
+                lowerCase: true,
+                digits: true,
+                symbols: true,
+              })
+            }
+            className="flex items-center space-x-2"
+          >
+            <RadioGroupItem
+              checked={
+                config.upperCase &&
+                config.lowerCase &&
+                config.symbols &&
+                config.digits
+              }
+              value="all-character"
+              id="r3"
+            />
             <Label htmlFor="r3">All Characters</Label>
             <TooltipProvider>
               <Tooltip>
@@ -203,11 +271,8 @@ export default function GeneratePage() {
             }
             className="flex items-center space-x-2"
           >
-            <Checkbox checked={config.upperCase} id="terms" />
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
+            <Checkbox checked={config.upperCase} />
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
               Uppercase
             </label>
           </div>
@@ -217,11 +282,8 @@ export default function GeneratePage() {
             }
             className="flex items-center space-x-2"
           >
-            <Checkbox checked={config.lowerCase} id="terms" />
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
+            <Checkbox checked={config.lowerCase} />
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
               Lowercase
             </label>
           </div>
@@ -229,11 +291,8 @@ export default function GeneratePage() {
             onClick={() => setConfig({ ...config, digits: !config.digits })}
             className="flex items-center space-x-2"
           >
-            <Checkbox checked={config.digits} id="terms" />
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
+            <Checkbox checked={config.digits} />
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
               Digits
             </label>
           </div>
@@ -241,11 +300,8 @@ export default function GeneratePage() {
             onClick={() => setConfig({ ...config, symbols: !config.symbols })}
             className="flex items-center space-x-2"
           >
-            <Checkbox checked={config.symbols} id="terms" />
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
+            <Checkbox checked={config.symbols} />
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
               Symbols
             </label>
           </div>

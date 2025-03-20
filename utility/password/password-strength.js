@@ -27,14 +27,6 @@ export const getPasswordStrength = (password) => {
     return "Great";
   }
 
-  if (length > 10) {
-    return "Dubious";
-  }
-
-  if (length > 15) {
-    return "Good";
-  }
-
   if (length >= 16 && complexity === 4) {
     return "Great";
   }
@@ -43,7 +35,15 @@ export const getPasswordStrength = (password) => {
     return "Good";
   }
 
+  if (length > 15) {
+    return "Good";
+  }
+
   if (length >= 8 && complexity >= 2) {
+    return "Dubious";
+  }
+
+  if (length > 10) {
     return "Dubious";
   }
 

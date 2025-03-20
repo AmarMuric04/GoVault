@@ -26,8 +26,8 @@ export const generatePassword = (length, config) => {
     candidates = candidates.concat(special_characters);
   }
 
-  if (candidates.length === 0) {
-    console.error("No character types selected in config");
+  if (candidates?.length === 0) {
+    // console.error("No character types selected in config");
     return "";
   }
 
@@ -35,6 +35,5 @@ export const generatePassword = (length, config) => {
     password += candidates[getRandomInt(0, candidates.length - 1)];
   }
 
-  console.log("The password is", password);
   return password;
 };
