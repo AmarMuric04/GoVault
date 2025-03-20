@@ -4,7 +4,7 @@ import Container from "@/components/container";
 import { IoCopy } from "react-icons/io5";
 import { FiRefreshCcw } from "react-icons/fi";
 import { generatePassword } from "@/utility/password/password-generator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { copyToClipboard } from "@/utility/copy-text";
 import { toast } from "sonner";
 import { getPasswordStrength } from "@/utility/password/password-strength";
@@ -14,14 +14,32 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { FaCircleInfo } from "react-icons/fa6";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function GeneratePage() {
   const [length, setLength] = useState(10);
-  const [password, setPassword] = useState(generatePassword(length));
+  const [config, setConfig] = useState({
+    lowerCase: true,
+    upperCase: true,
+    symbols: false,
+    digits: false,
+  });
+  const [password, setPassword] = useState(generatePassword(length, config));
   const [strength, setStrength] = useState(getPasswordStrength(password));
 
+  useEffect(() => {
+    const newPassword = generatePassword(length, config);
+    setPassword(newPassword);
+    setStrength(getPasswordStrength(newPassword));
+  }, [config]);
+
   const handleRegenerate = () => {
-    const newPassword = generatePassword(length);
+    const newPassword = generatePassword(length, config);
     setPassword(newPassword);
     setStrength(getPasswordStrength(newPassword));
   };
@@ -49,22 +67,42 @@ export default function GeneratePage() {
             className="kode-mono text-[4rem] px-4 border-b-4 border-zinc-900"
             value={password}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setPassword(e.target.value, config);
               setStrength(getPasswordStrength(e.target.value));
             }}
           />
-          <button
-            onClick={handleCopy}
-            className="p-4 rounded-full hover:bg-white/10 transition-all"
-          >
-            <IoCopy size={30} />
-          </button>
-          <button
-            onClick={handleRegenerate}
-            className="p-4 rounded-full hover:bg-white/10 transition-all"
-          >
-            <FiRefreshCcw size={30} />
-          </button>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={handleCopy}
+                  className="p-4 rounded-full hover:bg-white/10 transition-all"
+                >
+                  <IoCopy size={30} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Copy to clipboard</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={handleRegenerate}
+                  className="p-4 rounded-full hover:bg-white/10 transition-all"
+                >
+                  <FiRefreshCcw size={30} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Get a new password</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <div
           className={`h-2 transition-all absolute left-0 bottom-0 ${strengthClasses}`}
@@ -78,7 +116,7 @@ export default function GeneratePage() {
             step={1}
             onValueChange={(value) => {
               setLength(Number(value[0]));
-              const newPassword = generatePassword(Number(value[0]));
+              const newPassword = generatePassword(Number(value[0]), config);
               setPassword(newPassword);
               setStrength(getPasswordStrength(newPassword));
             }}
@@ -93,7 +131,10 @@ export default function GeneratePage() {
           value={length}
           onChange={(e) => {
             setLength(Number(e.target.value));
-            const newPassword = generatePassword(Number(e.target.value));
+            const newPassword = generatePassword(
+              Number(e.target.value),
+              config
+            );
             setPassword(newPassword);
             setStrength(getPasswordStrength(newPassword));
           }}
@@ -110,17 +151,44 @@ export default function GeneratePage() {
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="easy-to-say" id="r1" />
             <Label htmlFor="r1">Easy to say</Label>
-            <FaCircleInfo />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <FaCircleInfo />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Only letters</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="easy-to-read" id="r2" />
             <Label htmlFor="r2">Easy to read</Label>
-            <FaCircleInfo />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <FaCircleInfo />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Letters and digits</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="all-character" id="r3" />
             <Label htmlFor="r3">All Characters</Label>
-            <FaCircleInfo />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <FaCircleInfo />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Everything included</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </RadioGroup>
       </Container>
@@ -129,8 +197,13 @@ export default function GeneratePage() {
           Manually choose
         </h1>
         <div className="px-10 py-8 flex flex-col justify-between h-full">
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
+          <div
+            onClick={() =>
+              setConfig({ ...config, upperCase: !config.upperCase })
+            }
+            className="flex items-center space-x-2"
+          >
+            <Checkbox checked={config.upperCase} id="terms" />
             <label
               htmlFor="terms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -138,8 +211,13 @@ export default function GeneratePage() {
               Uppercase
             </label>
           </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
+          <div
+            onClick={() =>
+              setConfig({ ...config, lowerCase: !config.lowerCase })
+            }
+            className="flex items-center space-x-2"
+          >
+            <Checkbox checked={config.lowerCase} id="terms" />
             <label
               htmlFor="terms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -147,8 +225,11 @@ export default function GeneratePage() {
               Lowercase
             </label>
           </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
+          <div
+            onClick={() => setConfig({ ...config, digits: !config.digits })}
+            className="flex items-center space-x-2"
+          >
+            <Checkbox checked={config.digits} id="terms" />
             <label
               htmlFor="terms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -156,8 +237,11 @@ export default function GeneratePage() {
               Digits
             </label>
           </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
+          <div
+            onClick={() => setConfig({ ...config, symbols: !config.symbols })}
+            className="flex items-center space-x-2"
+          >
+            <Checkbox checked={config.symbols} id="terms" />
             <label
               htmlFor="terms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
