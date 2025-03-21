@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "recharts";
 
-const COLORS = ["#08742020", "#dfca0020", "#e6400620", "#b6060020"];
+const COLORS = ["#087420", "#0fc200", "#dfca00", "#e64006", "#b60600"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -62,7 +62,10 @@ export default class Example extends PureComponent {
             dataKey="value"
           >
             {data?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill="white" />
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
           </Pie>
           <Tooltip />

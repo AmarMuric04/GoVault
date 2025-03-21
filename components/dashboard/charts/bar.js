@@ -40,13 +40,13 @@ export default class BarChartComp extends PureComponent {
           <Legend />
           <Bar
             dataKey="Your passwords"
-            fill="#fff"
-            activeBar={<Rectangle fill="#000" stroke="#000" />}
+            fill="#ee6711"
+            activeBar={<Rectangle fill="#ee6711" stroke="#ee6711" />}
             barSize={20}
           />
           <Bar
             dataKey="Others' passwords"
-            fill="#aaa"
+            fill="#fff"
             activeBar={<Rectangle fill="#555" stroke="#555" />}
             barSize={20}
           />

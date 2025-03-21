@@ -19,17 +19,17 @@ export function DialogDemo({ children }) {
         <DialogHeader>
           <DialogTitle>Store your password</DialogTitle>
           <DialogDescription>
-            Where do you want to use this password for?
+            Where do you want to use this password?
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="flex flex-col grid-cols-4 justify-center gap-2">
             <Label htmlFor="place" className="text-right">
-              Place
+              I want to use this password for
             </Label>
             <Input
               id="place"
-              defaultValue="My Google account"
+              placeholder="My Google account"
               className="col-span-3"
             />
           </div>

@@ -23,6 +23,7 @@ export default function OverviewPage() {
   ];
 
   const pieData = [
+    { name: "Great Passwords", value: 27, label: 27 },
     { name: "Good Passwords", value: 40, label: 40 },
     { name: "Dubious Passwords", value: 25, label: 25 },
     { name: "Bad Passwords", value: 15, label: 15 },

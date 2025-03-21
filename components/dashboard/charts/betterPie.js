@@ -43,7 +43,7 @@ const renderActiveShape = (props) => {
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
-        fill={fill}
+        fill="#ee6711"
       />
       <Sector
         cx={cx}

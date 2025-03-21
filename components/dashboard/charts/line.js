@@ -22,7 +22,7 @@ export default function Chart({ data }) {
           type="monotone"
           dataKey="value"
           name="Total passwords"
-          stroke="#fff"
+          stroke="#ee6711"
           fill="#ffffff40"
           dot={false}
           strokeWidth={2}

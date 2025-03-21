@@ -21,6 +21,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { DialogDemo } from "@/components/dialog";
+import { Button } from "@/components/ui/button";
 
 export default function GeneratePage() {
   const [length, setLength] = useState(10);
@@ -56,7 +57,19 @@ export default function GeneratePage() {
 
   const handleCopy = () => {
     copyToClipboard(password);
-    toast("Copied to clipboard!");
+    toast(
+      <div className="flex items-center gap-4 justify-between">
+        <div>
+          <p className="font-semibold">Copied to clipboard!</p>
+          <p className="text-xs text-gray-700">
+            Consider saving it to your vault
+          </p>
+        </div>
+        <DialogDemo>
+          <Button>Save to Vault</Button>
+        </DialogDemo>
+      </div>
+    );
   };
 
   let strengthClasses = "w-0 bg-transparent";
@@ -69,7 +82,7 @@ export default function GeneratePage() {
   return (
     <div className="grid grid-cols-3 grid-rows-10 gap-10 p-6 max-h-full h-full overflow-hidden">
       <Container className="col-span-3 row-span-4 relative">
-        <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
+        <h1 className="text-2xl font-semibold mb-4 border-b-1 border-zinc-900 p-4">
           Generate password
         </h1>
         <div className="px-4 py-10 flex justify-center gap-4 items-center">
@@ -83,17 +96,22 @@ export default function GeneratePage() {
             }}
           />
 
+          <DialogDemo>
+            <Button>Save to Vault</Button>
+          </DialogDemo>
+
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <DialogDemo>
-                  <button
-                    onClick={handleCopy}
-                    className="p-4 rounded-full hover:bg-white/10 transition-all"
-                  >
-                    <IoCopy size={30} />
-                  </button>
-                </DialogDemo>
+                <button
+                  onClick={handleCopy}
+                  className="p-2 rounded-full hover:bg-white/10 transition-all group"
+                >
+                  <IoCopy
+                    size={25}
+                    className="group-hover:scale-120 transition-all"
+                  />
+                </button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Copy to clipboard</p>
@@ -106,9 +124,12 @@ export default function GeneratePage() {
               <TooltipTrigger asChild>
                 <button
                   onClick={handleRegenerate}
-                  className="p-4 rounded-full hover:bg-white/10 transition-all"
+                  className="p-2 rounded-full hover:bg-white/10 transition-all group"
                 >
-                  <FiRefreshCcw size={30} />
+                  <FiRefreshCcw
+                    size={25}
+                    className="group-hover:scale-120 transition-all"
+                  />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -121,45 +142,14 @@ export default function GeneratePage() {
           className={`h-2 transition-all absolute left-0 bottom-0 ${strengthClasses}`}
         ></div>
       </Container>
-      <Container className="col-span-3 row-span-2 gap-2 items-center justify-center flex-row">
-        <div className="w-1/2">
-          <Slider
-            value={[length]}
-            max={30}
-            step={1}
-            onValueChange={(value) => {
-              setLength(Number(value[0]));
-              const newPassword = generatePassword(Number(value[0]), config);
-              setPassword(newPassword);
-              setStrength(getPasswordStrength(newPassword));
-            }}
-          />
-        </div>
-        <input
-          className="w-12"
-          type="number"
-          step={1}
-          max={30}
-          min={0}
-          value={length}
-          onChange={(e) => {
-            setLength(Number(e.target.value));
-            const newPassword = generatePassword(
-              Number(e.target.value),
-              config
-            );
-            setPassword(newPassword);
-            setStrength(getPasswordStrength(newPassword));
-          }}
-        />
-      </Container>
-      <Container className="col-span-1 row-span-4">
-        <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
+
+      <Container className="col-span-1 row-span-3">
+        <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
           Modify visual experience
         </h1>
         <RadioGroup
           defaultValue="easy-to-say"
-          className="px-10 py-8 flex flex-col justify-between h-full"
+          className="px-10 py-4 flex flex-col justify-between h-full"
         >
           <div
             onClick={() =>
@@ -260,11 +250,133 @@ export default function GeneratePage() {
           </div>
         </RadioGroup>
       </Container>
-      <Container className="col-span-1 row-span-4">
-        <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
+
+      <Container className="col-span-1 row-span-1 gap-2 items-center justify-center flex-row">
+        <div className="w-1/2">
+          <Slider
+            value={[length]}
+            max={30}
+            step={1}
+            onValueChange={(value) => {
+              setLength(Number(value[0]));
+              const newPassword = generatePassword(Number(value[0]), config);
+              setPassword(newPassword);
+              setStrength(getPasswordStrength(newPassword));
+            }}
+          />
+        </div>
+        <input
+          className="w-12"
+          type="number"
+          step={1}
+          max={30}
+          min={0}
+          value={length}
+          onChange={(e) => {
+            setLength(Number(e.target.value));
+            const newPassword = generatePassword(
+              Number(e.target.value),
+              config
+            );
+            setPassword(newPassword);
+            setStrength(getPasswordStrength(newPassword));
+          }}
+        />
+      </Container>
+      <div className="col-span-1 row-span-6"></div>
+
+      <Container className="col-span-1 row-span-5">
+        <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
+          Strength checker
+        </h1>
+        <ul className="px-10 py-8 flex flex-col justify-between h-full">
+          <li className="flex gap-2 flex-col">
+            <div className="flex gap-2 items-center">
+              <p>An unacceptable password</p>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <FaCircleInfo />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Only letters</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="h-1 bg-red-600 w-0"></div>
+          </li>
+          <li className="flex gap-2 flex-col">
+            <div className="flex gap-2 items-center">
+              <p>A bad password</p>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <FaCircleInfo />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Only letters</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="h-1 bg-red-400 w-1/4"></div>
+          </li>
+          <li className="flex gap-2 flex-col">
+            <div className="flex gap-2 items-center">
+              <p>A dubious password</p>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <FaCircleInfo />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Only letters</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="h-1 bg-orange-400 w-1/2"></div>
+          </li>{" "}
+          <li className="flex gap-2 flex-col">
+            <div className="flex gap-2 items-center">
+              <p>A good password</p>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <FaCircleInfo />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Only letters</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="h-1 bg-lime-400 w-3/4"></div>
+          </li>
+          <li className="flex gap-2 flex-col">
+            <div className="flex gap-2 items-center">
+              <p>A great password</p>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <FaCircleInfo />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Only letters</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="h-1 bg-green-400 w-full"></div>
+          </li>
+        </ul>
+      </Container>
+      <Container className="col-span-1 row-span-3">
+        <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
           Manually choose
         </h1>
-        <div className="px-10 py-8 flex flex-col justify-between h-full">
+        <div className="px-10 py-4 flex flex-col justify-between h-full">
           <div
             onClick={() =>
               setConfig({ ...config, upperCase: !config.upperCase })
@@ -306,11 +418,6 @@ export default function GeneratePage() {
             </label>
           </div>
         </div>
-      </Container>
-      <Container className="col-span-1 row-span-4">
-        <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
-          Strength checker
-        </h1>
       </Container>
     </div>
   );
