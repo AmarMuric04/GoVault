@@ -8,19 +8,19 @@ import { GoDotFill } from "react-icons/go";
 import { IoCopy } from "react-icons/io5";
 import { toast } from "sonner";
 
-export default function Password({ invoice }) {
+export default function Password({ password }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleCopyToClipboard = () => {
-    copyToClipboard(invoice.paymentStatus);
+    copyToClipboard(password);
     toast("Copied to clipboard!");
   };
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex items-center">
+      <div className="flex items-center kode-mono min-w-48 w-48 max-w-48 overflow-auto">
         {showPassword
-          ? invoice.paymentStatus
+          ? password
           : new Array(15).fill(0).map((e, index) => <GoDotFill key={index} />)}
       </div>
       <div className="flex items-center gap-2">
@@ -33,7 +33,7 @@ export default function Password({ invoice }) {
         )}
         {showPassword && (
           <button
-            onClick={() => showPassword(false)}
+            onClick={() => setShowPassword(false)}
             className="group p-2 rounded-full hover:bg-white/10 transition-all"
           >
             <FaEyeSlash className="group-hover:scale-110 transition-all" />

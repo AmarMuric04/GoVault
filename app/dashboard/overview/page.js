@@ -93,7 +93,7 @@ export default function OverviewPage() {
 
       <Container className="col-span-2 row-span-3">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
-          Your vs. Others' Activity
+          Your activity over time
         </h1>
         <div className="w-full h-full">
           <Chart

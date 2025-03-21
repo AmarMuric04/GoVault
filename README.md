@@ -8,6 +8,10 @@
 
 ![Project Screenshot](./ccc.PNG)
 
+# The place where you store your passwords design
+
+![PRoject Screenshot](./3.PNG)
+
 # It's just a practice project!
 
 — I'm just practicing how to organize folder structure
