@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,32 +12,44 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
-export function DialogDemo({ children }) {
+export function PasswordDialog({ children, onProceed }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Store your password</DialogTitle>
+          <DialogTitle>Enter your password</DialogTitle>
           <DialogDescription>
-            Where do you want to use this password?
+            We need to make sure you are authorized for this action
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="flex flex-col grid-cols-4 justify-center gap-2">
             <Label htmlFor="place" className="text-right">
-              I want to use this password for
+              My password is
             </Label>
             <Input
               id="place"
-              placeholder="My Google account"
+              placeholder="Enter your password"
               className="col-span-3"
+              type="password"
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button
+            type="submit"
+            onClick={() => {
+              onProceed();
+              setOpen(false);
+            }}
+          >
+            Proceed
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
