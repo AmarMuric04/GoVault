@@ -65,7 +65,7 @@ export default function GeneratePage() {
             Consider saving it to your vault
           </p>
         </div>
-        <DialogDemo>
+        <DialogDemo password={password}>
           <Button>Save to Vault</Button>
         </DialogDemo>
       </div>
@@ -96,7 +96,7 @@ export default function GeneratePage() {
             }}
           />
 
-          <DialogDemo>
+          <DialogDemo password={password}>
             <Button>Save to Vault</Button>
           </DialogDemo>
 

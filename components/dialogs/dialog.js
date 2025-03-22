@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,8 +13,18 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useMutation } from "@tanstack/react-query";
+import { addPassword } from "@/actions/password.actions";
+import { BeatLoader } from "react-spinners";
+import { useState } from "react";
 
-export function DialogDemo({ children }) {
+export function DialogDemo({ children, password }) {
+  const [source, setSource] = useState("");
+
+  const { mutate: handleAddPassword, isPending } = useMutation({
+    mutationFn: () => addPassword(password, source),
+  });
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -29,7 +41,9 @@ export function DialogDemo({ children }) {
               I want to use this password for
             </Label>
             <Input
+              onChange={(e) => setSource(e.target.value)}
               id="place"
+              value={source}
               placeholder="My Google account"
               className="col-span-3"
             />
@@ -37,7 +51,10 @@ export function DialogDemo({ children }) {
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button onClick={handleAddPassword} type="submit">
+              {isPending && <BeatLoader />}
+              {!isPending && "Save Changes"}
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

@@ -137,7 +137,7 @@ export async function isAuthenticated() {
       return null;
     }
 
-    return { ...user._doc, _id: undefined };
+    return user._id.toString();
   } catch (error) {
     console.log(error);
     return null;
