@@ -1,6 +1,6 @@
 "use client";
 
-import { PasswordDialog } from "@/components/dialogs/password-dialog";
+import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
 import { copyToClipboard } from "@/utility/copy-text";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";

@@ -35,9 +35,9 @@ export function VaultTable({ showMoreInfo }) {
           {showMoreInfo && (
             <TableHead className="text-white text-center">Strength</TableHead>
           )}
+          <TableHead className="text-white">Notes</TableHead>
           <TableHead className="text-white">Created</TableHead>
           <TableHead className="text-white">Updated</TableHead>
-          <TableHead className="text-white">Notes</TableHead>
           <TableHead className="text-right text-white">Action</TableHead>
         </TableRow>
       </TableHeader>
@@ -46,7 +46,7 @@ export function VaultTable({ showMoreInfo }) {
           <Row
             showMoreInfo={showMoreInfo}
             password={password}
-            key={password.service + index}
+            key={password.source + index}
           />
         ))}
       </TableBody>

@@ -20,6 +20,8 @@ import { useState } from "react";
 
 export function DialogDemo({ children, password }) {
   const [source, setSource] = useState("");
+  const [psw, setPsw] = useState("");
+  const [notes, setNotes] = useState("");
 
   const { mutate: handleAddPassword, isPending } = useMutation({
     mutationFn: () => addPassword(password, source),
@@ -36,6 +38,20 @@ export function DialogDemo({ children, password }) {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+          {!password && (
+            <div className="flex flex-col grid-cols-4 justify-center gap-2">
+              <Label htmlFor="password" className="text-right">
+                My new password will be
+              </Label>
+              <Input
+                onChange={(e) => setPsw(e.target.value)}
+                id="password"
+                value={psw}
+                placeholder="Enter your new password"
+                className="col-span-3"
+              />
+            </div>
+          )}
           <div className="flex flex-col grid-cols-4 justify-center gap-2">
             <Label htmlFor="place" className="text-right">
               I want to use this password for
@@ -45,6 +61,18 @@ export function DialogDemo({ children, password }) {
               id="place"
               value={source}
               placeholder="My Google account"
+              className="col-span-3"
+            />
+          </div>
+          <div className="flex flex-col grid-cols-4 justify-center gap-2">
+            <Label htmlFor="notes" className="text-right">
+              Attached notes for this password are (optional)
+            </Label>
+            <Input
+              onChange={(e) => setNotes(e.target.value)}
+              id="notes"
+              value={notes}
+              placeholder="Enter your notes"
               className="col-span-3"
             />
           </div>

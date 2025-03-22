@@ -20,7 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { DialogDemo } from "@/components/dialogs/dialog";
+import { DialogDemo } from "@/components/dialogs/create-password-dialog";
 import { Button } from "@/components/ui/button";
 
 export default function GeneratePage() {
