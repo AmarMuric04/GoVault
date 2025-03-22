@@ -2,14 +2,19 @@
 
 import { PasswordDialog } from "@/components/dialogs/password-dialog";
 import { copyToClipboard } from "@/utility/copy-text";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { IoCopy } from "react-icons/io5";
 import { toast } from "sonner";
 
-export default function Password({ password }) {
+export default function Password({ showMoreInfo, password }) {
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    console.log(showMoreInfo);
+    setShowPassword(showMoreInfo);
+  }, [showMoreInfo]);
 
   const handleCopyToClipboard = () => {
     copyToClipboard(password);

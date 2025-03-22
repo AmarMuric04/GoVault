@@ -5,20 +5,24 @@ import Password from "../password";
 import SecurityIndicator from "../strength-indicator";
 import { formatMongoDate } from "@/formatters/date";
 
-export default function Row({ password }) {
+export default function Row({ showMoreInfo, password }) {
   return (
     <TableRow
       className={`p-4 border-zinc-900 ${
-        password.securityRating === "Critical" ? "bg-red-600/20" : "bg-zinc-950"
+        showMoreInfo && password.securityRating === "Critical"
+          ? "bg-red-600/20"
+          : "bg-zinc-950"
       }`}
     >
       <TableCell className="font-medium">{password.service}</TableCell>
       <TableCell>
-        <Password password={password.password} />
+        <Password showMoreInfo={showMoreInfo} password={password.password} />
       </TableCell>
-      <TableCell>
-        <SecurityIndicator strength={password.securityRating} />
-      </TableCell>
+      {showMoreInfo && (
+        <TableCell>
+          <SecurityIndicator strength={password.securityRating} />
+        </TableCell>
+      )}
       <TableCell>{formatMongoDate(password.createdAt)}</TableCell>
       <TableCell>{formatMongoDate(password.lastUpdated)}</TableCell>
       <TableCell>{password.notes}</TableCell>

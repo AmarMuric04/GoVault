@@ -163,14 +163,16 @@ const credentials = [
   },
 ];
 
-export function VaultTable() {
+export function VaultTable({ showMoreInfo }) {
   return (
     <Table className="max-h-full">
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px] text-white">Source</TableHead>
           <TableHead className="text-white">Password</TableHead>
-          <TableHead className="text-white text-center">Strength</TableHead>
+          {showMoreInfo && (
+            <TableHead className="text-white text-center">Strength</TableHead>
+          )}
           <TableHead className="text-white">Created</TableHead>
           <TableHead className="text-white">Updated</TableHead>
           <TableHead className="text-white">Notes</TableHead>
@@ -179,7 +181,11 @@ export function VaultTable() {
       </TableHeader>
       <TableBody className="max-h-full overflow-auto">
         {credentials.map((password, index) => (
-          <Row password={password} key={password.service + index} />
+          <Row
+            showMoreInfo={showMoreInfo}
+            password={password}
+            key={password.service + index}
+          />
         ))}
       </TableBody>
     </Table>
