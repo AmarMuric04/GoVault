@@ -20,8 +20,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { DialogDemo } from "@/components/dialogs/create-password-dialog";
+import { CreatePasswordDialog } from "@/components/dialogs/create-password-dialog";
 import { Button } from "@/components/ui/button";
+import HoverTitle from "@/components/hover-title";
 
 export default function GeneratePage() {
   const [length, setLength] = useState(10);
@@ -65,9 +66,11 @@ export default function GeneratePage() {
             Consider saving it to your vault
           </p>
         </div>
-        <DialogDemo password={password}>
-          <Button>Save to Vault</Button>
-        </DialogDemo>
+        <CreatePasswordDialog password={password}>
+          <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
+            Save to Vault
+          </Button>
+        </CreatePasswordDialog>
       </div>
     );
   };
@@ -96,47 +99,34 @@ export default function GeneratePage() {
             }}
           />
 
-          <DialogDemo password={password}>
-            <Button>Save to Vault</Button>
-          </DialogDemo>
+          <CreatePasswordDialog password={password}>
+            <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
+              Save to Vault
+            </Button>
+          </CreatePasswordDialog>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={handleCopy}
-                  className="p-2 rounded-full hover:bg-white/10 transition-all group"
-                >
-                  <IoCopy
-                    size={25}
-                    className="group-hover:scale-120 transition-all"
-                  />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Copy to clipboard</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={handleRegenerate}
-                  className="p-2 rounded-full hover:bg-white/10 transition-all group"
-                >
-                  <FiRefreshCcw
-                    size={25}
-                    className="group-hover:scale-120 transition-all"
-                  />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Get a new password</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <HoverTitle title={<p>Copy to clipboard</p>}>
+            <button
+              onClick={handleCopy}
+              className="p-2 rounded-full hover:bg-white/10 transition-all group"
+            >
+              <IoCopy
+                size={25}
+                className="group-hover:scale-120 transition-all"
+              />
+            </button>
+          </HoverTitle>
+          <HoverTitle title={<p>Get a new password</p>}>
+            <button
+              onClick={handleRegenerate}
+              className="p-2 rounded-full hover:bg-white/10 transition-all group"
+            >
+              <FiRefreshCcw
+                size={25}
+                className="group-hover:scale-120 transition-all"
+              />
+            </button>
+          </HoverTitle>
         </div>
         <div
           className={`h-2 transition-all absolute left-0 bottom-0 ${strengthClasses}`}
@@ -172,16 +162,9 @@ export default function GeneratePage() {
               value="easy-to-say"
             />
             <Label className="cursor-pointer">Easy to say</Label>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <FaCircleInfo />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Only letters</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <HoverTitle title={<p>Only letters</p>}>
+              <FaCircleInfo />
+            </HoverTitle>
           </div>
           <div
             onClick={() =>
@@ -204,16 +187,9 @@ export default function GeneratePage() {
               value="easy-to-read"
             />
             <Label>Easy to read</Label>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <FaCircleInfo />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Letters and digits</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <HoverTitle title={<p>Letters and digits</p>}>
+              <FaCircleInfo />
+            </HoverTitle>
           </div>
           <div
             onClick={() =>
@@ -237,16 +213,9 @@ export default function GeneratePage() {
               id="r3"
             />
             <Label htmlFor="r3">All Characters</Label>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <FaCircleInfo />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Everything included</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <HoverTitle title={<p>Everything included</p>}>
+              <FaCircleInfo />
+            </HoverTitle>
           </div>
         </RadioGroup>
       </Container>

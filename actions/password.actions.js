@@ -5,6 +5,7 @@ import Password from "@/lib/database/models/password";
 import { isAuthenticated } from "./auth.actions";
 import connectToDatabase from "@/lib/database/db";
 import { getPasswordStrength } from "@/utility/password/password-strength";
+import { revalidatePath } from "next/cache";
 
 const algorithm = "aes-256-cbc";
 const secretKey =
@@ -28,7 +29,7 @@ function decrypt(encryptedText) {
   return decrypted;
 }
 
-export const addPassword = async (password, source) => {
+export const addPassword = async (password, source, notes) => {
   const user = await isAuthenticated();
   console.log(user);
   if (!user) return;
@@ -43,10 +44,18 @@ export const addPassword = async (password, source) => {
     owner: user,
     password: encryptedPassword,
     strength: getPasswordStrength(password),
+    notes,
   });
 
   await psw.save();
-  return psw;
+
+  revalidatePath("/vault");
+  return {
+    ...psw.toObject(),
+    owner: psw.owner.toString(),
+    _id: psw._id.toString(),
+    password: decrypt(psw.password),
+  };
 };
 
 export const getDecryptedPassword = async (passwordId) => {

@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
-import Password from "../password";
-import SecurityIndicator from "../strength-indicator";
+import Password from "../password/password";
+import SecurityIndicator from "../password/strength-indicator";
 import { formatMongoDate } from "@/formatters/date";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 

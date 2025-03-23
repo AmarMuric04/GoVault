@@ -26,8 +26,6 @@ export default function AuthForm({ mode }) {
     mutationFn: (formData) => auth(formData, { remember, mode }),
   });
 
-  console.log(error);
-
   useEffect(() => {
     setFormValues(INITIAL_VALUES);
     setErrors({});

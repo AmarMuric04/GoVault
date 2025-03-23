@@ -10,7 +10,7 @@ export default async function AuthPage({ searchParams }) {
 
   const user = await isAuthenticated();
 
-  if (user) return redirect("/dashboard");
+  if (user) return redirect("/");
 
   return (
     <main className="w-screen h-screen grid place-items-center">

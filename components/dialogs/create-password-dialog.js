@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,18 +16,26 @@ import { useMutation } from "@tanstack/react-query";
 import { addPassword } from "@/actions/password.actions";
 import { BeatLoader } from "react-spinners";
 import { useState } from "react";
+import Link from "next/link";
 
-export function DialogDemo({ children, password }) {
+export function CreatePasswordDialog({ children, password }) {
   const [source, setSource] = useState("");
   const [psw, setPsw] = useState("");
   const [notes, setNotes] = useState("");
+  const [open, setOpen] = useState(false);
 
-  const { mutate: handleAddPassword, isPending } = useMutation({
-    mutationFn: () => addPassword(password, source),
+  const { mutateAsync: handleAddPassword, isPending } = useMutation({
+    mutationFn: () => {
+      if (!password) return addPassword(psw, source, notes);
+      return addPassword(password, source, notes);
+    },
+    onSuccess: () => {
+      redirect("/vault");
+    },
   });
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -49,6 +56,7 @@ export function DialogDemo({ children, password }) {
                 value={psw}
                 placeholder="Enter your new password"
                 className="col-span-3"
+                type="password"
               />
             </div>
           )}
@@ -78,12 +86,29 @@ export function DialogDemo({ children, password }) {
           </div>
         </div>
         <DialogFooter>
-          <DialogClose asChild>
-            <Button onClick={handleAddPassword} type="submit">
-              {isPending && <BeatLoader />}
-              {!isPending && "Save Changes"}
-            </Button>
-          </DialogClose>
+          <Button
+            onClick={() => setOpen(false)}
+            type="submit"
+            disabled={isPending}
+            className="bg-transparent border-1 border-zinc-900"
+          >
+            Cancel
+          </Button>
+          {!password && (
+            <Link href="/generate">
+              <Button type="submit" disabled={isPending}>
+                Use Generator
+              </Button>
+            </Link>
+          )}
+          <Button
+            onClick={handleAddPassword}
+            type="submit"
+            disabled={isPending}
+            className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
+          >
+            {isPending ? <BeatLoader color="white" size={5} /> : "Submit"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

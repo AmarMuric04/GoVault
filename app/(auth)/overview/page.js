@@ -5,12 +5,12 @@ import {
   PiClockFill,
 } from "react-icons/pi";
 import { TbPasswordUser } from "react-icons/tb";
-import SmallContainer from "@/components/dashboard/overview/small-container";
-import Chart from "@/components/dashboard/charts/line";
-import Example from "@/components/dashboard/charts/pie";
-import BarChartComp from "@/components/dashboard/charts/bar";
+import SmallContainer from "@/components/small-container";
+import Chart from "@/components/charts/line";
+import Example from "@/components/charts/pie";
+import BarChartComp from "@/components/charts/bar";
 import { formatMongoDate } from "@/formatters/date";
-import BetterPie from "@/components/dashboard/charts/betterPie";
+import BetterPie from "@/components/charts/betterPie";
 import Container from "@/components/container";
 
 export default function OverviewPage() {

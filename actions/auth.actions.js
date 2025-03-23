@@ -53,7 +53,7 @@ export async function signup(formData) {
     path: "/",
   });
 
-  redirect("/dashboard");
+  redirect("/overview");
 }
 
 export async function signin(formData) {
@@ -92,12 +92,13 @@ export async function signin(formData) {
 
   (await cookies()).set("token", token, {
     httpOnly: true,
+    secure: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 3600,
     path: "/",
   });
 
-  redirect("/dashboard");
+  redirect("/overview");
 }
 
 export async function signout() {

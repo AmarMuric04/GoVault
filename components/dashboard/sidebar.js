@@ -30,23 +30,23 @@ export default function Sidebar({ user }) {
         </div>
       </div>
 
-      <SidebarLink href="/dashboard/overview">
+      <SidebarLink href="/overview">
         <FaChartPie size={22} />
         <p>Overview</p>
       </SidebarLink>
-      <SidebarLink href="/dashboard/vault">
+      <SidebarLink href="/vault">
         <PiVaultFill size={22} />
         <p>My Vault</p>
       </SidebarLink>
-      <SidebarLink href="/dashboard/generate">
+      <SidebarLink href="/generate">
         <IoIosCreate size={22} />
         <p>Generate</p>
       </SidebarLink>
-      <SidebarLink href="/dashboard/security">
+      <SidebarLink href="/security">
         <MdOutlineSecurity size={22} />
         <p>Security</p>
       </SidebarLink>
-      <SidebarLink href="/dashboard/settings">
+      <SidebarLink href="/settings">
         <IoSettingsSharp size={22} />
         <p>Settings</p>
       </SidebarLink>
