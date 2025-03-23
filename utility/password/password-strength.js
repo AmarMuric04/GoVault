@@ -16,7 +16,7 @@ export const getPasswordStrength = (password) => {
   ].filter(Boolean).length;
 
   if (length < 4) {
-    return "Unacceptable";
+    return "Critical";
   }
 
   if (length > 4 && length < 8) {

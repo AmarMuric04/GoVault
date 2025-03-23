@@ -17,6 +17,7 @@ import { addPassword } from "@/actions/password.actions";
 import { BeatLoader } from "react-spinners";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function CreatePasswordDialog({ children, password }) {
   const [source, setSource] = useState("");
@@ -24,13 +25,15 @@ export function CreatePasswordDialog({ children, password }) {
   const [notes, setNotes] = useState("");
   const [open, setOpen] = useState(false);
 
+  const router = useRouter();
+
   const { mutateAsync: handleAddPassword, isPending } = useMutation({
     mutationFn: () => {
       if (!password) return addPassword(psw, source, notes);
       return addPassword(password, source, notes);
     },
     onSuccess: () => {
-      redirect("/vault");
+      router.push("/vault");
     },
   });
 

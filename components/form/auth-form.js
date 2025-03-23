@@ -7,6 +7,8 @@ import { auth } from "@/actions/auth.actions";
 import AuthInput from "./auth-input";
 import { useMutation } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
+import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/useAuthStore";
 
 const INITIAL_VALUES = {
   email: "",
@@ -18,12 +20,20 @@ export default function AuthForm({ mode }) {
   const [remember, setRemember] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const { setUser } = useAuthStore();
+
+  const router = useRouter();
+
   const {
     mutate: authenticate,
     isPending,
     error,
   } = useMutation({
     mutationFn: (formData) => auth(formData, { remember, mode }),
+    onSuccess: (data) => {
+      setUser(data);
+      router.push("/overview");
+    },
   });
 
   useEffect(() => {

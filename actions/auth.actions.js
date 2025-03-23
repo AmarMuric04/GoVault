@@ -53,7 +53,10 @@ export async function signup(formData) {
     path: "/",
   });
 
-  redirect("/overview");
+  return {
+    email: user.email,
+    _id: user._id.toString(),
+  };
 }
 
 export async function signin(formData) {
@@ -98,7 +101,10 @@ export async function signin(formData) {
     path: "/",
   });
 
-  redirect("/overview");
+  return {
+    email: user.email,
+    _id: user._id.toString(),
+  };
 }
 
 export async function signout() {
@@ -122,6 +128,18 @@ const userWithEmailExists = async (email) => {
   return !!(await User.countDocuments({ email }, { limit: 1 }));
 };
 
+export const correctPassword = async (userId, password) => {
+  const user = await User.findById(userId);
+
+  console.log("userId: " + userId, "User: " + user, "Password: " + password);
+
+  if (!user) return;
+
+  const correctPsw = await bcrypt.compare(password, user.password);
+
+  return correctPsw;
+};
+
 export async function isAuthenticated() {
   const tokenCookie = (await cookies()).get("token");
 
@@ -138,7 +156,10 @@ export async function isAuthenticated() {
       return null;
     }
 
-    return user._id.toString();
+    return {
+      email: user.email,
+      _id: user._id.toString(),
+    };
   } catch (error) {
     console.log(error);
     return null;

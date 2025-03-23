@@ -10,46 +10,47 @@ import { PiVaultFill } from "react-icons/pi";
 
 export default function Sidebar({ user }) {
   return (
-    <aside className="bg-zinc-950 text-white border-1 border-zinc-900 w-80 h-screen px-2">
-      <h1 className="text-center mt-20 mb-32 text-2xl font-semibold">
-        Welcome back!
-      </h1>
-      <div className="w-full flex flex-col items-center mb-10">
+    <aside className="bg-zinc-950 text-white border-1 border-zinc-900 min-w-80 h-screen flex flex-col justify-between px-2">
+      <div className="flex gap-2 items-center px-4 py-10">
         <Image
           src={Pfp}
           alt="User's profile picture"
           w={100}
           h={100}
-          className="rounded-full w-20 h-20"
+          className="rounded-full w-13 h-13"
         />
-        <div className="flex gap-2 items-center">
-          <h2 className="font-medium">{user.email}</h2>
-          <button className="w-full py-2 font-medium transition-all rounded-full p-2 hover:bg-white/10 flex items-center justify-center gap-2">
-            <FaEdit size={15} />
-          </button>
+        <div>
+          <h1 className="font-medium">Amar, Muric</h1>
+          <h2 className="text-sm text-[#ee6711]">{user.email}</h2>
         </div>
       </div>
 
-      <SidebarLink href="/overview">
-        <FaChartPie size={22} />
-        <p>Overview</p>
-      </SidebarLink>
-      <SidebarLink href="/vault">
-        <PiVaultFill size={22} />
-        <p>My Vault</p>
-      </SidebarLink>
-      <SidebarLink href="/generate">
-        <IoIosCreate size={22} />
-        <p>Generate</p>
-      </SidebarLink>
-      <SidebarLink href="/security">
-        <MdOutlineSecurity size={22} />
-        <p>Security</p>
-      </SidebarLink>
-      <SidebarLink href="/settings">
-        <IoSettingsSharp size={22} />
-        <p>Settings</p>
-      </SidebarLink>
+      <div>
+        <SidebarLink href="/overview">
+          <FaChartPie size={22} />
+          <p>Overview</p>
+        </SidebarLink>
+        <SidebarLink href="/vault">
+          <PiVaultFill size={22} />
+          <p>My Vault</p>
+        </SidebarLink>
+        <SidebarLink href="/generate">
+          <IoIosCreate size={22} />
+          <p>Generate</p>
+        </SidebarLink>
+        <SidebarLink href="/security">
+          <MdOutlineSecurity size={22} />
+          <p>Security</p>
+        </SidebarLink>
+        <SidebarLink href="/settings">
+          <IoSettingsSharp size={22} />
+          <p>Settings</p>
+        </SidebarLink>
+      </div>
+
+      <p className="text-zinc-800 text-sm mx-auto">
+        Made by Murga. All Rights Reserved.
+      </p>
     </aside>
   );
 }

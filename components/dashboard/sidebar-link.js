@@ -13,7 +13,7 @@ export default function SidebarLink({ href, children }) {
       className={`w-full py-3 my-1 font-medium transition-all rounded-sm flex items-center justify-center gap-2 
         ${
           isActive
-            ? "bg-zinc-900 hover:bg-zinc-800 text-white"
+            ? "bg-[#ee6711] hover:bg-[#ee671190] text-white"
             : "hover:bg-zinc-800"
         }`}
     >

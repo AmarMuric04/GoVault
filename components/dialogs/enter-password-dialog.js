@@ -12,10 +12,15 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useAuthStore from "@/store/useAuthStore";
 import { useState } from "react";
+import { BeatLoader } from "react-spinners";
 
-export function PasswordDialog({ children, onProceed }) {
+export function PasswordDialog({ children, onProceed, isPending }) {
   const [open, setOpen] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const { user } = useAuthStore();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -37,18 +42,21 @@ export function PasswordDialog({ children, onProceed }) {
               placeholder="Enter your password"
               className="col-span-3"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
         </div>
         <DialogFooter>
           <Button
             type="submit"
-            onClick={() => {
-              onProceed();
+            disabled={isPending}
+            onClick={async () => {
+              await onProceed({ userId: user._id, password });
               setOpen(false);
             }}
           >
-            Proceed
+            {isPending ? <BeatLoader color="white" size={5} /> : "Proceed"}
           </Button>
         </DialogFooter>
       </DialogContent>

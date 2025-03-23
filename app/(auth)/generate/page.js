@@ -75,7 +75,7 @@ export default function GeneratePage() {
     );
   };
 
-  let strengthClasses = "w-0 bg-transparent";
+  let strengthClasses = "w-4 bg-red-600";
 
   if (strength === "Bad") strengthClasses = "w-1/4 bg-red-400";
   if (strength === "Dubious") strengthClasses = "w-1/2 bg-orange-400";

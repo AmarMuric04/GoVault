@@ -1,6 +1,3 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -9,32 +6,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Row from "./row";
-import { getPasswordsByUserId } from "@/actions/password.actions";
-import { isAuthenticated } from "@/actions/auth.actions";
-import { HashLoader } from "react-spinners";
 import { Button } from "../ui/button";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { CreatePasswordDialog } from "../dialogs/create-password-dialog";
 
-export function VaultTable({ showMoreInfo }) {
-  const { data: userId } = useQuery({
-    queryKey: ["user"],
-    queryFn: isAuthenticated,
-  });
-
-  const { data: credentials = [], isLoading } = useQuery({
-    queryKey: ["passwords", userId],
-    queryFn: () => getPasswordsByUserId(userId),
-    enabled: !!userId,
-  });
-
-  if (isLoading)
-    return (
-      <div className="w-full h-full grid place-items-center">
-        <HashLoader color="#ee6711" size={40} />
-      </div>
-    );
-
+export function VaultTable({ items, showMoreInfo }) {
   return (
     <>
       <Table className="max-h-full">
@@ -52,7 +28,7 @@ export function VaultTable({ showMoreInfo }) {
           </TableRow>
         </TableHeader>
         <TableBody className="max-h-full overflow-auto">
-          {credentials.map((password, index) => (
+          {items.map((password, index) => (
             <Row
               showMoreInfo={showMoreInfo}
               password={password}
@@ -62,7 +38,7 @@ export function VaultTable({ showMoreInfo }) {
         </TableBody>
       </Table>
       <CreatePasswordDialog>
-        <Button className="border-1 border-dashed border-zinc-900 bg-zinc-950 w-full m-2 flex justify-center items-center gap-2">
+        <Button className="border-1 border-dashed border-zinc-900 bg-zinc-950 w-99/100 mx-auto self-center my-2 flex justify-center items-center gap-2">
           <FaRegSquarePlus />
           <p>Add a new password</p>
         </Button>

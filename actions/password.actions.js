@@ -2,7 +2,7 @@
 
 import crypto from "crypto";
 import Password from "@/lib/database/models/password";
-import { isAuthenticated } from "./auth.actions";
+import { correctPassword, isAuthenticated } from "./auth.actions";
 import connectToDatabase from "@/lib/database/db";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 import { revalidatePath } from "next/cache";
@@ -71,16 +71,45 @@ export const getPasswordsByUserId = async (userId) => {
 
   const passwords = await Password.find({ owner: userId });
 
-  const decryptedPasswords = passwords.map((psw) => {
-    console.log(psw);
+  const hiddenPasswords = passwords.map((psw) => ({
+    ...psw.toObject(),
+    owner: psw.owner.toString(),
+    _id: psw._id.toString(),
+    password: null,
+    strength: null,
+  }));
 
-    return {
-      ...psw.toObject(),
-      owner: psw.owner.toString(),
-      _id: psw._id.toString(),
-      password: decrypt(psw.password),
-    };
-  });
+  return hiddenPasswords;
+};
 
-  return decryptedPasswords;
+export const getFullPasswordInfo = async (userId, password) => {
+  if (!correctPassword(userId, password)) return;
+
+  const passwords = await Password.find({ owner: userId });
+
+  const shownPasswords = passwords.map((psw) => ({
+    ...psw.toObject(),
+    owner: psw.owner.toString(),
+    _id: psw._id.toString(),
+    password: decrypt(psw.password),
+  }));
+
+  return shownPasswords;
+};
+
+export const getIndividualFullPasswordInfo = async (
+  userId,
+  password,
+  passwordId
+) => {
+  if (!correctPassword(userId, password)) return;
+
+  const psw = await Password.findById(passwordId);
+
+  return {
+    ...psw.toObject(),
+    owner: psw.owner.toString(),
+    _id: psw._id.toString(),
+    password: decrypt(psw.password),
+  };
 };

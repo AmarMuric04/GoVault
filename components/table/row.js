@@ -7,6 +7,8 @@ import { formatMongoDate } from "@/formatters/date";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 
 export default function Row({ showMoreInfo, password }) {
+  console.log(password);
+
   return (
     <TableRow
       className={`p-4 border-zinc-900 ${
@@ -17,7 +19,7 @@ export default function Row({ showMoreInfo, password }) {
     >
       <TableCell className="font-medium">{password.source}</TableCell>
       <TableCell>
-        <Password showMoreInfo={showMoreInfo} password={password.password} />
+        <Password showMoreInfo={showMoreInfo} password={password} />
       </TableCell>
       {showMoreInfo && (
         <TableCell>
