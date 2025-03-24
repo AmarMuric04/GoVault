@@ -11,6 +11,8 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import { CreatePasswordDialog } from "../dialogs/create-password-dialog";
 
 export function VaultTable({ items, showMoreInfo }) {
+  console.log(items);
+
   return (
     <>
       <Table className="max-h-full">

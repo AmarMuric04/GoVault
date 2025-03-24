@@ -15,30 +15,84 @@ import { Label } from "@/components/ui/label";
 import { useMutation } from "@tanstack/react-query";
 import { addPassword } from "@/actions/password.actions";
 import { BeatLoader } from "react-spinners";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import usePasswordStore from "@/store/usePasswordStore";
+import useAuthStore from "@/store/useAuthStore";
+import { getPasswordStrength } from "@/utility/password/password-strength";
+import { toast } from "sonner";
 
 export function CreatePasswordDialog({ children, password }) {
+  const { passwords, setPasswords } = usePasswordStore();
+  const { user } = useAuthStore();
+
   const [source, setSource] = useState("");
   const [psw, setPsw] = useState("");
   const [notes, setNotes] = useState("");
   const [open, setOpen] = useState(false);
 
+  const toastId = useRef(null);
+
   const router = useRouter();
 
   const { mutateAsync: handleAddPassword, isPending } = useMutation({
-    mutationFn: () => {
-      if (!password) return addPassword(psw, source, notes);
-      return addPassword(password, source, notes);
+    mutationFn: async () => {
+      const thePassword = password || psw;
+
+      const tempId = Date.now().toString();
+
+      setPasswords([
+        ...passwords,
+        {
+          password: thePassword,
+          strength: getPasswordStrength(thePassword),
+          owner: user._id,
+          _id: tempId,
+          status: "Pending",
+          source,
+          notes,
+        },
+      ]);
+      setOpen(false);
+      setPsw("");
+      setSource("");
+      setNotes("");
+
+      if (toastId.current) toast.dismiss(toastId.current);
+
+      toastId.current = toast(<p>Saving the password...</p>);
+
+      return addPassword(thePassword, source, notes);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setPasswords(
+        passwords.map((p) =>
+          p._id === "123" || p.status === "Pending"
+            ? { ...data, status: "Saved" }
+            : p
+        )
+      );
+
+      if (toastId.current) toast.dismiss(toastId.current);
+      toast.success(<p>Password saved!</p>);
+
       router.push("/vault");
     },
   });
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) {
+          setPsw("");
+          setSource("");
+          setNotes("");
+        }
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

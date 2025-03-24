@@ -1,30 +1,29 @@
 import Pfp from "@/public/psw-pfp.jpg";
 import Image from "next/image";
-import { FaEdit, FaChartPie } from "react-icons/fa";
-import { SiManageiq } from "react-icons/si";
+import { FaChartPie } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
-import { IoSettingsSharp, IoLogOut } from "react-icons/io5";
+import { IoSettingsSharp } from "react-icons/io5";
 import { MdOutlineSecurity } from "react-icons/md";
 import SidebarLink from "./sidebar-link";
 import { PiVaultFill } from "react-icons/pi";
+import Logo from "@/public/TheLogo.png";
 
 export default function Sidebar({ user }) {
   return (
-    <aside className="bg-zinc-950 text-white border-1 border-zinc-900 min-w-80 h-screen flex flex-col justify-between px-2">
-      <div className="flex gap-2 items-center px-4 py-10">
+    <aside className="bg-zinc-950 text-white border-1 border-zinc-900 min-w-72 h-screen flex flex-col justify-between px-4">
+      <div className="flex gap-4 items-center montserrat h-1/10">
         <Image
-          src={Pfp}
-          alt="User's profile picture"
-          w={100}
-          h={100}
-          className="rounded-full w-13 h-13"
+          className="h-13 w-13"
+          src={Logo}
+          width={100}
+          height={100}
+          alt="App's Logo"
         />
         <div>
-          <h1 className="font-medium">Amar, Muric</h1>
-          <h2 className="text-sm text-[#ee6711]">{user.email}</h2>
+          <h1 className="font-semibold text-[#ee6711] text-lg">GuardX</h1>
+          <p className="text-zinc-600 text-sm">Be Safe & Stay Safe</p>
         </div>
       </div>
-
       <div>
         <SidebarLink href="/overview">
           <FaChartPie size={22} />
@@ -48,7 +47,7 @@ export default function Sidebar({ user }) {
         </SidebarLink>
       </div>
 
-      <p className="text-zinc-800 text-sm mx-auto">
+      <p className="text-zinc-800 text-xs mx-auto">
         Made by Murga. All Rights Reserved.
       </p>
     </aside>

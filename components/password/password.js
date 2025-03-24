@@ -5,7 +5,6 @@ import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
 import usePasswordStore from "@/store/usePasswordStore";
 import { copyToClipboard } from "@/utility/copy-text";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { IoCopy } from "react-icons/io5";

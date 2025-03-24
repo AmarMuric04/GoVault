@@ -9,7 +9,7 @@ import ReactQueryProvider from "@/providers/react-query";
 
 export default async function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="montserrat">
       <body className="bg-[#0a0a0a]">
         <ReactQueryProvider>
           {children}

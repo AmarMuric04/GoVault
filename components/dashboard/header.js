@@ -1,21 +1,31 @@
 import Image from "next/image";
-import Logo from "@/public/TheLogo.png";
+import Pfp from "@/public/psw-pfp.jpg";
+import { IoIosNotifications, IoMdMail } from "react-icons/io";
 
 export default function Header({ user }) {
   return (
-    <header className="bg-zinc-950 text-white border-1 border-zinc-900 flex flex-grow max-h-1/10 h-1/10 items-center justify-end px-10">
-      <div className="flex gap-4 items-center h-full montserrat text-end">
-        <div>
-          <h1 className="font-semibold text-[#ee6711] text-lg">GuardX</h1>
-          <p className="text-zinc-600 text-sm">Be Safe & Stay Safe</p>
+    <header className="bg-zinc-950 text-white border-1 border-zinc-900 flex flex-grow max-h-1/10 h-1/10 items-center justify-between px-10">
+      <h1 className="font-bold text-xl montserrat">Admin</h1>
+      <div className="flex gap-4 items-center">
+        <button>
+          <IoIosNotifications size={25} />
+        </button>
+        <button>
+          <IoMdMail size={25} />
+        </button>
+        <div className="flex gap-2 items-center">
+          <Image
+            src={Pfp}
+            alt="User's profile picture"
+            w={100}
+            h={100}
+            className="rounded-full w-13 h-13"
+          />
+          <div>
+            <h1 className="font-medium">Amar, Muric</h1>
+            <h2 className="text-sm text-[#ee6711]">{user.email}</h2>
+          </div>
         </div>
-        <Image
-          className="h-13 w-13"
-          src={Logo}
-          width={100}
-          height={100}
-          alt="App's Logo"
-        />
       </div>
     </header>
   );

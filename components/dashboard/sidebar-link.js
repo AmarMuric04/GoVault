@@ -17,7 +17,7 @@ export default function SidebarLink({ href, children }) {
             : "hover:bg-zinc-800"
         }`}
     >
-      <div className="w-1/2 flex gap-10 items-center">{children}</div>
+      <div className="w-1/2 flex gap-4 items-center">{children}</div>
     </Link>
   );
 }

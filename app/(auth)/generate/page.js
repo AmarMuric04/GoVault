@@ -261,7 +261,7 @@ export default function GeneratePage() {
         <ul className="px-10 py-8 flex flex-col justify-between h-full">
           <li className="flex gap-2 flex-col">
             <div className="flex gap-2 items-center">
-              <p>An unacceptable password</p>
+              <p>A critical password</p>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -273,7 +273,7 @@ export default function GeneratePage() {
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="h-1 bg-red-600 w-0"></div>
+            <div className="h-1 bg-red-600 w-2"></div>
           </li>
           <li className="flex gap-2 flex-col">
             <div className="flex gap-2 items-center">

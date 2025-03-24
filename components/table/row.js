@@ -6,8 +6,11 @@ import Link from "next/link";
 import Password from "../password/password";
 import SecurityIndicator from "../password/strength-indicator";
 import { formatMongoDate } from "@/formatters/date";
-import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { BiLoaderAlt } from "react-icons/bi";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import { MdEdit } from "react-icons/md";
 
 export default function Row({ showMoreInfo, password }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +18,8 @@ export default function Row({ showMoreInfo, password }) {
   useEffect(() => {
     setShowPassword(showMoreInfo);
   }, [showMoreInfo]);
+
+  console.log(password);
 
   return (
     <TableRow
@@ -24,7 +29,21 @@ export default function Row({ showMoreInfo, password }) {
           : "bg-zinc-950"
       }`}
     >
-      <TableCell className="font-medium">{password.source}</TableCell>
+      <TableCell className="font-medium">
+        <div className="flex gap-2 items-center">
+          {password.status === "Pending" && (
+            <div>
+              <BiLoaderAlt className="animate-spin" />
+            </div>
+          )}
+          {password.status === "Saved" && (
+            <div className="text-green-400 animate-in">
+              <IoCheckmarkDoneSharp />
+            </div>
+          )}
+          <p>{password.source}</p>
+        </div>
+      </TableCell>
       <TableCell>
         <Password
           showMoreInfo={showMoreInfo}
@@ -44,10 +63,10 @@ export default function Row({ showMoreInfo, password }) {
         <div className="flex gap-2 items-center justify-end w-full">
           <Link href="/dashboard/generate">
             <Button>
-              <FaEdit />
+              <MdEdit />
             </Button>
           </Link>
-          <Button className="bg-red-400/20 hover:bg-red-400/50">
+          <Button className="bg-red-500 hover:bg-red-500/60">
             <FaTrashAlt />
           </Button>
         </div>
