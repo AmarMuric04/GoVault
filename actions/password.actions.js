@@ -6,10 +6,10 @@ import { correctPassword, isAuthenticated } from "./auth.actions";
 import connectToDatabase from "@/lib/database/db";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 import { revalidatePath } from "next/cache";
+import moment from "moment";
 
 const algorithm = "aes-256-cbc";
-const secretKey =
-  process.env.ENCRYPTION_KEY || "my-super-secret-key-must-be-32-bytes-long";
+const secretKey = process.env.ENCRYPTION_KEY;
 const key = crypto.createHash("sha256").update(secretKey).digest();
 
 function encrypt(text) {
@@ -83,7 +83,7 @@ export const getPasswordsByUserId = async (userId) => {
 };
 
 export const getFullPasswordInfo = async (userId, password) => {
-  if (!correctPassword(userId, password)) return;
+  if (!(await correctPassword(userId, password))) throw new Error("AAA");
 
   const passwords = await Password.find({ owner: userId });
 
@@ -102,7 +102,7 @@ export const getIndividualFullPasswordInfo = async (
   password,
   passwordId
 ) => {
-  if (!correctPassword(userId, password)) return;
+  if (!(await correctPassword(userId, password))) throw new Error("AAA");
 
   const psw = await Password.findById(passwordId);
 
@@ -112,4 +112,103 @@ export const getIndividualFullPasswordInfo = async (
     _id: psw._id.toString(),
     password: decrypt(psw.password),
   };
+};
+
+export const getPasswordStrengthPieData = async () => {
+  const user = await isAuthenticated();
+  const passwords = await Password.find({ owner: user._id });
+
+  const strengthStats = {
+    Critical: 0,
+    Bad: 0,
+    Dubious: 0,
+    Good: 0,
+    Great: 0,
+  };
+
+  passwords.forEach((psw) => {
+    strengthStats[psw.strength] = (strengthStats[psw.strength] || 0) + 1;
+  });
+
+  const pieData = Object.entries(strengthStats).map(([strength, value]) => ({
+    name: `${strength} Passwords`,
+    value,
+    label: value,
+  }));
+
+  return pieData;
+};
+
+export const getPasswordsPerDay = async (days = 7) => {
+  const user = await isAuthenticated();
+  const passwords = await Password.find({ owner: user._id }).sort({
+    createdAt: 1,
+  });
+
+  const passwordCountByDate = {};
+
+  passwords.forEach((psw) => {
+    const date = moment(psw.createdAt).format("YYYY-MM-DD");
+    passwordCountByDate[date] = (passwordCountByDate[date] || 0) + 1;
+  });
+
+  const startDate = passwords.length
+    ? moment(passwords[0].createdAt).startOf("day")
+    : moment().subtract(6, "days").startOf("day");
+
+  const endDate = moment().startOf("day");
+  const data = [];
+  for (let i = 0; i < days; i++) {
+    const date = moment().subtract(i, "days").format("YYYY-MM-DD");
+    data.push({
+      date,
+      value: passwordCountByDate[date] || 0,
+    });
+  }
+
+  return data.reverse();
+};
+
+export const getBarChartData = async (userId, password, days = 7) => {
+  if (!correctPassword(userId, password)) return;
+
+  const yourPasswords = await getPasswordsPerDay(userId, password, days);
+
+  const allPasswords = await Password.find({
+    owner: { $ne: userId },
+    createdAt: {
+      $gte: moment()
+        .subtract(days - 1, "days")
+        .startOf("day")
+        .toDate(),
+    },
+  }).sort({ createdAt: 1 });
+
+  const passwordCountByDate = {};
+  const userCountByDate = {};
+
+  allPasswords.forEach((psw) => {
+    const date = moment(psw.createdAt).format("YYYY-MM-DD");
+
+    passwordCountByDate[date] = (passwordCountByDate[date] || 0) + 1;
+    userCountByDate[date] = new Set([
+      ...(userCountByDate[date] || new Set()),
+      psw.owner.toString(),
+    ]);
+  });
+
+  const avgPasswordsByDate = {};
+  Object.keys(passwordCountByDate).forEach((date) => {
+    const totalPasswords = passwordCountByDate[date];
+    const uniqueUsers = userCountByDate[date]?.size || 1;
+    avgPasswordsByDate[date] = totalPasswords / uniqueUsers;
+  });
+
+  const barData = yourPasswords.map(({ date, value }) => ({
+    date,
+    ["Your passwords"]: value,
+    ["Others' passwords"]: Math.round(avgPasswordsByDate[date] || 0),
+  }));
+
+  return barData;
 };

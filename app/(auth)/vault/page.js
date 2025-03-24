@@ -70,7 +70,7 @@ export default function VaultPage() {
               }}
               className="flex gap-2 items-center"
             >
-              <ImCheckboxUnchecked />
+              <ImCheckboxChecked />
               <p>Show all information</p>
             </button>
           )}

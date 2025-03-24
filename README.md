@@ -45,7 +45,7 @@
 - User can freely choose how long their password is
 - User can also enter their own password in and get feedback on the strength of their password
 - User can save their password to their Vault, or choose to only copy the password
-- User can regenerate the password with the same configuartions if they don't like the current generated password
+- User can regenerate the  password with the same configuartions if they don't like the current generated password
 
 ```bash
 npm install

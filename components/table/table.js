@@ -18,9 +18,7 @@ export function VaultTable({ items, showMoreInfo }) {
           <TableRow>
             <TableHead className="w-[100px] text-white">Source</TableHead>
             <TableHead className="text-white">Password</TableHead>
-            {showMoreInfo && (
-              <TableHead className="text-white text-center">Strength</TableHead>
-            )}
+            <TableHead className="text-white">Strength</TableHead>
             <TableHead className="text-white">Notes</TableHead>
             <TableHead className="text-white">Created</TableHead>
             <TableHead className="text-white">Updated</TableHead>

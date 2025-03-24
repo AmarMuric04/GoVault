@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
@@ -5,27 +7,36 @@ import Password from "../password/password";
 import SecurityIndicator from "../password/strength-indicator";
 import { formatMongoDate } from "@/formatters/date";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Row({ showMoreInfo, password }) {
-  console.log(password);
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    setShowPassword(showMoreInfo);
+  }, [showMoreInfo]);
 
   return (
     <TableRow
       className={`p-4 border-zinc-900 ${
-        showMoreInfo && password.strength === "Critical"
+        (showMoreInfo || showPassword) && password.strength === "Critical"
           ? "bg-red-600/20"
           : "bg-zinc-950"
       }`}
     >
       <TableCell className="font-medium">{password.source}</TableCell>
       <TableCell>
-        <Password showMoreInfo={showMoreInfo} password={password} />
+        <Password
+          showMoreInfo={showMoreInfo}
+          password={password}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+        />
       </TableCell>
-      {showMoreInfo && (
-        <TableCell>
-          <SecurityIndicator strength={password.strength} />
-        </TableCell>
-      )}
+      <TableCell>
+        {showPassword && <SecurityIndicator strength={password.strength} />}
+        {!showPassword && <div>N/A</div>}
+      </TableCell>
       <TableCell>{password.notes}</TableCell>
       <TableCell>{formatMongoDate(password.createdAt)}</TableCell>
       <TableCell>{formatMongoDate(password.updatedAt)}</TableCell>

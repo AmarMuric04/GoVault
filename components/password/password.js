@@ -11,13 +11,8 @@ import { GoDotFill } from "react-icons/go";
 import { IoCopy } from "react-icons/io5";
 import { toast } from "sonner";
 
-export default function Password({ showMoreInfo, password }) {
+export default function Password({ password, showPassword, setShowPassword }) {
   const { showIndividualPassword } = usePasswordStore();
-  const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    setShowPassword(showMoreInfo);
-  }, [showMoreInfo]);
 
   const handleCopyToClipboard = () => {
     copyToClipboard(password);

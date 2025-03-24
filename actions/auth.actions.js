@@ -131,8 +131,6 @@ const userWithEmailExists = async (email) => {
 export const correctPassword = async (userId, password) => {
   const user = await User.findById(userId);
 
-  console.log("userId: " + userId, "User: " + user, "Password: " + password);
-
   if (!user) return;
 
   const correctPsw = await bcrypt.compare(password, user.password);

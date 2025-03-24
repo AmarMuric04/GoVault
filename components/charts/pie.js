@@ -1,16 +1,19 @@
 "use client";
 
 import React, { PureComponent } from "react";
-import {
-  PieChart,
-  Pie,
-  Sector,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
-const COLORS = ["#087420", "#0fc200", "#dfca00", "#e64006", "#b60600"];
+const getColorForStrength = (strength) => {
+  const colors = {
+    Critical: "#b60600",
+    Bad: "#e64006",
+    Dubious: "#dfca00",
+    Good: "#0fc200",
+    Great: "#087420",
+  };
+
+  return colors[strength] || "#8884d8";
+};
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -21,6 +24,7 @@ const renderCustomizedLabel = ({
   outerRadius,
   percent,
   index,
+  name,
   label,
 }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -35,12 +39,12 @@ const renderCustomizedLabel = ({
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
     >
-      {label}
+      {label !== 0 && label}
     </text>
   );
 };
 
-export default class Example extends PureComponent {
+export default class PasswordStrengthPieChart extends PureComponent {
   static demoUrl =
     "https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj";
 
@@ -64,7 +68,7 @@ export default class Example extends PureComponent {
             {data?.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={getColorForStrength(entry.name.split(" ")[0])}
               />
             ))}
           </Pie>

@@ -12,31 +12,18 @@ import BarChartComp from "@/components/charts/bar";
 import { formatMongoDate } from "@/formatters/date";
 import BetterPie from "@/components/charts/betterPie";
 import Container from "@/components/container";
+import {
+  getBarChartData,
+  getPasswordsPerDay,
+  getPasswordStrengthPieData,
+} from "@/actions/password.actions";
 
-export default function OverviewPage() {
-  const data = [
-    { value: 12, date: "2024-12-12" },
-    { value: 25, date: "2024-12-11" },
-    { value: 5, date: "2024-12-10" },
-    { value: 18, date: "2024-12-09" },
-    { value: 22, date: "2024-12-08" },
-  ];
+export default async function OverviewPage() {
+  const data = await getPasswordsPerDay();
 
-  const pieData = [
-    { name: "Great Passwords", value: 27, label: 27 },
-    { name: "Good Passwords", value: 40, label: 40 },
-    { name: "Dubious Passwords", value: 25, label: 25 },
-    { name: "Bad Passwords", value: 15, label: 15 },
-    { name: "Critical Passwords", value: 20, label: 20 },
-  ];
+  const pieData = await getPasswordStrengthPieData();
 
-  const barData = [
-    { date: "2024-12-12", ["Your passwords"]: 25, ["Others' passwords"]: 20 },
-    { date: "2024-12-11", ["Your passwords"]: 30, ["Others' passwords"]: 22 },
-    { date: "2024-12-12", ["Your passwords"]: 25, ["Others' passwords"]: 20 },
-    { date: "2024-12-11", ["Your passwords"]: 30, ["Others' passwords"]: 22 },
-    { date: "2024-12-11", ["Your passwords"]: 30, ["Others' passwords"]: 22 },
-  ];
+  const barData = await getBarChartData();
 
   return (
     <div className="grid grid-cols-4 grid-rows-7 gap-10 p-6 max-h-full overflow-hidden">
