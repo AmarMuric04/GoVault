@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
+import { DeletePasswordDialog } from "../dialogs/delete-password-dialog";
 
 export default function Row({ showMoreInfo, password }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,8 +19,6 @@ export default function Row({ showMoreInfo, password }) {
   useEffect(() => {
     setShowPassword(showMoreInfo);
   }, [showMoreInfo]);
-
-  console.log(password);
 
   return (
     <TableRow
@@ -66,9 +65,11 @@ export default function Row({ showMoreInfo, password }) {
               <MdEdit />
             </Button>
           </Link>
-          <Button className="bg-red-500 hover:bg-red-500/60">
-            <FaTrashAlt />
-          </Button>
+          <DeletePasswordDialog password={password}>
+            <Button className="bg-red-500 hover:bg-red-500/60">
+              <FaTrashAlt />
+            </Button>
+          </DeletePasswordDialog>
         </div>
       </TableCell>
     </TableRow>

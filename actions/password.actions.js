@@ -30,32 +30,75 @@ function decrypt(encryptedText) {
 }
 
 export const addPassword = async (password, source, notes) => {
-  const user = await isAuthenticated();
-  console.log(user);
-  if (!user) return;
-  if (!password) return;
+  try {
+    const user = await isAuthenticated();
+    let errors = {};
 
-  await connectToDatabase();
+    if (!password) {
+      errors.password = "Password can't be empty";
+    }
 
-  const encryptedPassword = encrypt(password);
+    if (!source) {
+      errors.source = "You must provide a source";
+    }
 
-  const psw = new Password({
-    source,
-    owner: user,
-    password: encryptedPassword,
-    strength: getPasswordStrength(password),
-    notes,
-  });
+    if (Object.keys(errors).length) {
+      const errorResponse = { error: true, errors };
+      return errorResponse;
+    }
+    await connectToDatabase();
 
-  await psw.save();
+    const encryptedPassword = encrypt(password);
 
-  revalidatePath("/vault");
-  return {
-    ...psw.toObject(),
-    owner: psw.owner.toString(),
-    _id: psw._id.toString(),
-    password: decrypt(psw.password),
-  };
+    const psw = new Password({
+      source,
+      owner: user,
+      password: encryptedPassword,
+      strength: getPasswordStrength(password),
+      notes,
+    });
+
+    await psw.save();
+
+    revalidatePath("/vault");
+    return {
+      ...psw.toObject(),
+      owner: psw.owner.toString(),
+      _id: psw._id.toString(),
+      password: decrypt(psw.password),
+    };
+  } catch (error) {
+    return { error: true, message: "Internal server error" };
+  }
+};
+
+export const deletePassword = async (password, verifier, passwordToDelete) => {
+  try {
+    const user = await isAuthenticated();
+
+    let errors = {};
+
+    if (!(await correctPassword(user._id, password)))
+      errors.password = "Incorrect password";
+
+    const thePassword = await Password.findById(passwordToDelete._id);
+
+    if (verifier !== `Delete the password for ${thePassword.source}`) {
+      errors.verifier = "Please enter the verifier correctly";
+    }
+
+    if (Object.keys(errors).length) {
+      const errorResponse = { error: true, errors };
+      return errorResponse;
+    }
+    await connectToDatabase();
+
+    await Password.findByIdAndDelete(passwordToDelete._id);
+
+    return passwordToDelete._id;
+  } catch (error) {
+    return { error: true, message: "Internal server error" };
+  }
 };
 
 export const getDecryptedPassword = async (passwordId) => {
@@ -83,18 +126,27 @@ export const getPasswordsByUserId = async (userId) => {
 };
 
 export const getFullPasswordInfo = async (userId, password) => {
-  if (!(await correctPassword(userId, password))) throw new Error("AAA");
+  try {
+    if (!(await correctPassword(userId, password)))
+      return {
+        error: true,
+        errors: {
+          password: "Incorrect password",
+        },
+      };
+    const passwords = await Password.find({ owner: userId });
 
-  const passwords = await Password.find({ owner: userId });
+    const shownPasswords = passwords.map((psw) => ({
+      ...psw.toObject(),
+      owner: psw.owner.toString(),
+      _id: psw._id.toString(),
+      password: decrypt(psw.password),
+    }));
 
-  const shownPasswords = passwords.map((psw) => ({
-    ...psw.toObject(),
-    owner: psw.owner.toString(),
-    _id: psw._id.toString(),
-    password: decrypt(psw.password),
-  }));
-
-  return shownPasswords;
+    return shownPasswords;
+  } catch (error) {
+    return { error: true, message: "Internal server error" };
+  }
 };
 
 export const getIndividualFullPasswordInfo = async (
@@ -102,16 +154,26 @@ export const getIndividualFullPasswordInfo = async (
   password,
   passwordId
 ) => {
-  if (!(await correctPassword(userId, password))) throw new Error("AAA");
+  try {
+    if (!(await correctPassword(userId, password)))
+      return {
+        error: true,
+        errors: {
+          password: "Incorrect password",
+        },
+      };
 
-  const psw = await Password.findById(passwordId);
+    const psw = await Password.findById(passwordId);
 
-  return {
-    ...psw.toObject(),
-    owner: psw.owner.toString(),
-    _id: psw._id.toString(),
-    password: decrypt(psw.password),
-  };
+    return {
+      ...psw.toObject(),
+      owner: psw.owner.toString(),
+      _id: psw._id.toString(),
+      password: decrypt(psw.password),
+    };
+  } catch (error) {
+    return { error: true, message: "Internal server error" };
+  }
 };
 
 export const getPasswordStrengthPieData = async () => {

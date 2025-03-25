@@ -10,101 +10,112 @@ import { redirect } from "next/navigation";
 import validator from "validator";
 
 export async function signup(formData) {
-  await connectToDatabase();
+  try {
+    await connectToDatabase();
 
-  const email = formData.get("email");
-  const password = formData.get("password");
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-  let errors = validatePassword(password);
+    let errors = validatePassword(password);
+    if (!validator.isEmail(email)) {
+      errors.email = "Invalid email, try again.";
+    }
 
-  if (!validator.isEmail(email)) {
-    errors.email = "Invalid email, try again.";
+    const alreadyExists = await userWithEmailExists(email);
+    if (alreadyExists) {
+      errors.email = "User with this email already exists. Try another one.";
+    }
+
+    if (Object.keys(errors).length) {
+      const errorResponse = { error: true, errors };
+      console.log("Returning validation errors:", errorResponse);
+      return errorResponse; // Return a plain object
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ email, password: hashedPassword });
+    await user.save();
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    (await cookies()).set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 3600,
+      path: "/",
+    });
+
+    const successResponse = {
+      success: true,
+      email: user.email,
+      _id: user._id.toString(),
+    };
+    console.log("Returning success response:", successResponse);
+
+    return successResponse; // Return a plain object
+  } catch (error) {
+    console.error("Signup error:", error);
+    return { error: true, message: "Internal server error" }; // Return a plain object
   }
-
-  const alreadyExists = await userWithEmailExists(email);
-
-  if (alreadyExists) {
-    errors.email = "User with this email already exists. Try another one.";
-  }
-
-  if (Object.keys(errors).length) {
-    throw { errors };
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const user = new User({
-    email,
-    password: hashedPassword,
-  });
-
-  await user.save();
-
-  const token = jwt.sign(
-    { id: user._id, email: user.email },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
-
-  (await cookies()).set("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 3600,
-    path: "/",
-  });
-
-  return {
-    email: user.email,
-    _id: user._id.toString(),
-  };
 }
 
 export async function signin(formData) {
-  await connectToDatabase();
+  try {
+    await connectToDatabase();
 
-  const email = formData.get("email");
-  const password = formData.get("password");
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-  const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-  if (!user) {
-    throw {
-      errors: {
-        password: "Invalid credentials",
-        email: "Invalid credentials",
-      },
+    if (!user) {
+      return {
+        error: true,
+        errors: {
+          email: "Invalid credentials",
+          password: "Invalid credentials",
+        },
+      };
+    }
+
+    const correctPassword = await bcrypt.compare(password, user.password);
+
+    if (!correctPassword) {
+      return {
+        error: true,
+        errors: {
+          email: "Invalid credentials",
+          password: "Invalid credentials",
+        },
+      };
+    }
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    (await cookies()).set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 3600,
+      path: "/",
+    });
+
+    return {
+      success: true,
+      email: user.email,
+      _id: user._id.toString(),
     };
+  } catch (error) {
+    console.error("Signin error:", error);
+    return { error: true, message: "Internal server error" };
   }
-
-  const correctPassword = await bcrypt.compare(password, user.password);
-
-  if (!correctPassword) {
-    throw {
-      errors: {
-        password: "Invalid credentials",
-        email: "Invalid credentials",
-      },
-    };
-  }
-
-  const token = jwt.sign(
-    { id: user._id, email: user.email },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
-
-  (await cookies()).set("token", token, {
-    httpOnly: true,
-    secure: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 3600,
-    path: "/",
-  });
-
-  return {
-    email: user.email,
-    _id: user._id.toString(),
-  };
 }
 
 export async function signout() {
@@ -129,13 +140,18 @@ const userWithEmailExists = async (email) => {
 };
 
 export const correctPassword = async (userId, password) => {
-  const user = await User.findById(userId);
+  try {
+    const user = await User.findById(userId);
 
-  if (!user) return;
+    if (!user) return;
 
-  const correctPsw = await bcrypt.compare(password, user.password);
+    const correctPsw = await bcrypt.compare(password, user.password);
 
-  return correctPsw;
+    return correctPsw;
+  } catch (error) {
+    console.error("Signin error:", error);
+    return { error: true, message: "Internal server error" };
+  }
 };
 
 export async function isAuthenticated() {

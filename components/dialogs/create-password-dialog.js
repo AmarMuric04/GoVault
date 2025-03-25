@@ -22,9 +22,11 @@ import usePasswordStore from "@/store/usePasswordStore";
 import useAuthStore from "@/store/useAuthStore";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 import { toast } from "sonner";
+import AuthInput from "../form/auth-input";
 
 export function CreatePasswordDialog({ children, password }) {
   const { passwords, setPasswords } = usePasswordStore();
+  const [errors, setErrors] = useState({});
   const { user } = useAuthStore();
 
   const [source, setSource] = useState("");
@@ -36,11 +38,30 @@ export function CreatePasswordDialog({ children, password }) {
 
   const router = useRouter();
 
-  const { mutateAsync: handleAddPassword, isPending } = useMutation({
+  const handleFocus = (field) => {
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
+  const { mutate: handleAddPassword, isPending } = useMutation({
     mutationFn: async () => {
       const thePassword = password || psw;
 
       const tempId = Date.now().toString();
+
+      let errors = {};
+
+      if (!thePassword) {
+        errors.password = "Password can't be empty";
+      }
+
+      if (!source) {
+        errors.source = "You must provide a source";
+      }
+
+      if (Object.keys(errors).length) {
+        const errorResponse = { error: true, errors };
+        return Promise.reject(errorResponse);
+      }
 
       setPasswords([
         ...passwords,
@@ -63,7 +84,13 @@ export function CreatePasswordDialog({ children, password }) {
 
       toastId.current = toast(<p>Saving the password...</p>);
 
-      return addPassword(thePassword, source, notes);
+      const data = await addPassword(thePassword, source, notes);
+
+      if (data.error) {
+        return Promise.reject(data);
+      }
+
+      return data;
     },
     onSuccess: (data) => {
       setPasswords(
@@ -78,6 +105,9 @@ export function CreatePasswordDialog({ children, password }) {
       toast.success(<p>Password saved!</p>);
 
       router.push("/vault");
+    },
+    onError: (errorData) => {
+      setErrors(errorData.errors || {});
     },
   });
 
@@ -103,44 +133,43 @@ export function CreatePasswordDialog({ children, password }) {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           {!password && (
-            <div className="flex flex-col grid-cols-4 justify-center gap-2">
-              <Label htmlFor="password" className="text-right">
-                My new password will be
-              </Label>
-              <Input
-                onChange={(e) => setPsw(e.target.value)}
-                id="password"
-                value={psw}
-                placeholder="Enter your new password"
-                className="col-span-3"
-                type="password"
-              />
-            </div>
+            <AuthInput
+              name="password"
+              label="My password is"
+              errors={errors}
+              placeholder="Enter your password"
+              className={`${
+                errors.password ? "border-red-400" : "border-zinc-900"
+              } col-span-3`}
+              value={psw}
+              onChange={(e) => setPsw(e.target.value)}
+              onFocus={() => handleFocus("password")}
+            />
           )}
-          <div className="flex flex-col grid-cols-4 justify-center gap-2">
-            <Label htmlFor="place" className="text-right">
-              I want to use this password for
-            </Label>
-            <Input
-              onChange={(e) => setSource(e.target.value)}
-              id="place"
-              value={source}
-              placeholder="My Google account"
-              className="col-span-3"
-            />
-          </div>
-          <div className="flex flex-col grid-cols-4 justify-center gap-2">
-            <Label htmlFor="notes" className="text-right">
-              Attached notes for this password are (optional)
-            </Label>
-            <Input
-              onChange={(e) => setNotes(e.target.value)}
-              id="notes"
-              value={notes}
-              placeholder="Enter your notes"
-              className="col-span-3"
-            />
-          </div>
+          <AuthInput
+            name="source"
+            label="I want to use this password for"
+            errors={errors}
+            placeholder="My Google account"
+            className={`${
+              errors.source ? "border-red-400" : "border-zinc-900"
+            } col-span-3`}
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+            onFocus={() => handleFocus("source")}
+          />
+          <AuthInput
+            name="notes"
+            label="Attached notes for this password are (optional)"
+            errors={errors}
+            placeholder="Enter your notes"
+            className={`${
+              errors.notes ? "border-red-400" : "border-zinc-900"
+            } col-span-3`}
+            onChange={(e) => setNotes(e.target.value)}
+            value={notes}
+            onFocus={() => handleFocus("notes")}
+          />
         </div>
         <DialogFooter>
           <Button

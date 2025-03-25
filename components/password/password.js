@@ -18,14 +18,9 @@ export default function Password({ password, showPassword, setShowPassword }) {
     toast("Copied to clipboard!");
   };
 
-  const { mutate: handleShowPassword, isPending } = useMutation({
-    mutationFn: ({ userId, password: psw }) =>
-      getIndividualFullPasswordInfo(userId, psw, password._id),
-    onSuccess: (data) => {
-      showIndividualPassword(password._id, data);
-      setShowPassword(true);
-    },
-  });
+  const handleShowPassword = async (userId, psw) => {
+    return await getIndividualFullPasswordInfo(userId, psw, password._id);
+  };
 
   const handleHidePassword = () => {
     showIndividualPassword(password._id, {
@@ -45,7 +40,13 @@ export default function Password({ password, showPassword, setShowPassword }) {
       </div>
       <div className="flex items-center gap-2">
         {!showPassword && (
-          <PasswordDialog isPending={isPending} onProceed={handleShowPassword}>
+          <PasswordDialog
+            action={handleShowPassword}
+            onSuccess={(data) => {
+              showIndividualPassword(password._id, data);
+              setShowPassword(true);
+            }}
+          >
             <button className="group p-2 rounded-full hover:bg-white/10 transition-all">
               <FaEye className="group-hover:scale-110 transition-all" />
             </button>
@@ -60,10 +61,7 @@ export default function Password({ password, showPassword, setShowPassword }) {
           </button>
         )}
         {!showPassword && (
-          <PasswordDialog
-            isPending={isPending}
-            onProceed={handleCopyToClipboard}
-          >
+          <PasswordDialog action={handleCopyToClipboard}>
             <button className="group p-2 rounded-full hover:bg-white/10 transition-all">
               <IoCopy className="group-hover:scale-110 transition-all" />
             </button>

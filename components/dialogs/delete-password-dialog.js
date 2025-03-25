@@ -15,30 +15,36 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { BeatLoader } from "react-spinners";
 import AuthInput from "../form/auth-input";
+import { toast } from "sonner";
+import { deletePassword } from "@/actions/password.actions";
+import usePasswordStore from "@/store/usePasswordStore";
 
-export function PasswordDialog({ children, action, onSuccess }) {
+export function DeletePasswordDialog({ children, password }) {
+  const { passwords, setPasswords } = usePasswordStore();
   const [open, setOpen] = useState(false);
-  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
-
-  const { user } = useAuthStore();
+  const [verifier, setVerifier] = useState("");
+  const [psw, setPsw] = useState("");
 
   const handleFocus = (field) => {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const { mutate: checkPassword, isPending } = useMutation({
+  const { mutate: handleDeletePassword, isPending } = useMutation({
     mutationFn: async () => {
-      const data = await action(user._id, password);
+      const data = await deletePassword(psw, verifier, password);
 
       if (data.error) {
         return Promise.reject(data);
       }
 
+      setPasswords(passwords.filter((p) => p._id !== password._id));
+      setOpen(false);
+
       return data;
     },
     onSuccess: (data) => {
-      onSuccess(data);
+      toast.success("Password deleted!");
     },
     onError: (errorData) => {
       setErrors(errorData.errors || {});
@@ -50,25 +56,49 @@ export function PasswordDialog({ children, action, onSuccess }) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Enter your password</DialogTitle>
+          <DialogTitle>Delete password for {password.source}?</DialogTitle>
           <DialogDescription>
-            We need to make sure you are authorized for this action
+            Are you sure you want to delete this password?
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <AuthInput
-            name="password"
-            label="My password is"
+            name="verifier"
+            label={
+              <p>
+                Please enter "
+                <span className="font-bold text-red-400">
+                  Delete the password for {password.source}
+                </span>
+                "
+              </p>
+            }
             errors={errors}
-            placeholder="Enter your password"
+            placeholder={`Delete the password for ${password.source}`}
+            className={`${
+              errors.verifier ? "border-red-400" : "border-zinc-900"
+            } col-span-3`}
+            value={verifier}
+            onChange={(e) => setVerifier(e.target.value)}
+            onFocus={() => handleFocus("verifier")}
+          />
+          <AuthInput
+            name="password"
+            label="Your accounts password is"
+            errors={errors}
+            placeholder="Enter your accounts password"
             className={`${
               errors.password ? "border-red-400" : "border-zinc-900"
             } col-span-3`}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={psw}
+            onChange={(e) => setPsw(e.target.value)}
             onFocus={() => handleFocus("password")}
           />
         </div>
+        <p className="text-red-500 text-xs">
+          * Note! This action is irreversible, only proceed if you are sure you
+          want to delete this password.
+        </p>
         <DialogFooter>
           <Button
             onClick={() => setOpen(false)}
@@ -82,7 +112,7 @@ export function PasswordDialog({ children, action, onSuccess }) {
             className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
             type="submit"
             disabled={isPending}
-            onClick={checkPassword}
+            onClick={handleDeletePassword}
           >
             {isPending ? <BeatLoader color="white" size={5} /> : "Proceed"}
           </Button>

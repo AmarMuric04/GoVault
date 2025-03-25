@@ -21,18 +21,25 @@ export default function AuthForm({ mode }) {
   const [errors, setErrors] = useState({});
 
   const { setUser } = useAuthStore();
-
   const router = useRouter();
 
-  const {
-    mutate: authenticate,
-    isPending,
-    error,
-  } = useMutation({
-    mutationFn: (formData) => auth(formData, { remember, mode }),
+  const { mutate: authenticate, isPending } = useMutation({
+    mutationFn: async (formData) => {
+      const data = await auth(formData, { remember, mode });
+
+      if (data.error) {
+        return Promise.reject(data);
+      }
+
+      return data;
+    },
     onSuccess: (data) => {
       setUser(data);
       router.push("/overview");
+    },
+    onError: (errorData) => {
+      console.log(errorData);
+      setErrors(errorData.errors || {});
     },
   });
 
@@ -45,8 +52,14 @@ export default function AuthForm({ mode }) {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    authenticate(formData);
+  };
+
   return (
-    <form action={authenticate} className="mt-8 flex flex-col w-full gap-4">
+    <form onSubmit={handleSubmit} className="mt-8 flex flex-col w-full gap-4">
       <AuthInput
         value={formValues.email}
         onChange={(e) =>
@@ -80,10 +93,7 @@ export default function AuthForm({ mode }) {
               id="terms"
               className="border-1 border-zinc-900"
             />
-            <label
-              htmlFor="terms"
-              className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
+            <label htmlFor="terms" className="leading-none">
               Remember me
             </label>
           </div>

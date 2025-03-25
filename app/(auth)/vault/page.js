@@ -8,7 +8,7 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 
 import { CreatePasswordDialog } from "@/components/dialogs/create-password-dialog";
 import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   getFullPasswordInfo,
   getPasswordsByUserId,
@@ -27,14 +27,6 @@ export default function VaultPage() {
   const { user } = useAuthStore();
   const { passwords, setPasswords } = usePasswordStore();
   const [showMoreInfo, setShowMoreInfo] = useState(false);
-
-  const { mutate: checkPassword } = useMutation({
-    mutationFn: ({ userId, password }) => getFullPasswordInfo(userId, password),
-    onSuccess: (data) => {
-      setShowMoreInfo(true);
-      setPasswords(data);
-    },
-  });
 
   const { data, isLoading } = useQuery({
     queryFn: () => getPasswordsByUserId(user._id),
@@ -55,7 +47,13 @@ export default function VaultPage() {
         </h1>
         <div className="border-b-1 border-zinc-900 flex gap-4 items-center p-4 justify-between">
           {!showMoreInfo && (
-            <PasswordDialog onProceed={checkPassword}>
+            <PasswordDialog
+              action={getFullPasswordInfo}
+              onSuccess={(data) => {
+                setPasswords(data);
+                setShowMoreInfo(true);
+              }}
+            >
               <button className="flex gap-2 items-center">
                 <ImCheckboxUnchecked />
                 <p>Show all information</p>
@@ -74,7 +72,7 @@ export default function VaultPage() {
               <p>Show all information</p>
             </button>
           )}
-          <CreatePasswordDialog onProceed={() => {}}>
+          <CreatePasswordDialog>
             <button className="flex gap-2 items-center bg-[#ee6711] px-4 py-2 hover:rounded-[2rem] transition-all border-1 border-zinc-900 rounded-md hover:bg-[#ee671190]">
               <FaRegSquarePlus />
               <p>Add a new password</p>
