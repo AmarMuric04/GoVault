@@ -101,6 +101,69 @@ export const deletePassword = async (password, verifier, passwordToDelete) => {
   }
 };
 
+export const editPassword = async (accountsPassword, password, passwordId) => {
+  try {
+    const user = await isAuthenticated();
+
+    let errors = {};
+
+    if (!(await correctPassword(user._id, accountsPassword)))
+      errors.accountPassword = "Incorrect password";
+
+    if (!password) {
+      errors.password = "Password can't be empty";
+    }
+
+    const thePassword = await Password.findById(passwordId);
+
+    if (Object.keys(errors).length) {
+      const errorResponse = { error: true, errors };
+      return errorResponse;
+    }
+    await connectToDatabase();
+
+    await Password.findByIdAndUpdate(passwordId, {
+      $set: {
+        password: encrypt(password),
+        strength: getPasswordStrength(password),
+      },
+    });
+
+    return thePassword.password;
+  } catch (error) {
+    return { error: true, message: "Internal server error" };
+  }
+};
+
+export const editNotes = async (accountsPassword, notes, passwordId) => {
+  try {
+    const user = await isAuthenticated();
+
+    let errors = {};
+
+    if (!(await correctPassword(user._id, accountsPassword)))
+      errors.accountPassword = "Incorrect password";
+
+    const thePassword = await Password.findById(passwordId);
+
+    if (Object.keys(errors).length) {
+      const errorResponse = { error: true, errors };
+      return errorResponse;
+    }
+    await connectToDatabase();
+
+    await Password.findByIdAndUpdate(passwordId, {
+      $set: {
+        notes,
+      },
+    });
+
+    return thePassword.notes;
+  } catch (error) {
+    return { error: true, message: "Internal server error" };
+  }
+};
+
 export const getDecryptedPassword = async (passwordId) => {
   await connectToDatabase();
   const psw = await Password.findById(passwordId);

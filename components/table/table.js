@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/table";
 import Row from "./row";
 import { Button } from "../ui/button";
-import { FaRegSquarePlus } from "react-icons/fa6";
+import { FaCircleInfo, FaRegSquarePlus } from "react-icons/fa6";
 import { CreatePasswordDialog } from "../dialogs/create-password-dialog";
+import HoverTitle from "../hover-title";
 
 export function VaultTable({ items, showMoreInfo }) {
   return (
@@ -19,7 +20,14 @@ export function VaultTable({ items, showMoreInfo }) {
             <TableHead className="w-[100px] text-white">Source</TableHead>
             <TableHead className="text-white">Password</TableHead>
             <TableHead className="text-white">Strength</TableHead>
-            <TableHead className="text-white">Notes</TableHead>
+            <TableHead className="text-white">
+              <div className="flex items-center gap-2">
+                <p>Notes</p>
+                <HoverTitle title={<p>Click a note to edit it</p>}>
+                  <FaCircleInfo />
+                </HoverTitle>
+              </div>
+            </TableHead>
             <TableHead className="text-white">Created</TableHead>
             <TableHead className="text-white">Updated</TableHead>
             <TableHead className="text-right text-white">Action</TableHead>

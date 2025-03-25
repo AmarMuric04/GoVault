@@ -16,6 +16,8 @@ import {
 import useAuthStore from "@/store/useAuthStore";
 import usePasswordStore from "@/store/usePasswordStore";
 import { HashLoader } from "react-spinners";
+import { FaFileExport } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
 
 /* Initial state of passwords is [],
 when they get fetched, we get hidden passwords.
@@ -72,12 +74,19 @@ export default function VaultPage() {
               <p>Show all information</p>
             </button>
           )}
-          <CreatePasswordDialog>
-            <button className="flex gap-2 items-center bg-[#ee6711] px-4 py-2 hover:rounded-[2rem] transition-all border-1 border-zinc-900 rounded-md hover:bg-[#ee671190]">
-              <FaRegSquarePlus />
-              <p>Add a new password</p>
-            </button>
-          </CreatePasswordDialog>
+          <div className="flex gap-4 items-center">
+            <Button className="bg-transparent border-1 border-zinc-900 px-4 py-2">
+              <FaFileExport />
+              <p>Export</p>
+            </Button>
+
+            <CreatePasswordDialog>
+              <button className="flex gap-2 items-center bg-[#ee6711] px-4 py-2 hover:rounded-[2rem] transition-all border-1 border-zinc-900 rounded-md hover:bg-[#ee671190]">
+                <FaRegSquarePlus />
+                <p>Add a new password</p>
+              </button>
+            </CreatePasswordDialog>
+          </div>
         </div>
         <section className="w-full max-h-full overflow-auto h-full">
           {isLoading && (

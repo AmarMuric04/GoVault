@@ -23,6 +23,8 @@ import {
 import { CreatePasswordDialog } from "@/components/dialogs/create-password-dialog";
 import { Button } from "@/components/ui/button";
 import HoverTitle from "@/components/hover-title";
+import { useSearchParams } from "next/navigation";
+import { EditPasswordDialog } from "@/components/dialogs/edit-password-dialog";
 
 export default function GeneratePage() {
   const [length, setLength] = useState(10);
@@ -34,6 +36,10 @@ export default function GeneratePage() {
   });
   const [password, setPassword] = useState(generatePassword(length, config));
   const [strength, setStrength] = useState(getPasswordStrength(password));
+
+  const searchParams = useSearchParams();
+
+  const isEditing = searchParams.get("editing");
 
   useEffect(() => {
     if (
@@ -66,11 +72,20 @@ export default function GeneratePage() {
             Consider saving it to your vault
           </p>
         </div>
-        <CreatePasswordDialog password={password}>
-          <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
-            Save to Vault
-          </Button>
-        </CreatePasswordDialog>
+        {isEditing && (
+          <EditPasswordDialog password={password} passwordId={isEditing}>
+            <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
+              Save Changes
+            </Button>
+          </EditPasswordDialog>
+        )}
+        {!isEditing && (
+          <CreatePasswordDialog password={password}>
+            <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
+              Save to Vault
+            </Button>
+          </CreatePasswordDialog>
+        )}
       </div>
     );
   };
@@ -99,11 +114,20 @@ export default function GeneratePage() {
             }}
           />
 
-          <CreatePasswordDialog password={password}>
-            <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
-              Save to Vault
-            </Button>
-          </CreatePasswordDialog>
+          {isEditing && (
+            <EditPasswordDialog password={password} passwordId={isEditing}>
+              <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
+                Save Changes
+              </Button>
+            </EditPasswordDialog>
+          )}
+          {!isEditing && (
+            <CreatePasswordDialog password={password}>
+              <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
+                Save to Vault
+              </Button>
+            </CreatePasswordDialog>
+          )}
 
           <HoverTitle title={<p>Copy to clipboard</p>}>
             <button

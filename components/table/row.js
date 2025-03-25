@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
-import Password from "../password/password";
-import SecurityIndicator from "../password/strength-indicator";
+import Password from "./password/password";
+import SecurityIndicator from "./password/strength-indicator";
 import { formatMongoDate } from "@/formatters/date";
 import { FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -12,6 +12,8 @@ import { BiLoaderAlt } from "react-icons/bi";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import { DeletePasswordDialog } from "../dialogs/delete-password-dialog";
+import { EditPasswordDialog } from "../dialogs/edit-password-dialog";
+import Notes from "./password/notes";
 
 export default function Row({ showMoreInfo, password }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,16 +57,18 @@ export default function Row({ showMoreInfo, password }) {
         {showPassword && <SecurityIndicator strength={password.strength} />}
         {!showPassword && <div>N/A</div>}
       </TableCell>
-      <TableCell>{password.notes}</TableCell>
+      <TableCell>
+        <Notes password={password} />
+      </TableCell>
       <TableCell>{formatMongoDate(password.createdAt)}</TableCell>
       <TableCell>{formatMongoDate(password.updatedAt)}</TableCell>
       <TableCell className="text-right">
         <div className="flex gap-2 items-center justify-end w-full">
-          <Link href="/dashboard/generate">
+          <EditPasswordDialog passwordId={password._id}>
             <Button>
               <MdEdit />
             </Button>
-          </Link>
+          </EditPasswordDialog>
           <DeletePasswordDialog password={password}>
             <Button className="bg-red-500 hover:bg-red-500/60">
               <FaTrashAlt />

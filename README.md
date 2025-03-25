@@ -1,6 +1,6 @@
 # Next.js Password Manager
 
-# The General Statistics Overview Page
+## The General Statistics Overview Page
 
 ![Project Screenshot](./Overview.PNG)
 

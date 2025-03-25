@@ -41,6 +41,7 @@ export function PasswordDialog({ children, action, onSuccess }) {
       onSuccess(data);
     },
     onError: (errorData) => {
+      console.log(errorData);
       setErrors(errorData.errors || {});
     },
   });
