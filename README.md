@@ -1,4 +1,4 @@
-## Next.js Password Manager
+# Next.js Password Manager
 
 # The General Statistics Overview Page
 
@@ -11,7 +11,9 @@
 - Displaying user's overall statistics
 - Displaying user's activity over time
 
-# The User's Vault Page
+---
+
+## The User's Vault Page
 
 ![Project Screenshot](./Vault.PNG)
 
@@ -25,7 +27,7 @@
 
 ---
 
-# The Generate A Password Page
+## The Generate A Password Page
 
 ![Project Screenshot](./Generate.PNG)
 
@@ -45,7 +47,25 @@
 - User can freely choose how long their password is
 - User can also enter their own password in and get feedback on the strength of their password
 - User can save their password to their Vault, or choose to only copy the password
-- User can regenerate the  password with the same configuartions if they don't like the current generated password
+- User can regenerate the password with the same configuartions if they don't like the current generated password
+
+---
+
+# The Flow of the Application
+
+## The application was made with security as It's no.1 priority.
+
+**ANY** action that interacts with the user's secure information will <u>require authentication.</u>
+That includes
+
+- Showing the information for all passwords (The passwords themselves & their strength)
+- Showing individual passwords information
+- Deleting a password
+- Editing a password
+
+---
+
+A feature that will be added in the future is a timer the user can set which would set their status as authorized. So in the end the user doesn't have to enter their password every time an authorization-based action is being performed.
 
 ```bash
 npm install
