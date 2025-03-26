@@ -3,11 +3,6 @@
 import React, { PureComponent } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "You have", value: 15 },
-  { name: "Other's have", value: 27 },
-];
-
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const {
@@ -23,7 +18,6 @@ const renderActiveShape = (props) => {
     percent,
     value,
   } = props;
-  console.log(data);
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -94,6 +88,8 @@ export default class BetterPie extends PureComponent {
   };
 
   render() {
+    const { data } = this.props;
+
     return (
       <ResponsiveContainer width="100%" height="100%">
         <PieChart width={400} height={400}>

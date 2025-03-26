@@ -7,7 +7,6 @@ import connectToDatabase from "@/lib/database/db";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 import { revalidatePath } from "next/cache";
 import moment from "moment";
-import { copyToClipboard } from "@/utility/copy-text";
 
 const algorithm = "aes-256-cbc";
 const secretKey = process.env.ENCRYPTION_KEY;
@@ -337,4 +336,201 @@ export const getBarChartData = async (userId, password, days = 7) => {
   }));
 
   return barData;
+};
+
+export const getPasswordStatisticsByUserId = async () => {
+  const user = await isAuthenticated();
+
+  await connectToDatabase();
+
+  const passwords = await Password.find({ owner: user._id });
+  const total = passwords.length;
+
+  const counts = { good: 0, great: 0, bad: 0, critical: 0, compromised: 0 };
+  let positiveCount = 0;
+  let negativeCount = 0;
+  let totalPasswordLength = 0;
+  let countWithPassword = 0;
+  let minPasswordLength = Infinity;
+  let maxPasswordLength = 0;
+
+  passwords.forEach((psw) => {
+    if (psw.strength) {
+      const strength = psw.strength.toLowerCase();
+      if (["good", "great", "bad", "critical"].includes(strength)) {
+        counts[strength]++;
+      }
+      if (["good", "great"].includes(strength)) {
+        positiveCount++;
+      } else if (["bad", "critical"].includes(strength)) {
+        negativeCount++;
+      }
+    }
+    if (psw.compromised) {
+      counts.compromised++;
+    }
+    if (psw.password) {
+      const len = psw.password.length;
+      totalPasswordLength += len;
+      countWithPassword++;
+      if (len < minPasswordLength) minPasswordLength = len;
+      if (len > maxPasswordLength) maxPasswordLength = len;
+    }
+  });
+
+  const averagePasswordLength =
+    countWithPassword > 0 ? totalPasswordLength / countWithPassword : 0;
+  const positivePercentage = total > 0 ? (positiveCount / total) * 100 : 0;
+  const negativePercentage = total > 0 ? (negativeCount / total) * 100 : 0;
+  const compromisedPercentage =
+    total > 0 ? (counts.compromised / total) * 100 : 0;
+
+  const strengthDistribution = {
+    good: total > 0 ? (counts.good / total) * 100 : 0,
+    great: total > 0 ? (counts.great / total) * 100 : 0,
+    bad: total > 0 ? (counts.bad / total) * 100 : 0,
+    critical: total > 0 ? (counts.critical / total) * 100 : 0,
+  };
+
+  return {
+    totalPasswords: total,
+    countsByStrength: {
+      good: counts.good,
+      great: counts.great,
+      bad: counts.bad,
+      critical: counts.critical,
+    },
+    strengthDistribution,
+    compromisedCount: counts.compromised,
+    compromisedPercentage,
+    positivePercentage,
+    negativePercentage,
+    averagePasswordLength,
+    minPasswordLength: countWithPassword > 0 ? minPasswordLength : 0,
+    maxPasswordLength: countWithPassword > 0 ? maxPasswordLength : 0,
+  };
+};
+
+export const getUserGlobalComparisons = async (userId) => {
+  const user = isAuthenticated();
+
+  await connectToDatabase();
+
+  const allPasswords = await Password.find({});
+
+  const userStatsMap = {};
+  allPasswords.forEach((psw) => {
+    const owner = psw.owner.toString();
+    if (!userStatsMap[owner]) {
+      userStatsMap[owner] = {
+        count: 0,
+        compromised: 0,
+        generated: 0,
+        strengthTotal: 0,
+        strengthCount: 0,
+      };
+    }
+    userStatsMap[owner].count += 1;
+    if (psw.compromised) userStatsMap[owner].compromised += 1;
+    if (psw.isGenerated) userStatsMap[owner].generated += 1;
+    if (psw.strength) {
+      let score = 0;
+      const s = psw.strength.toLowerCase();
+      if (s === "critical") score = 0;
+      else if (s === "bad") score = 1;
+      else if (s === "good") score = 3;
+      else if (s === "great") score = 4;
+      userStatsMap[owner].strengthTotal += score;
+      userStatsMap[owner].strengthCount += 1;
+    }
+  });
+
+  const users = Object.keys(userStatsMap);
+  const quantityArr = users.map((u) => userStatsMap[u].count);
+  const strengthArr = users.map((u) =>
+    userStatsMap[u].strengthCount > 0
+      ? userStatsMap[u].strengthTotal / userStatsMap[u].strengthCount
+      : 0
+  );
+  const compromisedArr = users.map((u) =>
+    userStatsMap[u].count > 0
+      ? (userStatsMap[u].compromised / userStatsMap[u].count) * 100
+      : 0
+  );
+  const generatedArr = users.map((u) =>
+    userStatsMap[u].count > 0
+      ? (userStatsMap[u].generated / userStatsMap[u].count) * 100
+      : 0
+  );
+
+  const getPercentileRank = (arr, value) => {
+    const sorted = arr.slice().sort((a, b) => a - b);
+    let count = 0;
+    for (let i = 0; i < sorted.length; i++) {
+      if (sorted[i] <= value) count++;
+    }
+    return (count / sorted.length) * 100;
+  };
+
+  const userStats = userStatsMap[user._id] || {
+    count: 0,
+    compromised: 0,
+    generated: 0,
+    strengthTotal: 0,
+    strengthCount: 0,
+  };
+  const userQuantity = userStats.count;
+  const userStrength =
+    userStats.strengthCount > 0
+      ? userStats.strengthTotal / userStats.strengthCount
+      : 0;
+  const userCompromisedRatio =
+    userStats.count > 0 ? (userStats.compromised / userStats.count) * 100 : 0;
+  const userGeneratedRatio =
+    userStats.count > 0 ? (userStats.generated / userStats.count) * 100 : 0;
+
+  const quantityPercentile = getPercentileRank(quantityArr, userQuantity);
+  const strengthPercentile = getPercentileRank(strengthArr, userStrength);
+  const compromisedPercentile =
+    100 - getPercentileRank(compromisedArr, userCompromisedRatio);
+  const generatedPercentile =
+    100 - getPercentileRank(generatedArr, userGeneratedRatio);
+
+  return {
+    passwordQuantity: `Top ${Math.round(100 - quantityPercentile)}%`,
+    passwordStrength: `Top ${Math.round(100 - strengthPercentile)}%`,
+    compromisedPasswords: `Top ${Math.round(compromisedPercentile)}%`,
+    generatedPasswords: `Top ${Math.round(generatedPercentile)}%`,
+  };
+};
+
+export const getPasswordCountComparison = async () => {
+  const user = await isAuthenticated();
+
+  await connectToDatabase();
+
+  const allPasswords = await Password.find({});
+
+  const userCounts = {};
+  allPasswords.forEach((psw) => {
+    const owner = psw.owner.toString();
+    userCounts[owner] = (userCounts[owner] || 0) + 1;
+  });
+
+  const currentUserCount = userCounts[user._id] || 0;
+
+  const otherUserCounts = Object.keys(userCounts)
+    .filter((owner) => owner !== user._id)
+    .map((owner) => userCounts[owner]);
+
+  const averageOthers =
+    otherUserCounts.length > 0
+      ? otherUserCounts.reduce((sum, count) => sum + count, 0) /
+        otherUserCounts.length
+      : 0;
+
+  return [
+    { name: "You have", value: currentUserCount },
+    { name: "Other's have", value: Math.round(averageOthers) },
+  ];
 };

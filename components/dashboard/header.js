@@ -1,15 +1,19 @@
 import Image from "next/image";
 import Pfp from "@/public/psw-pfp.jpg";
 import { IoIosNotifications, IoMdMail } from "react-icons/io";
+import { NotificationsDropdown } from "../dropdowns/notifications-dropdown";
 
 export default function Header({ user }) {
   return (
     <header className="bg-zinc-950 text-white border-1 border-zinc-900 flex flex-grow max-h-1/10 h-1/10 items-center justify-between px-10">
       <h1 className="font-bold text-xl montserrat">Admin</h1>
       <div className="flex gap-4 items-center">
-        <button>
-          <IoIosNotifications size={25} />
-        </button>
+        <NotificationsDropdown>
+          <button>
+            <IoIosNotifications size={25} />
+          </button>
+        </NotificationsDropdown>
+
         <button>
           <IoMdMail size={25} />
         </button>
