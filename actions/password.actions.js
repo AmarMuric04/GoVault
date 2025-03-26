@@ -463,12 +463,21 @@ export const getUserGlobalComparisons = async (userId) => {
       : 0
   );
 
-  const getPercentileRank = (arr, value) => {
+  const getReversedPercentileRank = (arr, value) => {
     const sorted = arr.slice().sort((a, b) => a - b);
     let count = 0;
-    for (let i = 0; i < sorted.length; i++) {
-      if (sorted[i] <= value) count++;
-    }
+    sorted.forEach((val) => {
+      if (val >= value) count++;
+    });
+    return (count / sorted.length) * 100;
+  };
+
+  const getNormalPercentileRank = (arr, value) => {
+    const sorted = arr.slice().sort((a, b) => a - b);
+    let count = 0;
+    sorted.forEach((val) => {
+      if (val <= value) count++;
+    });
     return (count / sorted.length) * 100;
   };
 
@@ -489,16 +498,23 @@ export const getUserGlobalComparisons = async (userId) => {
   const userGeneratedRatio =
     userStats.count > 0 ? (userStats.generated / userStats.count) * 100 : 0;
 
-  const quantityPercentile = getPercentileRank(quantityArr, userQuantity);
-  const strengthPercentile = getPercentileRank(strengthArr, userStrength);
-  const compromisedPercentile =
-    100 - getPercentileRank(compromisedArr, userCompromisedRatio);
-  const generatedPercentile =
-    100 - getPercentileRank(generatedArr, userGeneratedRatio);
+  const quantityPercentile = getReversedPercentileRank(
+    quantityArr,
+    userQuantity
+  );
+  const compromisedPercentile = getReversedPercentileRank(
+    compromisedArr,
+    userCompromisedRatio
+  );
+  const generatedPercentile = getReversedPercentileRank(
+    generatedArr,
+    userGeneratedRatio
+  );
+  const strengthPercentile = getNormalPercentileRank(strengthArr, userStrength);
 
   return {
-    passwordQuantity: `Top ${Math.round(100 - quantityPercentile)}%`,
-    passwordStrength: `Top ${Math.round(100 - strengthPercentile)}%`,
+    passwordQuantity: `Top ${Math.round(quantityPercentile)}%`,
+    passwordStrength: `Top ${Math.round(strengthPercentile)}%`,
     compromisedPasswords: `Top ${Math.round(compromisedPercentile)}%`,
     generatedPasswords: `Top ${Math.round(generatedPercentile)}%`,
   };
