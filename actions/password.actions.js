@@ -7,6 +7,7 @@ import connectToDatabase from "@/lib/database/db";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 import { revalidatePath } from "next/cache";
 import moment from "moment";
+import { copyToClipboard } from "@/utility/copy-text";
 
 const algorithm = "aes-256-cbc";
 const secretKey = process.env.ENCRYPTION_KEY;
@@ -55,7 +56,7 @@ export const addPassword = async (password, source, notes) => {
       owner: user,
       password: encryptedPassword,
       strength: getPasswordStrength(password),
-      notes,
+      notes: notes || "No notes",
     });
 
     await psw.save();
@@ -142,7 +143,7 @@ export const editNotes = async (accountsPassword, notes, passwordId) => {
     let errors = {};
 
     if (!(await correctPassword(user._id, accountsPassword)))
-      errors.accountPassword = "Incorrect password";
+      errors.password = "Incorrect password";
 
     const thePassword = await Password.findById(passwordId);
 
@@ -154,7 +155,7 @@ export const editNotes = async (accountsPassword, notes, passwordId) => {
 
     await Password.findByIdAndUpdate(passwordId, {
       $set: {
-        notes,
+        notes: notes || "No notes",
       },
     });
 

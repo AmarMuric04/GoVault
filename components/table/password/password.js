@@ -1,6 +1,9 @@
 "use client";
 
-import { getIndividualFullPasswordInfo } from "@/actions/password.actions";
+import {
+  copyPassword,
+  getIndividualFullPasswordInfo,
+} from "@/actions/password.actions";
 import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
 import usePasswordStore from "@/store/usePasswordStore";
 import { copyToClipboard } from "@/utility/copy-text";
@@ -12,11 +15,6 @@ import { toast } from "sonner";
 
 export default function Password({ password, showPassword, setShowPassword }) {
   const { showIndividualPassword } = usePasswordStore();
-
-  const handleCopyToClipboard = () => {
-    copyToClipboard(password);
-    toast("Copied to clipboard!");
-  };
 
   const handleShowPassword = async (userId, psw) => {
     return await getIndividualFullPasswordInfo(userId, psw, password._id);
@@ -61,7 +59,13 @@ export default function Password({ password, showPassword, setShowPassword }) {
           </button>
         )}
         {!showPassword && (
-          <PasswordDialog action={handleCopyToClipboard}>
+          <PasswordDialog
+            action={handleShowPassword}
+            onSuccess={(data) => {
+              copyToClipboard(data.password);
+              toast.success("Copied to clipboard!");
+            }}
+          >
             <button className="group p-2 rounded-full hover:bg-white/10 transition-all">
               <IoCopy className="group-hover:scale-110 transition-all" />
             </button>
@@ -69,7 +73,10 @@ export default function Password({ password, showPassword, setShowPassword }) {
         )}
         {showPassword && (
           <button
-            onClick={handleCopyToClipboard}
+            onClick={() => {
+              copyToClipboard(password.password);
+              toast.success("Copied to clipboard!");
+            }}
             className="group p-2 rounded-full hover:bg-white/10 transition-all"
           >
             <IoCopy className="group-hover:scale-110 transition-all" />

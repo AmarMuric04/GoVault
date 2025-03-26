@@ -16,7 +16,7 @@ import { useState } from "react";
 import { BeatLoader } from "react-spinners";
 import AuthInput from "../form/auth-input";
 
-export function PasswordDialog({ children, action, onSuccess }) {
+export function PasswordDialog({ children, action, onSuccess = () => {} }) {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -39,15 +39,21 @@ export function PasswordDialog({ children, action, onSuccess }) {
     },
     onSuccess: (data) => {
       onSuccess(data);
+
+      setOpen(false);
     },
     onError: (errorData) => {
-      console.log(errorData);
       setErrors(errorData.errors || {});
     },
   });
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

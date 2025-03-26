@@ -34,7 +34,7 @@ export default function Notes({ password }) {
             ref={input}
             className="flex-grow"
             onChange={(e) => setNewNotes(e.target.value)}
-            value={newNotes || "No notes"}
+            value={newNotes}
           />
           <div className="flex gap-2 items-center">
             <button onClick={() => setIsEditing(false)}>
@@ -43,7 +43,7 @@ export default function Notes({ password }) {
             <PasswordDialog
               action={handleEditPassword}
               onSuccess={() => {
-                setShownNotes(newNotes);
+                setShownNotes(newNotes || "No notes");
                 setIsEditing(false);
               }}
             >
@@ -55,8 +55,11 @@ export default function Notes({ password }) {
         </div>
       )}
       {!isEditing && (
-        <button onClick={() => setIsEditing(true)}>
-          <p>{shownNotes}</p>
+        <button
+          className="w-full h-full text-start flex items-center"
+          onClick={() => setIsEditing(true)}
+        >
+          <p className="w-full items-center">{shownNotes || "\u00A0"}</p>
         </button>
       )}
     </>

@@ -20,7 +20,7 @@ export default function Sidebar({ user }) {
           alt="App's Logo"
         />
         <div>
-          <h1 className="font-semibold text-[#ee6711] text-lg">GuardX</h1>
+          <h1 className="font-semibold text-[#ee6711] text-lg">GoVault</h1>
           <p className="text-zinc-600 text-sm">Be Safe & Stay Safe</p>
         </div>
       </div>
