@@ -370,7 +370,7 @@ export const getPasswordStatisticsByUserId = async () => {
       counts.compromised++;
     }
     if (psw.password) {
-      const len = psw.password.length;
+      const len = decrypt(psw.password).length;
       totalPasswordLength += len;
       countWithPassword++;
       if (len < minPasswordLength) minPasswordLength = len;
