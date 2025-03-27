@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 export default function SidebarLink({ href, children }) {
   const pathname = usePathname();
-  const isActive = pathname === href;
+  const isActive = pathname.includes(href);
 
   return (
     <Link

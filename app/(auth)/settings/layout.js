@@ -10,7 +10,7 @@ export default async function SettingsPage({ children }) {
           Manage your account settings and set e-mail preferences.
         </p>
       </div>
-      <main className="grid grid-cols-6 w-full">
+      <main className="grid grid-cols-6 w-full gap-5">
         <aside className="col-span-1">
           <SettingsOptions />
         </aside>
