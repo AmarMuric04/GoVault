@@ -37,10 +37,10 @@ export default function Sidebar({ user }) {
           <IoIosCreate size={22} />
           <p>Generate</p>
         </SidebarLink>
-        <SidebarLink href="/security">
+        {/* <SidebarLink href="/security">
           <MdOutlineSecurity size={22} />
           <p>Security</p>
-        </SidebarLink>
+        </SidebarLink> */}
         <SidebarLink href="/settings">
           <IoSettingsSharp size={22} />
           <p>Settings</p>
