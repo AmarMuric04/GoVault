@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { BeatLoader } from "react-spinners";
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,7 +17,7 @@ import usePasswordStore from "@/store/usePasswordStore";
 import AuthInput from "../form/auth-input";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { editPassword } from "@/actions/password.actions";
+import { editPassword } from "@/lib/actions/password/password.actions";
 import { Check, CircleX, Loader2 } from "lucide-react";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 

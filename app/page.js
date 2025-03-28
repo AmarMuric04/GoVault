@@ -1,4 +1,4 @@
-import { isAuthenticated } from "@/actions/auth.actions";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
 import AuthForm from "@/components/form/auth-form";
 import Link from "next/link";
 import { redirect } from "next/navigation";

@@ -3,7 +3,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { auth } from "@/actions/auth.actions";
+import { auth } from "@/lib/actions/auth.actions";
 import AuthInput from "./auth-input";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";

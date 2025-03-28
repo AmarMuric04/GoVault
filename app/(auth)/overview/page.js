@@ -6,11 +6,7 @@ import {
   ShieldUser,
 } from "lucide-react";
 import SmallContainer from "@/components/small-container";
-import Chart from "@/components/charts/line";
-import Example from "@/components/charts/pie";
-import BarChartComp from "@/components/charts/bar";
 import { formatMongoDate } from "@/formatters/date";
-import BetterPie from "@/components/charts/betterPie";
 import Container from "@/components/container";
 import {
   getBarChartData,
@@ -19,20 +15,29 @@ import {
   getPasswordStatisticsByUserId,
   getPasswordStrengthPieData,
   getUserGlobalComparisons,
-} from "@/actions/password.actions";
+} from "@/lib/actions/password/statistics.actions";
+import AreaChart from "@/components/charts/area-chart";
+import BarChart from "@/components/charts/bar-chart";
+import PieChart from "@/components/charts/pie-chart";
+import OutlineChart from "@/components/charts/outline-pie-chart";
+import OutlinePieChart from "@/components/charts/outline-pie-chart";
 
 export default async function OverviewPage() {
-  const data = await getPasswordsPerDay();
-
-  const pieData = await getPasswordStrengthPieData();
-
-  const barData = await getBarChartData();
-
-  const generalPasswordStats = await getPasswordStatisticsByUserId();
-
-  const globalComparisons = await getUserGlobalComparisons();
-
-  const countComparison = await getPasswordCountComparison();
+  const [
+    data,
+    pieData,
+    barData,
+    generalPasswordStats,
+    globalComparisons,
+    countComparison,
+  ] = await Promise.all([
+    getPasswordsPerDay(),
+    getPasswordStrengthPieData(),
+    getBarChartData(),
+    getPasswordStatisticsByUserId(),
+    getUserGlobalComparisons(),
+    getPasswordCountComparison(),
+  ]);
 
   return (
     <div className="grid grid-cols-4 grid-rows-7 gap-10 p-6 max-h-full overflow-hidden">
@@ -61,16 +66,16 @@ export default async function OverviewPage() {
           Your vs. Others' Passwords
         </h1>
         <div className="flex justify-between h-full">
-          <div className="w-2/3 h-full">
-            <BarChartComp
+          <div className="w-1/2 h-full">
+            <BarChart
               data={barData.map((d) => ({
                 ...d,
                 date: formatMongoDate(d.date),
               }))}
             />
           </div>
-          <div className="w-1/3 relative h-full">
-            <BetterPie data={countComparison} />
+          <div className="w-1/2 relative h-full">
+            <OutlinePieChart data={countComparison} />
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10">
               <ShieldUser size={30} />
             </div>
@@ -83,7 +88,7 @@ export default async function OverviewPage() {
           Password Strength
         </h1>
         <div className="w-full h-full">
-          <Example data={pieData} />
+          <PieChart data={pieData} />
         </div>
       </Container>
 
@@ -92,7 +97,7 @@ export default async function OverviewPage() {
           Your activity over time
         </h1>
         <div className="w-full h-full">
-          <Chart
+          <AreaChart
             data={data.map((d) => ({ ...d, date: formatMongoDate(d.date) }))}
           />
         </div>

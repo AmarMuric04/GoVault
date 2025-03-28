@@ -1,7 +1,7 @@
 "use client";
 
-import React, { PureComponent } from "react";
-import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
+import { useState, memo } from "react";
+import { PieChart, Pie, Sector, ResponsiveContainer, Tooltip } from "recharts";
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -18,6 +18,7 @@ const renderActiveShape = (props) => {
     percent,
     value,
   } = props;
+
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -59,7 +60,9 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`${payload.name} ${value}`}</text>
+      >
+        {`${payload.name} ${value}`}
+      </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -73,41 +76,29 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default class BetterPie extends PureComponent {
-  static demoUrl =
-    "https://codesandbox.io/s/pie-chart-with-customized-active-shape-y93si";
+const OutlinePieChart = memo(({ data }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  state = {
-    activeIndex: 0,
-  };
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart width={400} height={400}>
+        <Pie
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          data={data}
+          cx="50%"
+          cy="50%"
+          innerRadius={50}
+          outerRadius={70}
+          stroke="#000"
+          fill="#fff"
+          dataKey="value"
+          onMouseEnter={(_, index) => setActiveIndex(index)}
+        />
+        <Tooltip />
+      </PieChart>
+    </ResponsiveContainer>
+  );
+});
 
-  onPieEnter = (_, index) => {
-    this.setState({
-      activeIndex: index,
-    });
-  };
-
-  render() {
-    const { data } = this.props;
-
-    return (
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
-          <Pie
-            activeIndex={this.state.activeIndex}
-            activeShape={renderActiveShape}
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={50}
-            outerRadius={70}
-            stroke="#000"
-            fill="#fff"
-            dataKey="value"
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  }
-}
+export default OutlinePieChart;

@@ -1,6 +1,6 @@
 "use client";
 
-import { getIndividualFullPasswordInfo } from "@/actions/password.actions";
+import { getIndividualFullPasswordInfo } from "@/lib/actions/password/password.actions";
 import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
 import usePasswordStore from "@/store/usePasswordStore";
 import { copyToClipboard } from "@/utility/copy-text";

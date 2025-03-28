@@ -6,14 +6,15 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  AreaChart,
+  AreaChart as AreaC,
   Area,
 } from "recharts";
+import { memo } from "react";
 
-export default function Chart({ data }) {
+const AreaChart = memo(({ data }) => {
   return (
-    <ResponsiveContainer width="100%">
-      <AreaChart data={data}>
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaC data={data} key={data?.length || "chart"}>
         <CartesianGrid stroke="#111" />
         <XAxis dataKey="date" name="Date" />
         <YAxis dataKey="value" name="Value" axisLine={false} />
@@ -24,10 +25,12 @@ export default function Chart({ data }) {
           name="Total passwords"
           stroke="#ee6711"
           fill="#ffffff40"
-          dot={false}
+          dot={{ r: 0 }}
           strokeWidth={2}
         />
-      </AreaChart>
+      </AreaC>
     </ResponsiveContainer>
   );
-}
+});
+
+export default AreaChart;

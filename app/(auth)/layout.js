@@ -1,4 +1,4 @@
-import { isAuthenticated } from "@/actions/auth.actions";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
 import Header from "@/components/dashboard/header";
 import Sidebar from "@/components/dashboard/sidebar";
 import StoreUser from "@/components/store-user";

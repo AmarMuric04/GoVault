@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
-import { editNotes, editPassword } from "@/actions/password.actions";
+import { editNotes } from "@/lib/actions/password/password.actions";
 import { ChevronRight, X } from "lucide-react";
 
 export default function Notes({ password }) {

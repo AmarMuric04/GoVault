@@ -10,11 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useMutation } from "@tanstack/react-query";
-import { addPassword } from "@/actions/password.actions";
-import { BeatLoader } from "react-spinners";
+import { addPassword } from "@/lib/actions/password/password.actions";
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

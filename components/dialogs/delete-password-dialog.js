@@ -10,13 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import useAuthStore from "@/store/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { BeatLoader } from "react-spinners";
 import AuthInput from "../form/auth-input";
 import { toast } from "sonner";
-import { deletePassword } from "@/actions/password.actions";
+import { deletePassword } from "@/lib/actions/password/password.actions";
 import usePasswordStore from "@/store/usePasswordStore";
 import { Check, CircleX, Loader2 } from "lucide-react";
 

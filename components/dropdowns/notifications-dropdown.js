@@ -1,4 +1,4 @@
-import { getPasswordStatisticsByUserId } from "@/actions/password.actions";
+import { getPasswordStatisticsByUserId } from "@/lib/actions/password/statistics.actions";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

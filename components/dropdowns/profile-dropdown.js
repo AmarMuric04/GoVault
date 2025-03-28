@@ -1,4 +1,4 @@
-import { isAuthenticated } from "@/actions/auth.actions";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
 import {
   Popover,
   PopoverContent,

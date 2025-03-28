@@ -45,9 +45,9 @@ export function SwitchForm() {
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                   <div className="space-y-0.5">
-                    <FormLabel>Marketing emails</FormLabel>
+                    <FormLabel>Password emails</FormLabel>
                     <FormDescription>
-                      Receive emails about new products, features, and more.
+                      Receive emails when we detect a negative password
                     </FormDescription>
                   </div>
                   <FormControl>

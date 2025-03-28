@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   getFullPasswordInfo,
   getPasswordsByUserId,
-} from "@/actions/password.actions";
+} from "@/lib/actions/password/password.actions";
 import useAuthStore from "@/store/useAuthStore";
 import usePasswordStore from "@/store/usePasswordStore";
 import { HashLoader } from "react-spinners";

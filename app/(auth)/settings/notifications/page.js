@@ -20,15 +20,15 @@ export default function AccountPage() {
         <RadioGroup defaultValue="comfortable" className="my-5">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="default" id="r1" />
-            <Label htmlFor="r1">Default</Label>
+            <Label htmlFor="r1">Critical passwords</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="comfortable" id="r2" />
-            <Label htmlFor="r2">Comfortable</Label>
+            <Label htmlFor="r2">Bad passwords</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="compact" id="r3" />
-            <Label htmlFor="r3">Compact</Label>
+            <Label htmlFor="r3">Compromised passwords</Label>
           </div>
         </RadioGroup>
       </div>
