@@ -1,8 +1,6 @@
 "use client";
 
 import Container from "@/components/container";
-import { IoCopy } from "react-icons/io5";
-import { FiRefreshCcw } from "react-icons/fi";
 import { generatePassword } from "@/utility/password/password-generator";
 import { useEffect, useState } from "react";
 import { copyToClipboard } from "@/utility/copy-text";
@@ -11,7 +9,6 @@ import { getPasswordStrength } from "@/utility/password/password-strength";
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { FaCircleInfo } from "react-icons/fa6";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -25,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import HoverTitle from "@/components/hover-title";
 import { useSearchParams } from "next/navigation";
 import { EditPasswordDialog } from "@/components/dialogs/edit-password-dialog";
+import { Copy, Info, RefreshCcw } from "lucide-react";
 
 export default function GeneratePage() {
   const [length, setLength] = useState(10);
@@ -134,7 +132,7 @@ export default function GeneratePage() {
               onClick={handleCopy}
               className="p-2 rounded-full hover:bg-white/10 transition-all group"
             >
-              <IoCopy
+              <Copy
                 size={25}
                 className="group-hover:scale-120 transition-all"
               />
@@ -145,7 +143,7 @@ export default function GeneratePage() {
               onClick={handleRegenerate}
               className="p-2 rounded-full hover:bg-white/10 transition-all group"
             >
-              <FiRefreshCcw
+              <RefreshCcw
                 size={25}
                 className="group-hover:scale-120 transition-all"
               />
@@ -187,7 +185,7 @@ export default function GeneratePage() {
             />
             <Label className="cursor-pointer">Easy to say</Label>
             <HoverTitle title={<p>Only letters</p>}>
-              <FaCircleInfo />
+              <Info />
             </HoverTitle>
           </div>
           <div
@@ -212,7 +210,7 @@ export default function GeneratePage() {
             />
             <Label>Easy to read</Label>
             <HoverTitle title={<p>Letters and digits</p>}>
-              <FaCircleInfo />
+              <Info />
             </HoverTitle>
           </div>
           <div
@@ -238,7 +236,7 @@ export default function GeneratePage() {
             />
             <Label htmlFor="r3">All Characters</Label>
             <HoverTitle title={<p>Everything included</p>}>
-              <FaCircleInfo />
+              <Info />
             </HoverTitle>
           </div>
         </RadioGroup>
@@ -289,7 +287,7 @@ export default function GeneratePage() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <FaCircleInfo />
+                    <Info />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Only letters</p>
@@ -305,7 +303,7 @@ export default function GeneratePage() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <FaCircleInfo />
+                    <Info />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Only letters</p>
@@ -321,7 +319,7 @@ export default function GeneratePage() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <FaCircleInfo />
+                    <Info />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Only letters</p>
@@ -337,7 +335,7 @@ export default function GeneratePage() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <FaCircleInfo />
+                    <Info />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Only letters</p>
@@ -353,7 +351,7 @@ export default function GeneratePage() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <FaCircleInfo />
+                    <Info />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Only letters</p>
