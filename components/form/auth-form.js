@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { auth } from "@/actions/auth.actions";
 import AuthInput from "./auth-input";
 import { useMutation } from "@tanstack/react-query";
-import { BeatLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
+import { Check, CircleX, Loader2 } from "lucide-react";
+import Link from "next/link";
 
 const INITIAL_VALUES = {
   email: "",
@@ -23,7 +24,12 @@ export default function AuthForm({ mode }) {
   const { setUser } = useAuthStore();
   const router = useRouter();
 
-  const { mutate: authenticate, isPending } = useMutation({
+  const {
+    mutate: authenticate,
+    isPending,
+    isSuccess,
+    isError,
+  } = useMutation({
     mutationFn: async (formData) => {
       const data = await auth(formData, { remember, mode });
 
@@ -97,12 +103,19 @@ export default function AuthForm({ mode }) {
               Remember me
             </label>
           </div>
-          <p className="hover:underline cursor-pointer">Forgot password</p>
+          <Button asChild variant="link">
+            <Link href="/?mode=forgot_password">Forgot Password</Link>
+          </Button>
         </div>
       )}
-      <Button disabled={isPending} className="w-full">
-        {isPending && <BeatLoader color="white" size={5} />}
-        {!isPending && <>{mode === "signin" ? "Sign In" : "Sign Up"}</>}
+      <Button
+        className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
+        disabled={isPending || isSuccess}
+      >
+        {isPending && <Loader2 className="animate-spin" />}
+        {isSuccess && <Check />}
+        {isError && <CircleX />}
+        {mode === "signin" ? "Sign In" : "Sign Up"}
       </Button>
     </form>
   );

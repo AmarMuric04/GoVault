@@ -1,12 +1,7 @@
-import Pfp from "@/public/psw-pfp.jpg";
 import Image from "next/image";
-import { FaChartPie } from "react-icons/fa";
-import { IoIosCreate } from "react-icons/io";
-import { IoSettingsSharp } from "react-icons/io5";
-import { MdOutlineSecurity } from "react-icons/md";
 import SidebarLink from "./sidebar-link";
-import { PiVaultFill } from "react-icons/pi";
 import Logo from "@/public/TheLogo.png";
+import { ChartArea, CirclePlus, Settings, Vault } from "lucide-react";
 
 export default function Sidebar({ user }) {
   return (
@@ -26,15 +21,15 @@ export default function Sidebar({ user }) {
       </div>
       <div>
         <SidebarLink href="/overview">
-          <FaChartPie size={22} />
+          <ChartArea size={22} />
           <p>Overview</p>
         </SidebarLink>
         <SidebarLink href="/vault">
-          <PiVaultFill size={22} />
+          <Vault size={22} />
           <p>My Vault</p>
         </SidebarLink>
         <SidebarLink href="/generate">
-          <IoIosCreate size={22} />
+          <CirclePlus size={22} />
           <p>Generate</p>
         </SidebarLink>
         {/* <SidebarLink href="/security">
@@ -42,7 +37,7 @@ export default function Sidebar({ user }) {
           <p>Security</p>
         </SidebarLink> */}
         <SidebarLink href="/settings">
-          <IoSettingsSharp size={22} />
+          <Settings size={22} />
           <p>Settings</p>
         </SidebarLink>
       </div>

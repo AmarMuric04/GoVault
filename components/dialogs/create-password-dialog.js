@@ -23,6 +23,7 @@ import useAuthStore from "@/store/useAuthStore";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 import { toast } from "sonner";
 import AuthInput from "../form/auth-input";
+import { Check, CircleX, Loader2 } from "lucide-react";
 
 export function CreatePasswordDialog({ children, password }) {
   const { passwords, setPasswords } = usePasswordStore();
@@ -42,7 +43,12 @@ export function CreatePasswordDialog({ children, password }) {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const { mutate: handleAddPassword, isPending } = useMutation({
+  const {
+    mutate: handleAddPassword,
+    isPending,
+    isSuccess,
+    isError,
+  } = useMutation({
     mutationFn: async () => {
       const thePassword = password || psw;
 
@@ -174,18 +180,16 @@ export function CreatePasswordDialog({ children, password }) {
         <DialogFooter>
           <Button
             onClick={() => setOpen(false)}
-            type="submit"
             disabled={isPending}
+            variant="outline"
             className="bg-transparent border-1 border-zinc-900"
           >
             Cancel
           </Button>
           {!password && (
-            <Link href="/generate">
-              <Button type="submit" disabled={isPending}>
-                Use Generator
-              </Button>
-            </Link>
+            <Button asChild variant="secondary" disabled={isPending}>
+              <Link href="/generate">Use Generator</Link>
+            </Button>
           )}
           <Button
             onClick={handleAddPassword}
@@ -193,7 +197,10 @@ export function CreatePasswordDialog({ children, password }) {
             disabled={isPending}
             className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
           >
-            {isPending ? <BeatLoader color="white" size={5} /> : "Submit"}
+            {isPending && <Loader2 className="animate-spin" />}
+            {isSuccess && <Check />}
+            {isError && <CircleX />}
+            Submit
           </Button>
         </DialogFooter>
       </DialogContent>

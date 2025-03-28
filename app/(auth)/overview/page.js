@@ -1,10 +1,10 @@
 import {
-  PiPasswordFill,
-  PiKeyFill,
-  PiLockFill,
-  PiClockFill,
-} from "react-icons/pi";
-import { TbPasswordUser } from "react-icons/tb";
+  RectangleEllipsis,
+  ThumbsUp,
+  ShieldX,
+  Ruler,
+  ShieldUser,
+} from "lucide-react";
 import SmallContainer from "@/components/small-container";
 import Chart from "@/components/charts/line";
 import Example from "@/components/charts/pie";
@@ -39,22 +39,22 @@ export default async function OverviewPage() {
       <SmallContainer
         mainStat={generalPasswordStats.totalPasswords}
         description="Total Passwords"
-        icon={<PiPasswordFill />}
+        icon={<RectangleEllipsis />}
       />
       <SmallContainer
         mainStat={`${generalPasswordStats.positivePercentage.toFixed(2)}%`}
         description="Positive passwords"
-        icon={<PiClockFill />}
+        icon={<ThumbsUp />}
       />
       <SmallContainer
         mainStat={generalPasswordStats.compromisedCount}
         description="Compromised"
-        icon={<PiLockFill />}
+        icon={<ShieldX />}
       />
       <SmallContainer
         mainStat={`${generalPasswordStats.averagePasswordLength.toFixed(2)}`}
         description="Avg. password length"
-        icon={<PiKeyFill />}
+        icon={<Ruler />}
       />
       <Container className="col-span-3 row-span-3">
         <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
@@ -72,7 +72,7 @@ export default async function OverviewPage() {
           <div className="w-1/3 relative h-full">
             <BetterPie data={countComparison} />
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10">
-              <TbPasswordUser size={30} />
+              <ShieldUser size={30} />
             </div>
           </div>
         </div>

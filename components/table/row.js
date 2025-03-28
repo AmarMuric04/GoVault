@@ -2,18 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
 import Password from "./password/password";
 import SecurityIndicator from "./password/strength-indicator";
 import { formatMongoDate } from "@/formatters/date";
-import { FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { BiLoaderAlt } from "react-icons/bi";
-import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import { MdEdit } from "react-icons/md";
 import { DeletePasswordDialog } from "../dialogs/delete-password-dialog";
 import { EditPasswordDialog } from "../dialogs/edit-password-dialog";
 import Notes from "./password/notes";
+import { Check, Edit, Loader2, Trash } from "lucide-react";
 
 export default function Row({ showMoreInfo, password }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,12 +30,12 @@ export default function Row({ showMoreInfo, password }) {
         <div className="flex gap-2 items-center">
           {password.status === "Pending" && (
             <div>
-              <BiLoaderAlt className="animate-spin" />
+              <Loader2 className="animate-spin" />
             </div>
           )}
           {password.status === "Saved" && (
             <div className="text-green-400 animate-in">
-              <IoCheckmarkDoneSharp />
+              <Check />
             </div>
           )}
           <p>{password.source}</p>
@@ -65,13 +61,13 @@ export default function Row({ showMoreInfo, password }) {
       <TableCell className="text-right">
         <div className="flex gap-2 items-center justify-end w-full">
           <EditPasswordDialog passwordId={password._id}>
-            <Button>
-              <MdEdit />
+            <Button variant="secondary">
+              <Edit />
             </Button>
           </EditPasswordDialog>
           <DeletePasswordDialog password={password}>
-            <Button className="bg-red-500 hover:bg-red-500/60">
-              <FaTrashAlt />
+            <Button variant="destructive">
+              <Trash />
             </Button>
           </DeletePasswordDialog>
         </div>

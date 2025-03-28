@@ -14,8 +14,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Edit } from "lucide-react";
 import Link from "next/link";
-import { MdEdit } from "react-icons/md";
 
 export async function NotificationsDropdown({ children }) {
   const passwordGeneralStats = await getPasswordStatisticsByUserId();
@@ -52,7 +52,7 @@ export async function NotificationsDropdown({ children }) {
               </div>
               <Link href="/vault">
                 <Button className="text-white">
-                  <MdEdit />
+                  <Edit />
                 </Button>
               </Link>
             </DropdownMenuItem>
@@ -68,7 +68,7 @@ export async function NotificationsDropdown({ children }) {
               </div>
               <Link href="/vault">
                 <Button className="text-white">
-                  <MdEdit />
+                  <Edit />
                 </Button>
               </Link>
             </DropdownMenuItem>

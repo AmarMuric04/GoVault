@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { IoInformationCircleSharp } from "react-icons/io5";
+import { InfoIcon } from "lucide-react";
 
 export default function AuthInput({ name, label, errors, ...props }) {
   return (
@@ -9,7 +9,7 @@ export default function AuthInput({ name, label, errors, ...props }) {
       <Input type={name} id={name} name={name} {...props} />
       {errors?.[name] && (
         <div className="text-xs text-red-400 flex items-center gap-1">
-          <IoInformationCircleSharp />
+          <InfoIcon size={15} />
           <p>{errors[name]}</p>
         </div>
       )}

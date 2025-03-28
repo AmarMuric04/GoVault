@@ -3,9 +3,6 @@
 import Container from "@/components/container";
 import { VaultTable } from "@/components/table/table";
 import { useEffect, useState } from "react";
-import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import { FaRegSquarePlus } from "react-icons/fa6";
-
 import { CreatePasswordDialog } from "@/components/dialogs/create-password-dialog";
 import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
 import { useQuery } from "@tanstack/react-query";
@@ -16,8 +13,10 @@ import {
 import useAuthStore from "@/store/useAuthStore";
 import usePasswordStore from "@/store/usePasswordStore";
 import { HashLoader } from "react-spinners";
-import { FaFileExport } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { FileUp, Plus } from "lucide-react";
 
 /* Initial state of passwords is [],
 when they get fetched, we get hidden passwords.
@@ -56,34 +55,38 @@ export default function VaultPage() {
                 setShowMoreInfo(true);
               }}
             >
-              <button className="flex gap-2 items-center">
-                <ImCheckboxUnchecked />
-                <p>Show all information</p>
-              </button>
+              <div className="flex items-center space-x-2">
+                <Checkbox checked={false} />
+                <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Show all information
+                </Label>
+              </div>
             </PasswordDialog>
           )}
           {showMoreInfo && (
-            <button
+            <div
               onClick={() => {
                 setPasswords(data);
                 setShowMoreInfo(false);
               }}
-              className="flex gap-2 items-center"
+              className="flex items-center space-x-2"
             >
-              <ImCheckboxChecked />
-              <p>Show all information</p>
-            </button>
+              <Checkbox checked={true} />
+              <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Show all information
+              </Label>
+            </div>
           )}
           <div className="flex gap-4 items-center">
-            <Button className="bg-transparent border-1 border-zinc-900 px-4 py-2">
-              <FaFileExport />
-              <p>Export</p>
+            <Button variant="outline">
+              <FileUp />
+              Export
             </Button>
 
             <CreatePasswordDialog>
               <button className="flex gap-2 items-center bg-[#ee6711] px-4 py-2 hover:rounded-[2rem] transition-all border-1 border-zinc-900 rounded-md hover:bg-[#ee671190]">
-                <FaRegSquarePlus />
-                <p>Add a new password</p>
+                <Plus />
+                Add a new password
               </button>
             </CreatePasswordDialog>
           </div>

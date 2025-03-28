@@ -13,8 +13,8 @@ import {
 import useAuthStore from "@/store/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { BeatLoader } from "react-spinners";
 import AuthInput from "../form/auth-input";
+import { Check, CircleX, Loader2 } from "lucide-react";
 
 export function PasswordDialog({ children, action, onSuccess = () => {} }) {
   const [open, setOpen] = useState(false);
@@ -27,7 +27,12 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const { mutate: checkPassword, isPending } = useMutation({
+  const {
+    mutate: checkPassword,
+    isPending,
+    isSuccess,
+    isError,
+  } = useMutation({
     mutationFn: async () => {
       const data = await action(user._id, password);
 
@@ -79,9 +84,8 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
         <DialogFooter>
           <Button
             onClick={() => setOpen(false)}
-            type="submit"
+            variant="outline"
             disabled={isPending}
-            className="bg-transparent border-1 border-zinc-900"
           >
             Cancel
           </Button>
@@ -91,7 +95,10 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
             disabled={isPending}
             onClick={checkPassword}
           >
-            {isPending ? <BeatLoader color="white" size={5} /> : "Proceed"}
+            {isPending && <Loader2 className="animate-spin" />}
+            {isSuccess && <Check />}
+            {isError && <CircleX />}
+            Proceed
           </Button>
         </DialogFooter>
       </DialogContent>

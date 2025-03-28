@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/table";
 import Row from "./row";
 import { Button } from "../ui/button";
-import { FaCircleInfo, FaRegSquarePlus } from "react-icons/fa6";
 import { CreatePasswordDialog } from "../dialogs/create-password-dialog";
 import HoverTitle from "../hover-title";
+import { Info, Plus } from "lucide-react";
 
 export function VaultTable({ items, showMoreInfo }) {
   return (
@@ -24,7 +24,7 @@ export function VaultTable({ items, showMoreInfo }) {
               <div className="flex items-center gap-2">
                 <p>Notes</p>
                 <HoverTitle title={<p>Click a note to edit it</p>}>
-                  <FaCircleInfo />
+                  <Info />
                 </HoverTitle>
               </div>
             </TableHead>
@@ -44,9 +44,12 @@ export function VaultTable({ items, showMoreInfo }) {
         </TableBody>
       </Table>
       <CreatePasswordDialog>
-        <Button className="border-1 border-dashed border-zinc-900 bg-zinc-950 w-99/100 mx-auto self-center my-2 flex justify-center items-center gap-2">
-          <FaRegSquarePlus />
-          <p>Add a new password</p>
+        <Button
+          variant="outline"
+          className="border-dashed w-99/100 mx-auto self-center flex my-2"
+        >
+          <Plus />
+          Add a new password
         </Button>
       </CreatePasswordDialog>
     </>

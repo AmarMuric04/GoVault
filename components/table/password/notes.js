@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
 import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
-import { MdNavigateNext } from "react-icons/md";
 import { editNotes, editPassword } from "@/actions/password.actions";
+import { ChevronRight, X } from "lucide-react";
 
 export default function Notes({ password }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -38,7 +37,7 @@ export default function Notes({ password }) {
           />
           <div className="flex gap-2 items-center">
             <button onClick={() => setIsEditing(false)}>
-              <AiOutlineClose />
+              <X size={15} />
             </button>
             <PasswordDialog
               action={handleEditPassword}
@@ -48,7 +47,7 @@ export default function Notes({ password }) {
               }}
             >
               <button className="bg-[#ee6711] hover:bg-[#ee671190] p-1 rounded-full">
-                <MdNavigateNext />
+                <ChevronRight size={15} />
               </button>
             </PasswordDialog>
           </div>

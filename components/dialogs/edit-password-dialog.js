@@ -19,6 +19,8 @@ import AuthInput from "../form/auth-input";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { editPassword } from "@/actions/password.actions";
+import { Check, CircleX, Loader2 } from "lucide-react";
+import { getPasswordStrength } from "@/utility/password/password-strength";
 
 export function EditPasswordDialog({ children, password, passwordId }) {
   const { passwords, setPasswords } = usePasswordStore();
@@ -36,7 +38,12 @@ export function EditPasswordDialog({ children, password, passwordId }) {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const { mutate: handleEditPassword, isPending } = useMutation({
+  const {
+    mutate: handleEditPassword,
+    isPending,
+    isSuccess,
+    isError,
+  } = useMutation({
     mutationFn: async () => {
       let errors = {};
 
@@ -56,7 +63,15 @@ export function EditPasswordDialog({ children, password, passwordId }) {
       }
 
       setPasswords(
-        passwords.map((p) => (p._id === passwordId ? { ...p, password } : p))
+        passwords.map((p) =>
+          p._id === passwordId
+            ? {
+                ...p,
+                password: thePassword,
+                strength: getPasswordStrength(thePassword),
+              }
+            : p
+        )
       );
 
       if (toastId.current) toast.dismiss(toastId.current);
@@ -88,7 +103,7 @@ export function EditPasswordDialog({ children, password, passwordId }) {
       onOpenChange={(isOpen) => {
         setPsw("");
         setAccountPassword("");
-        if (isOpen) setOpen(isOpen);
+        setOpen(isOpen);
       }}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -131,18 +146,17 @@ export function EditPasswordDialog({ children, password, passwordId }) {
         <DialogFooter>
           <Button
             onClick={() => setOpen(false)}
-            type="submit"
             disabled={isPending}
-            className="bg-transparent border-1 border-zinc-900"
+            variant="outline"
           >
             Cancel
           </Button>
           {!password && (
-            <Link href={`/generate?editing=${passwordId}`}>
-              <Button type="submit" disabled={isPending}>
+            <Button variant="secondary" asChild disabled={isPending}>
+              <Link href={`/generate?editing=${passwordId}`}>
                 Use Generator
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           )}
           <Button
             onClick={handleEditPassword}
@@ -150,7 +164,10 @@ export function EditPasswordDialog({ children, password, passwordId }) {
             disabled={isPending}
             className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
           >
-            {isPending ? <BeatLoader color="white" size={5} /> : "Submit"}
+            {isPending && <Loader2 className="animate-spin" />}
+            {isSuccess && <Check />}
+            {isError && <CircleX />}
+            Submit
           </Button>
         </DialogFooter>
       </DialogContent>

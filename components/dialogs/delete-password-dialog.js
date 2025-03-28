@@ -18,6 +18,7 @@ import AuthInput from "../form/auth-input";
 import { toast } from "sonner";
 import { deletePassword } from "@/actions/password.actions";
 import usePasswordStore from "@/store/usePasswordStore";
+import { Check, CircleX, Loader2 } from "lucide-react";
 
 export function DeletePasswordDialog({ children, password }) {
   const { passwords, setPasswords } = usePasswordStore();
@@ -30,7 +31,12 @@ export function DeletePasswordDialog({ children, password }) {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const { mutate: handleDeletePassword, isPending } = useMutation({
+  const {
+    mutate: handleDeletePassword,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
     mutationFn: async () => {
       const data = await deletePassword(psw, verifier, password);
 
@@ -102,19 +108,22 @@ export function DeletePasswordDialog({ children, password }) {
         <DialogFooter>
           <Button
             onClick={() => setOpen(false)}
-            type="submit"
             disabled={isPending}
-            className="bg-transparent border-1 border-zinc-900"
+            variant="outline"
           >
             Cancel
           </Button>
           <Button
             className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
             type="submit"
+            variant="desctructive"
             disabled={isPending}
             onClick={handleDeletePassword}
           >
-            {isPending ? <BeatLoader color="white" size={5} /> : "Proceed"}
+            {isPending && <Loader2 className="animate-spin" />}
+            {isSuccess && <Check />}
+            {isError && <CircleX />}
+            Delete
           </Button>
         </DialogFooter>
       </DialogContent>
