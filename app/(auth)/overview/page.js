@@ -44,6 +44,11 @@ export default async function OverviewPage() {
     getPasswordCountComparison(),
   ]);
 
+  const formatBarData = barData?.map((d) => ({
+    ...d,
+    date: formatMongoDate(d.date),
+  }));
+
   return (
     <div className="grid grid-cols-4 grid-rows-7 gap-10 p-6 max-h-full overflow-hidden">
       <SmallContainer
@@ -81,12 +86,7 @@ export default async function OverviewPage() {
           </h1>
           <div className="flex justify-between h-full">
             <div className="w-1/2 h-full">
-              <BarChart
-                data={barData.map((d) => ({
-                  ...d,
-                  date: formatMongoDate(d.date),
-                }))}
-              />
+              <BarChart data={formatBarData} />
             </div>
             <div className="w-1/2 relative h-full">
               <OutlinePieChart data={countComparison} />
