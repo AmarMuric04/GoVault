@@ -3,15 +3,14 @@ import Header from "@/components/dashboard/header";
 import Sidebar from "@/components/dashboard/sidebar";
 import StoreUser from "@/components/store-user";
 import { redirect } from "next/navigation";
+import { SidebarCloseIcon } from "lucide-react";
 
 export default async function DashboardLayout({ children }) {
   const user = await isAuthenticated();
 
-  if (!user) return redirect("/?mode=signin");
-
   return (
     <main className="flex text-white h-screen">
-      <Sidebar user={user} />
+      <Sidebar />
       <main className="w-full flex flex-col h-screen max-h-screen overflow-hidden">
         <Header user={user} />
         <StoreUser user={user} />

@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FileUp, Plus } from "lucide-react";
+import Locked from "@/components/locked";
 
 /* Initial state of passwords is [],
 when they get fetched, we get hidden passwords.
@@ -30,8 +31,9 @@ export default function VaultPage() {
   const [showMoreInfo, setShowMoreInfo] = useState(false);
 
   const { data, isLoading } = useQuery({
-    queryFn: () => getPasswordsByUserId(user._id),
-    queryKey: ["passwords", user._id],
+    queryFn: () => getPasswordsByUserId(user?._id),
+    queryKey: ["passwords", user?._id],
+    enabled: !!user,
   });
 
   useEffect(() => {
@@ -39,6 +41,8 @@ export default function VaultPage() {
       setPasswords(data);
     }
   }, [data]);
+
+  if (!user) return <Locked />;
 
   return (
     <div className="w-full h-full">

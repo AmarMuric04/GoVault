@@ -1,7 +1,13 @@
 import Container from "@/components/container";
+import Locked from "@/components/locked";
 import SettingsOptions from "@/components/settings-options";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
 
 export default async function SettingsPage({ children }) {
+  const user = await isAuthenticated();
+
+  if (!user) return <Locked />;
+
   return (
     <Container className="w-full h-full p-10">
       <div className="pb-5 border-b-1 border-zinc-900">

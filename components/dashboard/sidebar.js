@@ -5,7 +5,7 @@ import { ChartArea, CirclePlus, Settings, Vault } from "lucide-react";
 
 export default function Sidebar({ user }) {
   return (
-    <aside className="bg-zinc-950 text-white border-1 border-zinc-900 min-w-72 h-screen flex flex-col justify-between px-4">
+    <aside className="bg-zinc-950 text-white border-1 border-zinc-900 max-w-72 w-72 h-screen flex flex-col justify-between px-4">
       <div className="flex gap-4 items-center montserrat h-1/10">
         <Image
           className="h-13 w-13"
@@ -19,18 +19,18 @@ export default function Sidebar({ user }) {
           <p className="text-zinc-600 text-sm">Be Safe & Stay Safe</p>
         </div>
       </div>
-      <div>
+      <nav className="w-full">
         <SidebarLink href="/overview">
           <ChartArea size={22} />
-          <p>Overview</p>
+          Overview
         </SidebarLink>
         <SidebarLink href="/vault">
           <Vault size={22} />
-          <p>My Vault</p>
+          My Vault
         </SidebarLink>
         <SidebarLink href="/generate">
           <CirclePlus size={22} />
-          <p>Generate</p>
+          Generate
         </SidebarLink>
         {/* <SidebarLink href="/security">
           <MdOutlineSecurity size={22} />
@@ -38,9 +38,9 @@ export default function Sidebar({ user }) {
         </SidebarLink> */}
         <SidebarLink href="/settings">
           <Settings size={22} />
-          <p>Settings</p>
+          Settings
         </SidebarLink>
-      </div>
+      </nav>
 
       <p className="text-zinc-800 text-xs mx-auto">
         Made by Murga. All Rights Reserved.

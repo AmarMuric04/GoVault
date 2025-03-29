@@ -2,22 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
 
 export default function SidebarLink({ href, children }) {
   const pathname = usePathname();
   const isActive = pathname.includes(href);
 
   return (
-    <Link
-      href={href}
-      className={`w-full py-3 my-1 font-medium transition-all rounded-sm flex items-center justify-center gap-2 
-        ${
-          isActive
-            ? "bg-[#ee6711] hover:bg-[#ee671190] text-white"
-            : "hover:bg-zinc-800"
-        }`}
+    <Button
+      asChild
+      className={`w-full my-1 font-medium transition-all rounded-sm
+        ${isActive ? "bg-[#ee6711] hover:bg-[#ee671190]" : ""}`}
+      variant={isActive ? "primary" : "link"}
     >
-      <div className="w-1/2 flex gap-4 items-center">{children}</div>
-    </Link>
+      <Link href={href} className="w-full flex items-center justify-center">
+        <div className="w-1/2 flex gap-6 items-center">{children}</div>
+      </Link>
+    </Button>
   );
 }

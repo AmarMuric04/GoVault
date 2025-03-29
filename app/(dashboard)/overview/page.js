@@ -19,6 +19,8 @@ import {
   getUserGlobalComparisons,
 } from "@/lib/actions/password/statistics.actions";
 import { HashLoader } from "react-spinners";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
+import Locked from "@/components/locked";
 
 const AreaChart = dynamic(() => import("@/components/charts/area-chart"));
 const BarChart = dynamic(() => import("@/components/charts/bar-chart"));
@@ -28,6 +30,10 @@ const OutlinePieChart = dynamic(() =>
 );
 
 export default async function OverviewPage() {
+  const user = await isAuthenticated();
+
+  if (!user) return <Locked />;
+
   const [
     data,
     pieData,
@@ -43,11 +49,6 @@ export default async function OverviewPage() {
     getUserGlobalComparisons(),
     getPasswordCountComparison(),
   ]);
-
-  const formatBarData = barData?.map((d) => ({
-    ...d,
-    date: formatMongoDate(d.date),
-  }));
 
   return (
     <div className="grid grid-cols-4 grid-rows-7 gap-10 p-6 max-h-full overflow-hidden">
@@ -86,7 +87,12 @@ export default async function OverviewPage() {
           </h1>
           <div className="flex justify-between h-full">
             <div className="w-1/2 h-full">
-              <BarChart data={formatBarData} />
+              <BarChart
+                data={barData?.map((d) => ({
+                  ...d,
+                  date: formatMongoDate(d.date),
+                }))}
+              />
             </div>
             <div className="w-1/2 relative h-full">
               <OutlinePieChart data={countComparison} />
