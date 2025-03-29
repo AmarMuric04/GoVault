@@ -1,48 +1,34 @@
-import { isAuthenticated } from "@/lib/actions/auth.actions";
-import AuthForm from "@/components/form/auth-form";
+import { Button } from "@/components/ui/button";
+import Logo from "@/public/TheLogo.png";
+import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
-export default async function AuthPage({ searchParams }) {
-  const params = await searchParams;
-
-  const mode = params?.mode || "signin";
-
-  const user = await isAuthenticated();
-
-  if (user) return redirect("/");
-
+export default async function LandingPage() {
   return (
     <main className="w-screen h-screen grid place-items-center">
-      <section className="bg-zinc-950 border-1 border-zinc-900 w-1/4 text-white px-12 pt-20 pb-8 rounded-md">
-        <h1 className="font-serif text-4xl">
-          Welcome {mode === "signin" && "back"}
-        </h1>
-        <p className="text-sm text-gray-300">Enter your email & password</p>
-        <AuthForm mode={mode} />
-        {mode === "signin" && (
-          <p className="text-sm mt-4 text-center">
-            Don't have an account?{" "}
-            <Link
-              href="/?mode=signup"
-              className="font-medium cursor-pointer hover:underline"
-            >
-              Create one!
-            </Link>
-          </p>
-        )}
-        {mode === "signup" && (
-          <p className="text-sm mt-4 text-center">
-            Already have an account?{" "}
-            <Link
-              href="/?mode=signin"
-              className="font-medium cursor-pointer hover:underline"
-            >
-              Sign In
-            </Link>
-          </p>
-        )}
-      </section>
+      <div className="flex items-center flex-col gap-4">
+        <Image
+          width={100}
+          height={100}
+          priority
+          src={Logo}
+          alt="A fingerprint"
+          className="w-15 h-15"
+        />
+        <h1 className="text-2xl font-medium">GoVault</h1>
+        <p className="text-gray-400 text-sm w-[200px] text-center">
+          Your passwords, <br />
+          securely stored.
+          <br /> Always accessible.
+        </p>
+        <Button
+          asChild
+          className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
+        >
+          <Link href="/generate">Go to the Dashboard</Link>
+        </Button>
+        <span className="text-xs text-gray-400">No sign-up required</span>
+      </div>
     </main>
   );
 }
