@@ -5,20 +5,14 @@ import { ChartArea, CirclePlus, Settings, Vault } from "lucide-react";
 
 export default function Sidebar({ user }) {
   return (
-    <aside className="bg-zinc-950 text-white border-1 border-zinc-900 max-w-72 w-72 h-screen flex flex-col justify-between px-4">
-      <div className="flex gap-4 items-center montserrat h-1/10">
-        <Image
-          className="h-13 w-13"
-          src={Logo}
-          width={100}
-          height={100}
-          alt="App's Logo"
-        />
-        <div>
-          <h1 className="font-semibold text-[#ee6711] text-lg">GoVault</h1>
-          <p className="text-zinc-600 text-sm">Be Safe & Stay Safe</p>
-        </div>
-      </div>
+    <aside className="bg-accent text-white border-1 max-w-72 w-72 h-screen flex flex-col justify-between px-4">
+      <Image
+        src={Logo}
+        width={150}
+        height={50}
+        alt="App's Logo"
+        className="self-center pt-12"
+      />
       <nav className="w-full">
         <SidebarLink href="/overview">
           <ChartArea size={22} />

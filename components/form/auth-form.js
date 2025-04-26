@@ -108,10 +108,7 @@ export default function AuthForm({ mode }) {
           </Button>
         </div>
       )}
-      <Button
-        className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
-        disabled={isPending || isSuccess}
-      >
+      <Button disabled={isPending || isSuccess}>
         {isPending && <Loader2 className="animate-spin" />}
         {isSuccess && <Check />}
         {isError && <CircleX />}

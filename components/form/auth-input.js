@@ -8,7 +8,10 @@ export default function AuthInput({ name, label, errors, ...props }) {
       <Label htmlFor={name}>{label}</Label>
       <Input type={name} id={name} name={name} {...props} />
       {errors?.[name] && (
-        <div className="text-xs text-red-400 flex items-center gap-1">
+        <div
+          id="error"
+          className="text-xs text-red-400 flex items-center gap-1"
+        >
           <InfoIcon size={15} />
           <p>{errors[name]}</p>
         </div>

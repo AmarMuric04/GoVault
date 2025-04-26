@@ -72,21 +72,15 @@ export default function GeneratePage() {
       <div className="flex items-center gap-4 justify-between">
         <div>
           <p className="font-semibold">Copied to clipboard!</p>
-          <p className="text-xs text-gray-700">
-            Consider saving it to your vault
-          </p>
+          <p className="text-xs">Consider saving it to your vault</p>
         </div>
         {isEditing ? (
           <EditPasswordDialog password={password} passwordId={isEditing}>
-            <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
-              Save Changes
-            </Button>
+            <Button id="save-changes">Save Changes</Button>
           </EditPasswordDialog>
         ) : (
           <CreatePasswordDialog password={password}>
-            <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
-              Save to Vault
-            </Button>
+            <Button id="save-to-vault">Save to Vault</Button>
           </CreatePasswordDialog>
         )}
       </div>
@@ -162,30 +156,25 @@ export default function GeneratePage() {
           />
           {!user && (
             <AuthDialog>
-              <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
-                Save to Vault
-              </Button>
+              <Button>Save to Vault</Button>
             </AuthDialog>
           )}
           {user && (
             <>
               {isEditing ? (
                 <EditPasswordDialog password={password} passwordId={isEditing}>
-                  <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
-                    Save Changes
-                  </Button>
+                  <Button>Save Changes</Button>
                 </EditPasswordDialog>
               ) : (
                 <CreatePasswordDialog password={password}>
-                  <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]">
-                    Save to Vault
-                  </Button>
+                  <Button>Save to Vault</Button>
                 </CreatePasswordDialog>
               )}
             </>
           )}
           <HoverTitle title={<p>Copy to clipboard</p>}>
             <button
+              id="copy"
               onClick={handleCopy}
               className="p-2 rounded-full hover:bg-white/10 transition-all group"
             >
@@ -197,6 +186,7 @@ export default function GeneratePage() {
           </HoverTitle>
           <HoverTitle title={<p>Get a new password</p>}>
             <button
+              id="regenerate"
               onClick={handleRegenerate}
               className="p-2 rounded-full hover:bg-white/10 transition-all group"
             >
@@ -237,7 +227,7 @@ export default function GeneratePage() {
               />
               <Label>{label}</Label>
               <HoverTitle title={<p>{tooltip}</p>}>
-                <Info />
+                <Info size={16} />
               </HoverTitle>
             </div>
           ))}
@@ -282,43 +272,36 @@ export default function GeneratePage() {
           {[
             {
               label: "A critical password",
-              tooltip: "Only letters",
+              tooltip: "Unacceptably bad password",
               strengthBar: "bg-red-600 w-2",
             },
             {
               label: "A bad password",
-              tooltip: "Only letters",
+              tooltip: "Too short and/or not complex enough",
               strengthBar: "bg-red-400 w-1/4",
             },
             {
               label: "A dubious password",
-              tooltip: "Only letters",
+              tooltip: "Not complex enough",
               strengthBar: "bg-orange-400 w-1/2",
             },
             {
               label: "A good password",
-              tooltip: "Only letters",
+              tooltip: "Acceptable password",
               strengthBar: "bg-lime-400 w-3/4",
             },
             {
               label: "A great password",
-              tooltip: "Only letters",
+              tooltip: "A password to cherish",
               strengthBar: "bg-green-400 w-full",
             },
           ].map((item, index) => (
             <li key={index} className="flex gap-2 flex-col">
               <div className="flex gap-2 items-center">
                 <p>{item.label}</p>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Info />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{item.tooltip}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <HoverTitle title={item.tooltip}>
+                  <Info size={16} />
+                </HoverTitle>
               </div>
               <div className={`h-1 ${item.strengthBar}`}></div>
             </li>

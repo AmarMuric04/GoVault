@@ -2,7 +2,7 @@ import { Ellipsis } from "lucide-react";
 
 export default function SmallContainer({ mainStat, description, icon }) {
   return (
-    <section className="bg-zinc-950 border-1 border-zinc-900 p-4 rounded-md flex gap-4 items-center pr-10 relative flex-grow min-w-xs">
+    <section className="border-1 border-zinc-900 p-4 rounded-md flex gap-4 items-center pr-10 relative flex-grow min-w-xs">
       <div className="bg-[#ee671180] rounded-full p-4">{icon}</div>
       <div className="flex flex-col">
         <h1 className="font-bold text-2xl">{mainStat}</h1>

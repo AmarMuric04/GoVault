@@ -12,8 +12,8 @@ export default function SidebarLink({ href, children }) {
     <Button
       asChild
       className={`w-full my-1 font-medium transition-all rounded-sm
-        ${isActive ? "bg-[#ee6711] hover:bg-[#ee671190]" : ""}`}
-      variant={isActive ? "primary" : "link"}
+        ${isActive ? "" : ""}`}
+      variant={isActive ? "" : "link"}
     >
       <Link href={href} className="w-full flex items-center justify-center">
         <div className="w-1/2 flex gap-6 items-center">{children}</div>

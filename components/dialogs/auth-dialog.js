@@ -25,15 +25,9 @@ const INITIAL_VALUES = {
 
 export function AuthDialog({ children, onSuccess = () => {} }) {
   const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState("signin");
   const [remember, setRemember] = useState(false);
   const [errors, setErrors] = useState({});
   const [formValues, setFormValues] = useState(INITIAL_VALUES);
-
-  useEffect(() => {
-    setFormValues(INITIAL_VALUES);
-    setErrors({});
-  }, [mode]);
 
   const handleFocus = useCallback((field) => {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
@@ -46,7 +40,7 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
     isError,
   } = useMutation({
     mutationFn: async (data) => {
-      const response = await auth(data, { remember, mode });
+      const response = await auth(data, { remember, mode: "signin" });
       if (response.error) {
         return Promise.reject(response);
       }
@@ -72,7 +66,7 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{mode === "signin" ? "Sign In" : "Sign Up"}</DialogTitle>
+          <DialogTitle>Sign In</DialogTitle>
           <DialogDescription>
             You need to be authenticated for this action.
           </DialogDescription>
@@ -110,69 +104,46 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
               onFocus={() => handleFocus("password")}
             />
           </div>
-          {mode === "signin" && (
-            <div className="text-sm font-medium flex justify-between items-center mt-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  checked={remember}
-                  onChange={() => setRemember((prev) => !prev)}
-                  id="remember"
-                  className="border border-zinc-900"
-                />
-                <label
-                  htmlFor="remember"
-                  className="leading-none cursor-pointer"
-                >
-                  Remember me
-                </label>
-              </div>
-              <Button asChild variant="link">
-                <Link href="/?mode=forgot_password">Forgot Password</Link>
-              </Button>
+          <div className="text-sm font-medium flex justify-between items-center mt-2">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                checked={remember}
+                onCheckedChange={setRemember}
+                id="remember"
+                className="border border-zinc-900"
+              />
+              <label htmlFor="remember" className="leading-none cursor-pointer">
+                Remember me
+              </label>
             </div>
-          )}
+            <Button asChild variant="link">
+              <Link href="/?mode=forgot_password">Forgot Password</Link>
+            </Button>
+          </div>
           <DialogFooter className="mt-5">
             <Button
               type="button"
               onClick={() => setOpen(false)}
-              variant="outline"
+              variant="link"
               disabled={isLoading}
             >
               Cancel
             </Button>
-            <Button
-              className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
-              type="submit"
-              disabled={isLoading}
-            >
+            <Button title="signin" type="submit" disabled={isLoading}>
               {isLoading && <Loader2 className="animate-spin" />}{" "}
               {isSuccess && <Check />}
               {isError && <CircleX />}
-              Proceed
+              Sign In
             </Button>
           </DialogFooter>
           <div className="mt-4 text-center text-sm">
-            {mode === "signin" ? (
-              <>
-                Don't have an account?{" "}
-                <span
-                  onClick={() => setMode("signup")}
-                  className="font-medium cursor-pointer hover:underline"
-                >
-                  Create one!
-                </span>
-              </>
-            ) : (
-              <>
-                Already have an account?{" "}
-                <span
-                  onClick={() => setMode("signin")}
-                  className="font-medium cursor-pointer hover:underline"
-                >
-                  Sign In
-                </span>
-              </>
-            )}
+            Don't have an account?{" "}
+            <Link
+              href="/auth?mode=signup"
+              className="text-primary hover:underline"
+            >
+              Create one!
+            </Link>
           </div>
         </form>
       </DialogContent>

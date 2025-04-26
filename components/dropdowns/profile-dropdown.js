@@ -8,6 +8,8 @@ import Image from "next/image";
 import Pfp from "@/public/psw-pfp.jpg";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
+import { ExternalLink } from "lucide-react";
 
 export async function ProfilePopover({ children }) {
   const user = await isAuthenticated();
@@ -33,12 +35,71 @@ export async function ProfilePopover({ children }) {
             />
             <div>
               <h1 className="font-medium">Amar, Muric</h1>
-              <h2 className="text-sm text-[#ee6711]">{user.email}</h2>
+              <h2 className="text-sm text-primary">{user.email}</h2>
             </div>
           </div>
-          <Button asChild>
-            <Link href="/settings/profile">Edit profile</Link>
-          </Button>
+          <section className="text-sm flex flex-col">
+            <Link
+              className="hover:bg-primary/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              View profile
+            </Link>
+            <Link
+              className="hover:bg-primary/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              Edit profile
+            </Link>
+            <Separator className="my-1" />
+            <Link
+              className="hover:bg-primary/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              Profile Settings
+            </Link>
+            <Link
+              className="hover:bg-primary/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              Account Settings
+            </Link>
+            <Separator className="my-1" />
+            <Link
+              className="hover:bg-primary/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              Notifications
+            </Link>
+            <Separator className="my-1" />
+            <Link
+              className="hover:bg-primary/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              Help and Support
+            </Link>
+            <Link
+              className="hover:bg-primary/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              Log out
+            </Link>
+            <Separator className="my-1" />
+            <Link
+              className="p-2 transition-all group"
+              href="https://github.com/AmarMuric04/GoBot"
+            >
+              <div className="flex justify-between items-center transition-all">
+                <p className="text-lg font-bold group-hover:text-primary">
+                  Check out GoBot
+                </p>
+                <ExternalLink />
+              </div>
+              <p className="text-xs text-secondary-foreground italic">
+                A CLI Tool to automate password managemenet and creation.
+              </p>
+            </Link>
+          </section>
         </div>
       </PopoverContent>
     </Popover>
