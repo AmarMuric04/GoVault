@@ -11,12 +11,6 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { CreatePasswordDialog } from "@/components/dialogs/create-password-dialog";
 import { EditPasswordDialog } from "@/components/dialogs/edit-password-dialog";
 import { Button } from "@/components/ui/button";

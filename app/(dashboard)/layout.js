@@ -12,8 +12,7 @@ export default async function DashboardLayout({ children }) {
     <main className="flex text-white h-screen">
       <Sidebar />
       <main className="w-full flex flex-col h-screen max-h-screen overflow-hidden">
-        <Header user={user} />
-        <StoreUser user={user} />
+        <Header />
         <section className="p-10 flex flex-col ml-10 h-9/10 max-h-9/10 text-white">
           {children}
         </section>

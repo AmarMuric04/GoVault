@@ -1,7 +1,8 @@
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
-
 import ReactQueryProvider from "@/providers/react-query";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
+import UserProvider from "@/providers/user-provider";
 
 export const metadata = {
   icons: {
@@ -11,6 +12,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+  const user = await isAuthenticated();
+
   return (
     <html lang="en" className="montserrat">
       <head>
@@ -30,6 +33,7 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="bg-background">
         <ReactQueryProvider>
+          <UserProvider user={user} />
           {children}
           <Toaster />
         </ReactQueryProvider>
