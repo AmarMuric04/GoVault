@@ -14,24 +14,45 @@ export default function SettingsOptions() {
     <nav className="flex flex-col gap-2 text-sm w-full my-5">
       <Button
         className="justify-start"
-        variant={mode === "profile" ? "secondary" : "link"}
+        variant={mode === "profile" ? "" : "link"}
         asChild
       >
-        <Link href="/settings/notifications">Profile</Link>
+        <Link href="/settings/profile">Profile</Link>
       </Button>
       <Button
         className="justify-start"
-        variant={mode === "account" ? "secondary" : "link"}
+        variant={mode === "photo" ? "" : "link"}
         asChild
       >
-        <Link href="/settings/notifications">Account</Link>
+        <Link href="/settings/photo">Photo</Link>
       </Button>
       <Button
         className="justify-start"
-        variant={mode === "notifications" ? "secondary" : "link"}
+        variant={mode === "account" ? "" : "link"}
+        asChild
+      >
+        <Link href="/settings/account">Account</Link>
+      </Button>
+      <Button
+        className="justify-start"
+        variant={mode === "notifications" ? "" : "link"}
         asChild
       >
         <Link href="/settings/notifications">Notifications</Link>
+      </Button>
+      <Button
+        className="justify-start"
+        variant={mode === "security" ? "" : "link"}
+        asChild
+      >
+        <Link href="/settings/security">Security</Link>
+      </Button>
+      <Button
+        className="justify-start"
+        variant={mode === "close-account" ? "" : "link"}
+        asChild
+      >
+        <Link href="/settings/close-account">Close Account</Link>
       </Button>
     </nav>
   );

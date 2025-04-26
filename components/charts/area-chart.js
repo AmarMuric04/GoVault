@@ -15,7 +15,7 @@ const AreaChart = memo(({ data }) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaC data={data} key={data?.length || "chart"}>
-        <CartesianGrid stroke="#111" />
+        <CartesianGrid stroke="#00000010" />
         <XAxis dataKey="date" name="Date" />
         <YAxis dataKey="value" name="Value" axisLine={false} />
         <Tooltip labelClassName="text-black" />
@@ -23,7 +23,7 @@ const AreaChart = memo(({ data }) => {
           type="monotone"
           dataKey="value"
           name="Total passwords"
-          stroke="#ee6711"
+          stroke="#0118D8"
           fill="#ffffff40"
           dot={{ r: 0 }}
           strokeWidth={2}

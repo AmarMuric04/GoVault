@@ -47,10 +47,10 @@ export default function VaultPage() {
   return (
     <div className="w-full h-full">
       <Container className="h-full">
-        <h1 className="text-lg font-semibold border-b-1 border-zinc-900 p-4">
+        <h1 className="text-lg font-semibold border-b-1 p-4">
           Passwords stored in Your Vault
         </h1>
-        <div className="border-b-1 border-zinc-900 flex gap-4 items-center p-4 justify-between">
+        <div className="border-b-1 flex gap-4 items-center p-4 justify-between">
           {!showMoreInfo && (
             <PasswordDialog
               action={getFullPasswordInfo}
@@ -88,17 +88,17 @@ export default function VaultPage() {
             </Button>
 
             <CreatePasswordDialog>
-              <button className="flex gap-2 items-center bg-[#ee6711] px-4 py-2 hover:rounded-[2rem] transition-all border-1 border-zinc-900 rounded-md hover:bg-[#ee671190]">
+              <Button className="flex gap-2 items-center">
                 <Plus />
                 Add a new password
-              </button>
+              </Button>
             </CreatePasswordDialog>
           </div>
         </div>
         <section className="w-full max-h-full overflow-auto h-full">
           {isLoading && (
             <div className="w-full h-full grid place-items-center">
-              <HashLoader color="#ee6711" size={40} />
+              <HashLoader color="#0118D8" size={40} />
             </div>
           )}
           {!isLoading && (

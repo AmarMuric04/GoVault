@@ -178,13 +178,12 @@ export function CreatePasswordDialog({ children, password }) {
           <Button
             onClick={() => setOpen(false)}
             disabled={isPending}
-            variant="outline"
-            className="bg-transparent border-1 border-zinc-900"
+            variant="link"
           >
             Cancel
           </Button>
           {!password && (
-            <Button asChild variant="secondary" disabled={isPending}>
+            <Button asChild variant="outline" disabled={isPending}>
               <Link href="/generate">Use Generator</Link>
             </Button>
           )}
@@ -192,7 +191,6 @@ export function CreatePasswordDialog({ children, password }) {
             onClick={handleAddPassword}
             type="submit"
             disabled={isPending}
-            className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
           >
             {isPending && <Loader2 className="animate-spin" />}
             {isSuccess && <Check />}

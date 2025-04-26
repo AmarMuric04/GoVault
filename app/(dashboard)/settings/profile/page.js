@@ -2,21 +2,37 @@ import AuthInput from "@/components/form/auth-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Separator } from "@/components/ui/separator";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const user = await isAuthenticated();
+
   return (
     <>
-      <div className="pb-5 mb-5 border-b-1 border-zinc-900">
-        <h1 className="text-xl font-medium">Profile</h1>
-        <p className="text-sm text-gray-400">
-          This is how others will see you on the site.
-        </p>
+      <h1 className="text-xl font-medium">Profile</h1>
+      <p className="text-sm">This is how others will see you on the site.</p>
+      <Separator className="my-4" />
+      <div className="flex flex-col gap-2">
+        <AuthInput
+          name="text"
+          label="First Name"
+          placeholder="John"
+          className="border-zinc-900"
+        />
+        <AuthInput
+          name="text"
+          label="Last Name"
+          placeholder="Doe"
+          className="border-zinc-900"
+        />
       </div>
+      <Separator className="my-4" />
       <div className="mb-5 grid w-full gap-1.5">
         <AuthInput
           name="text"
           label="Username"
-          placeholder="Amar Muric"
+          placeholder="@johndoe"
           className="border-zinc-900"
         />
         <p className="text-sm text-muted-foreground">
@@ -30,6 +46,7 @@ export default function ProfilePage() {
           name="text"
           label="Email"
           placeholder="Select a verified email to display"
+          value={user.email}
         />
         <p className="text-sm text-muted-foreground">
           You can manage verified email addresses in your email settings.
@@ -48,9 +65,7 @@ export default function ProfilePage() {
         </p>
       </div>
 
-      <Button className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem] self-end">
-        Save to Vault
-      </Button>
+      <Button>Save to Vault</Button>
     </>
   );
 }

@@ -38,7 +38,7 @@ const renderActiveShape = (props) => {
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
-        fill="#ee6711"
+        fill="#0118D8"
       />
       <Sector
         cx={cx}
@@ -90,8 +90,8 @@ const OutlinePieChart = memo(({ data }) => {
           cy="50%"
           innerRadius={50}
           outerRadius={70}
-          stroke="#000"
-          fill="#fff"
+          stroke="#1B56FD"
+          fill="#1B56FD"
           dataKey="value"
           onMouseEnter={(_, index) => setActiveIndex(index)}
         />

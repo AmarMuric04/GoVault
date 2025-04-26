@@ -13,24 +13,30 @@ export default function AccountPage() {
         Update your account settings. Set your preferred language and timezone.
       </p>
       <Separator className="my-4" />
+      <div className="space-y-4 mb-8">
+        <AuthInput
+          name="text"
+          label="Current password"
+          placeholder="password"
+          className="border-zinc-900"
+        />
 
-      <div className="mb-5 grid w-full gap-1.5">
-        <Label htmlFor="date">Date of birth</Label>
-        <DatePicker />
-        <p className="text-sm text-muted-foreground">
-          Your date of birth is used to calculate your age.
-        </p>
+        <AuthInput
+          name="text"
+          label="New password"
+          placeholder="New password"
+          className="border-zinc-900"
+        />
+
+        <AuthInput
+          name="text"
+          label="Confirm new password"
+          placeholder="Confirm new password"
+          className="border-zinc-900"
+        />
       </div>
 
-      <div className="mb-5 grid w-full gap-1.5">
-        <Label htmlFor="date">Language</Label>
-        <LanguageCombobox />
-        <p className="text-sm text-muted-foreground">
-          This is the language that will be used in the dashboard.
-        </p>
-      </div>
-
-      <Button>Update account</Button>
+      <Button>Save Changes</Button>
     </>
   );
 }

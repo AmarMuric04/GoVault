@@ -107,14 +107,13 @@ export function DeletePasswordDialog({ children, password }) {
           <Button
             onClick={() => setOpen(false)}
             disabled={isPending}
-            variant="outline"
+            variant="link"
           >
             Cancel
           </Button>
           <Button
-            className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
             type="submit"
-            variant="desctructive"
+            variant="destructive"
             disabled={isPending}
             onClick={handleDeletePassword}
           >

@@ -20,10 +20,10 @@ export default function Row({ showMoreInfo, password }) {
 
   return (
     <TableRow
-      className={`p-4 border-zinc-900 ${
+      className={`p-4 ${
         (showMoreInfo || showPassword) && password.strength === "Critical"
           ? "bg-red-600/20"
-          : "bg-zinc-950"
+          : ""
       }`}
     >
       <TableCell className="font-medium">
@@ -61,7 +61,7 @@ export default function Row({ showMoreInfo, password }) {
       <TableCell className="text-right">
         <div className="flex gap-2 items-center justify-end w-full">
           <EditPasswordDialog passwordId={password._id}>
-            <Button variant="secondary">
+            <Button>
               <Edit />
             </Button>
           </EditPasswordDialog>

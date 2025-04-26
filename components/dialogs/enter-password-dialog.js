@@ -84,17 +84,12 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
         <DialogFooter>
           <Button
             onClick={() => setOpen(false)}
-            variant="outline"
+            variant="link"
             disabled={isPending}
           >
             Cancel
           </Button>
-          <Button
-            className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
-            type="submit"
-            disabled={isPending}
-            onClick={checkPassword}
-          >
+          <Button type="submit" disabled={isPending} onClick={checkPassword}>
             {isPending && <Loader2 className="animate-spin" />}
             {isSuccess && <Check />}
             {isError && <CircleX />}

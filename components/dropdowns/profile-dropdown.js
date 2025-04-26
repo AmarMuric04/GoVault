@@ -71,6 +71,12 @@ export async function ProfilePopover({ children }) {
             >
               Notifications
             </Link>
+            <Link
+              className="hover:bg-primary/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              Security
+            </Link>
             <Separator className="my-1" />
             <Link
               className="hover:bg-primary/20 p-2 transition-all"
@@ -83,6 +89,12 @@ export async function ProfilePopover({ children }) {
               href="/settings/profile"
             >
               Log out
+            </Link>
+            <Link
+              className="hover:bg-red-600/20 p-2 transition-all"
+              href="/settings/profile"
+            >
+              Close Account
             </Link>
             <Separator className="my-1" />
             <Link

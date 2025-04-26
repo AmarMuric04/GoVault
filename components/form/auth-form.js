@@ -108,7 +108,7 @@ export default function AuthForm({ mode }) {
           </Button>
         </div>
       )}
-      <Button disabled={isPending || isSuccess}>
+      <Button id="authenticate" disabled={isPending || isSuccess}>
         {isPending && <Loader2 className="animate-spin" />}
         {isSuccess && <Check />}
         {isError && <CircleX />}

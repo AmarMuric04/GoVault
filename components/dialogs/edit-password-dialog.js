@@ -146,12 +146,12 @@ export function EditPasswordDialog({ children, password, passwordId }) {
           <Button
             onClick={() => setOpen(false)}
             disabled={isPending}
-            variant="outline"
+            variant="link"
           >
             Cancel
           </Button>
           {!password && (
-            <Button variant="secondary" asChild disabled={isPending}>
+            <Button variant="outline" asChild disabled={isPending}>
               <Link href={`/generate?editing=${passwordId}`}>
                 Use Generator
               </Link>
@@ -161,7 +161,6 @@ export function EditPasswordDialog({ children, password, passwordId }) {
             onClick={handleEditPassword}
             type="submit"
             disabled={isPending}
-            className="bg-[#ee6711] hover:bg-[#ee671180] transition-all rounded-md hover:rounded-[2rem]"
           >
             {isPending && <Loader2 className="animate-spin" />}
             {isSuccess && <Check />}

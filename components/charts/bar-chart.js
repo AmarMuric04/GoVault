@@ -25,21 +25,21 @@ const BarChart = memo(({ data }) => {
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         barCategoryGap="50%"
       >
-        <CartesianGrid strokeDasharray="3 3" stroke="#111" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#00000010" />
         <XAxis dataKey="date" />
         <YAxis axisLine={false} />
         <Tooltip />
         <Legend />
         <Bar
           dataKey="Your passwords"
-          fill="#ee6711"
-          activeBar={<Rectangle fill="#ee6711" stroke="#ee6711" />}
+          fill="#0118D8"
+          activeBar={<Rectangle fill="#0118D8" stroke="#0118D8" />}
           barSize={20}
         />
         <Bar
           dataKey="Others' passwords"
-          fill="#aaa"
-          activeBar={<Rectangle fill="#555" stroke="#555" />}
+          fill="#1B56FD"
+          activeBar={<Rectangle fill="#1B56FD" stroke="#1B56FD" />}
           barSize={20}
         />
       </RechartsBarChart>
