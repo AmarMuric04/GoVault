@@ -35,8 +35,6 @@ export default function AccountPage() {
           className="border-zinc-900"
         />
       </div>
-
-      <Button>Save Changes</Button>
     </>
   );
 }

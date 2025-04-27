@@ -15,13 +15,15 @@ export default async function ProfilePage() {
       <Separator className="my-4" />
       <div className="flex flex-col gap-2">
         <AuthInput
-          name="text"
+          type="text"
+          name="firstName"
           label="First Name"
           placeholder="John"
           className="border-zinc-900"
         />
         <AuthInput
-          name="text"
+          type="text"
+          name="lastName"
           label="Last Name"
           placeholder="Doe"
           className="border-zinc-900"
@@ -30,7 +32,8 @@ export default async function ProfilePage() {
       <Separator className="my-4" />
       <div className="mb-5 grid w-full gap-1.5">
         <AuthInput
-          name="text"
+          type="text"
+          name="username"
           label="Username"
           placeholder="@johndoe"
           className="border-zinc-900"
@@ -43,10 +46,11 @@ export default async function ProfilePage() {
       <div className="mb-5 grid w-full gap-1.5">
         <AuthInput
           className="border-zinc-900"
-          name="text"
+          type="email"
+          name="email"
           label="Email"
           placeholder="Select a verified email to display"
-          value={user.email}
+          defaultValue={user.email}
         />
         <p className="text-sm text-muted-foreground">
           You can manage verified email addresses in your email settings.
@@ -56,6 +60,7 @@ export default async function ProfilePage() {
       <div className="grid w-full gap-1.5 mb-5">
         <Label htmlFor="message-2">Bio</Label>
         <Textarea
+          name="bio"
           className="border-zinc-900 max-h-40"
           placeholder="Your bio..."
           id="message-2"
@@ -64,8 +69,6 @@ export default async function ProfilePage() {
           You can @mention other users and organizations to link to them.
         </p>
       </div>
-
-      <Button>Save to Vault</Button>
     </>
   );
 }

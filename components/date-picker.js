@@ -18,15 +18,15 @@ export function DatePicker() {
 
   return (
     <Popover>
-      <PopoverTrigger asChild id="date">
+      <PopoverTrigger asChild>
         <Button
-          variant={"outline"}
+          variant="outline"
           className={cn(
             "w-[240px] justify-start text-left font-normal",
             !date && "text-muted-foreground"
           )}
         >
-          <CalendarIcon />
+          <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? format(date, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
@@ -38,6 +38,12 @@ export function DatePicker() {
           initialFocus
         />
       </PopoverContent>
+
+      <input
+        type="hidden"
+        name="dateOfBirth"
+        value={date ? date.toISOString().split("T")[0] : ""}
+      />
     </Popover>
   );
 }

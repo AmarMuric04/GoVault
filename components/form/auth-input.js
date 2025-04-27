@@ -2,11 +2,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { InfoIcon } from "lucide-react";
 
-export default function AuthInput({ name, label, errors, ...props }) {
+export default function AuthInput({ type, name, label, errors, ...props }) {
   return (
     <div className="grid w-full items-center gap-1.5">
       <Label htmlFor={name}>{label}</Label>
-      <Input type={name} id={name} name={name} {...props} />
+      <Input type={type} id={name} name={name} {...props} />
       {errors?.[name] && (
         <div
           id="error"

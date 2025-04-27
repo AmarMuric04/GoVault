@@ -13,6 +13,7 @@ import { RectangleEllipsis, ThumbsUp, ShieldX, Ruler } from "lucide-react";
 
 export default async function OverviewPage() {
   const user = await isAuthenticated();
+
   if (!user) return <Locked />;
 
   const generalPasswordStats = await getPasswordStatisticsByUserId();
@@ -64,7 +65,7 @@ export default async function OverviewPage() {
         <OverallStatisticsSection />
       </Suspense>
 
-      <div className="col-span-1 row-span-3 bg-[#ee6711] p-8 rounded-md shadow-md flex flex-col">
+      <div className="col-span-1 row-span-3 bg-primary p-8 rounded-md shadow-md flex flex-col">
         <h1 className="text-4xl font-medium">4,923</h1>
         <p className="text-sm text-gray-100">Active Users</p>
       </div>

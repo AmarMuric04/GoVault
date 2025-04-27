@@ -6,13 +6,10 @@ import {
 } from "@/lib/actions/password/statistics.actions";
 import { formatMongoDate } from "@/formatters/date";
 import Container from "@/components/container";
-import { HashLoader } from "react-spinners";
 import { ShieldUser } from "lucide-react";
-
-const BarChart = dynamic(() => import("@/components/charts/bar-chart"));
-const OutlinePieChart = dynamic(() =>
-  import("@/components/charts/outline-pie-chart")
-);
+import { Separator } from "../ui/separator";
+import BarChart from "@/components/charts/bar-chart";
+import OutlinePieChart from "@/components/charts/outline-pie-chart";
 
 export default async function BarAndPieSection() {
   const [barData, countComparison] = await Promise.all([
@@ -22,9 +19,8 @@ export default async function BarAndPieSection() {
 
   return (
     <Container className="col-span-3 row-span-3">
-      <h1 className="text-lg font-semibold mb-4 border-b-1 border-zinc-900 p-4">
-        Your vs. Others' Passwords
-      </h1>
+      <h1 className="text-lg font-semibold p-4">Your vs. Others' Passwords</h1>
+      <Separator className="mb-4" />
       <div className="flex justify-between h-full">
         <div className="w-1/2 h-full">
           <BarChart

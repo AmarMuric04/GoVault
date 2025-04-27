@@ -7,6 +7,7 @@ import HoverTitle from "../hover-title";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { Bot } from "lucide-react";
 
 export default async function Header() {
   const user = await isAuthenticated();
@@ -29,6 +30,14 @@ export default async function Header() {
           {/* <button>
           <Mail size={25} />
         </button> */}
+          <Link
+            href="https://github.com/AmarMuric04/GoBot"
+            className="hover:bg-primary/20 p-2 transition-all"
+          >
+            <HoverTitle title="Check out GoBot">
+              <Bot size={18} />
+            </HoverTitle>
+          </Link>
           <Link
             href="/settings"
             className="hover:bg-primary/20 p-2 transition-all"

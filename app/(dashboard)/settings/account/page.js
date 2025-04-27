@@ -29,8 +29,6 @@ export default function AccountPage() {
           This is the language that will be used in the dashboard.
         </p>
       </div>
-
-      <Button>Update account</Button>
     </>
   );
 }

@@ -29,7 +29,7 @@ const languages = [
     label: "Bosnian",
   },
   {
-    value: "nglish",
+    value: "english",
     label: "English",
   },
 ];
@@ -55,7 +55,10 @@ export function LanguageCombobox() {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search language..." className="h-9" />
+          <CommandInput
+            placeholder="Search for a language..."
+            className="h-9"
+          />
           <CommandList>
             <CommandEmpty>No languages found.</CommandEmpty>
             <CommandGroup>
@@ -81,6 +84,8 @@ export function LanguageCombobox() {
           </CommandList>
         </Command>
       </PopoverContent>
+
+      <input type="hidden" name="language" value={value} />
     </Popover>
   );
 }
