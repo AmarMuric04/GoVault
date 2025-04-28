@@ -72,6 +72,7 @@ export default function AuthForm({ mode }) {
           setFormValues({ ...formValues, email: e.target.value })
         }
         name="email"
+        type="email"
         placeholder="Email"
         label="Email"
         onFocus={() => handleFocus("email")}
@@ -84,6 +85,7 @@ export default function AuthForm({ mode }) {
           setFormValues({ ...formValues, password: e.target.value })
         }
         name="password"
+        type="password"
         placeholder="Password"
         label="Password"
         onFocus={() => handleFocus("password")}

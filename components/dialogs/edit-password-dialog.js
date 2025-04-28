@@ -117,6 +117,7 @@ export function EditPasswordDialog({ children, password, passwordId }) {
           {!password && (
             <AuthInput
               name="password"
+              type="password"
               label="My new password is"
               errors={errors}
               placeholder="Enter your password"

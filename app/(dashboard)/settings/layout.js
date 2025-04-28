@@ -16,7 +16,7 @@ export default async function SettingsPage({ children }) {
       <p>Manage your account settings and set e-mail preferences.</p>
       <Separator className="mt-4" />
       <main className="grid grid-cols-6 w-full gap-5">
-        <aside className="col-span-1 flex items-center">
+        <aside className="col-span-1 flex">
           <SettingsOptions />
           <Separator orientation="vertical" className="mx-4" />
         </aside>

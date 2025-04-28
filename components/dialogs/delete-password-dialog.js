@@ -68,6 +68,7 @@ export function DeletePasswordDialog({ children, password }) {
         <div className="grid gap-4 py-4">
           <AuthInput
             name="verifier"
+            type="text"
             label={
               <p>
                 Please enter "
@@ -88,6 +89,7 @@ export function DeletePasswordDialog({ children, password }) {
           />
           <AuthInput
             name="password"
+            type="password"
             label="Your accounts password is"
             errors={errors}
             placeholder="Enter your accounts password"

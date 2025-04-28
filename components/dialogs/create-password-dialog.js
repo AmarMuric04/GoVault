@@ -138,6 +138,7 @@ export function CreatePasswordDialog({ children, password }) {
           {!password && (
             <AuthInput
               name="password"
+              type="password"
               label="My password is"
               errors={errors}
               placeholder="Enter your password"
@@ -151,6 +152,7 @@ export function CreatePasswordDialog({ children, password }) {
           )}
           <AuthInput
             name="source"
+            type="text"
             label="I want to use this password for"
             errors={errors}
             placeholder="My Google account"
@@ -163,6 +165,7 @@ export function CreatePasswordDialog({ children, password }) {
           />
           <AuthInput
             name="notes"
+            type="text"
             label="Attached notes for this password are (optional)"
             errors={errors}
             placeholder="Enter your notes"

@@ -75,6 +75,7 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
           <div className="grid gap-4 mb-4">
             <AuthInput
               name="email"
+              type="email"
               label="Email"
               placeholder="Enter your email"
               errors={errors}
@@ -91,6 +92,7 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
           <div className="grid gap-4">
             <AuthInput
               name="password"
+              type="password"
               label="Password"
               placeholder="Enter your password"
               errors={errors}
