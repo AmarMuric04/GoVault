@@ -72,11 +72,11 @@ export default function GeneratePage() {
         </div>
         {isEditing ? (
           <EditPasswordDialog password={password} passwordId={isEditing}>
-            <Button className="save-changes">Save Changes</Button>
+            <Button id="save-changes">Save Changes</Button>
           </EditPasswordDialog>
         ) : (
           <CreatePasswordDialog password={password}>
-            <Button className="save-to-vault">Save to Vault</Button>
+            <Button id="save-to-vault">Save to Vault</Button>
           </CreatePasswordDialog>
         )}
       </div>
@@ -152,18 +152,18 @@ export default function GeneratePage() {
           />
           {!user && (
             <AuthDialog>
-              <Button>Save to Vault</Button>
+              <Button id="save-to-vault">Save to Vault</Button>
             </AuthDialog>
           )}
           {user && (
             <>
               {isEditing ? (
                 <EditPasswordDialog password={password} passwordId={isEditing}>
-                  <Button>Save Changes</Button>
+                  <Button id="save-changes">Save Changes</Button>
                 </EditPasswordDialog>
               ) : (
                 <CreatePasswordDialog password={password}>
-                  <Button>Save to Vault</Button>
+                  <Button id="save-to-vault">Save to Vault</Button>
                 </CreatePasswordDialog>
               )}
             </>
