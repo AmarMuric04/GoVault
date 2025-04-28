@@ -35,7 +35,7 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
 
   const {
     mutate: authenticate,
-    isLoading,
+    isPending,
     isSuccess,
     isError,
   } = useMutation({
@@ -48,7 +48,6 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
     },
     onSuccess: (data) => {
       onSuccess(data);
-      setOpen(false);
     },
     onError: (errorData) => {
       setErrors(errorData.errors || {});
@@ -127,12 +126,12 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
               type="button"
               onClick={() => setOpen(false)}
               variant="link"
-              disabled={isLoading}
+              disabled={isPending}
             >
               Cancel
             </Button>
-            <Button title="signin" type="submit" disabled={isLoading}>
-              {isLoading && <Loader2 className="animate-spin" />}{" "}
+            <Button title="signin" type="submit" disabled={isPending}>
+              {isPending && <Loader2 className="animate-spin" />}{" "}
               {isSuccess && <Check />}
               {isError && <CircleX />}
               Sign In

@@ -29,6 +29,8 @@ export default function GeneratePage() {
     symbols: true,
     digits: true,
   });
+
+  console.log(!!user, user);
   const [password, setPassword] = useState(() => generatePassword(20, config));
   const [strength, setStrength] = useState(getPasswordStrength(password));
 
