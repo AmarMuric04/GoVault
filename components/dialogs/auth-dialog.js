@@ -130,7 +130,7 @@ export function AuthDialog({ children, onSuccess = () => {} }) {
             >
               Cancel
             </Button>
-            <Button title="signin" type="submit" disabled={isPending}>
+            <Button id="signin" type="submit" disabled={isPending}>
               {isPending && <Loader2 className="animate-spin" />}{" "}
               {isSuccess && <Check />}
               {isError && <CircleX />}

@@ -153,7 +153,7 @@ export default function GeneratePage() {
           {!user && (
             <AuthDialog>
               <Button id="save-to-vault">Save to Vault</Button>
-            </AuthDialog>
+            </AuthDialog> 
           )}
           {user && (
             <>
