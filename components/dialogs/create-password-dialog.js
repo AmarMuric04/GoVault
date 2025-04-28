@@ -193,6 +193,7 @@ export function CreatePasswordDialog({ children, password }) {
           <Button
             onClick={handleAddPassword}
             type="submit"
+            id="submit"
             disabled={isPending}
           >
             {isPending && <Loader2 className="animate-spin" />}

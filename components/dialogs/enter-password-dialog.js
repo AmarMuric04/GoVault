@@ -83,13 +83,19 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
         </div>
         <DialogFooter>
           <Button
+            id="cancel"
             onClick={() => setOpen(false)}
             variant="link"
             disabled={isPending}
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isPending} onClick={checkPassword}>
+          <Button
+            id="proceed"
+            type="submit"
+            disabled={isPending}
+            onClick={checkPassword}
+          >
             {isPending && <Loader2 className="animate-spin" />}
             {isSuccess && <Check />}
             {isError && <CircleX />}

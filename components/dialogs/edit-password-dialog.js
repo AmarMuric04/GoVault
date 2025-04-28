@@ -148,17 +148,24 @@ export function EditPasswordDialog({ children, password, passwordId }) {
             onClick={() => setOpen(false)}
             disabled={isPending}
             variant="link"
+            id="cancel"
           >
             Cancel
           </Button>
           {!password && (
-            <Button variant="outline" asChild disabled={isPending}>
+            <Button
+              id="use-generator"
+              variant="outline"
+              asChild
+              disabled={isPending}
+            >
               <Link href={`/generate?editing=${passwordId}`}>
                 Use Generator
               </Link>
             </Button>
           )}
           <Button
+            id="submit"
             onClick={handleEditPassword}
             type="submit"
             disabled={isPending}

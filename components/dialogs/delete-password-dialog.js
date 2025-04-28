@@ -109,12 +109,14 @@ export function DeletePasswordDialog({ children, password }) {
           <Button
             onClick={() => setOpen(false)}
             disabled={isPending}
+            id="cancel"
             variant="link"
           >
             Cancel
           </Button>
           <Button
             type="submit"
+            id="delete"
             variant="destructive"
             disabled={isPending}
             onClick={handleDeletePassword}
