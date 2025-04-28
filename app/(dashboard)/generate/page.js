@@ -70,11 +70,11 @@ export default function GeneratePage() {
         </div>
         {isEditing ? (
           <EditPasswordDialog password={password} passwordId={isEditing}>
-            <Button id="save-changes">Save Changes</Button>
+            <Button className="save-changes">Save Changes</Button>
           </EditPasswordDialog>
         ) : (
           <CreatePasswordDialog password={password}>
-            <Button id="save-to-vault">Save to Vault</Button>
+            <Button className="save-to-vault">Save to Vault</Button>
           </CreatePasswordDialog>
         )}
       </div>
