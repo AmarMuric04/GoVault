@@ -4,22 +4,68 @@ import Image from "next/image";
 import Link from "next/link";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
+import Phone from "@/public/phone.png";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Check, Hash, Shield } from "lucide-react";
 
 export default async function LandingPage() {
   return (
-    <main className="w-screen h-screen grid place-items-center">
-      <div className="flex items-center flex-col gap-4">
-        <Image width={150} height={50} priority src={Logo} alt="logo" />
-        <p className="text-foreground text-sm w-[200px] text-center">
-          Your passwords, <br />
-          securely stored.
-          <br /> Always accessible.
-        </p>
-        <Button className="bg-primary text-primary-foreground">
-          <Link href="/generate">Go to the Dashboard</Link>
-        </Button>
-        <span className="text-xs text-gray-400">No sign-up required</span>
-      </div>
+    <main className="w-screen">
+      <section className="bg-primary flex w-full h-[45rem] py-[10rem] px-[15rem] overflow-hidden">
+        <div className="h-full flex items-center w-1/2">
+          <div>
+            <Image src={Logo} width={150} alt="logo" />
+            <h1 className="text-[3rem] font-bold">Be safe and stay safe</h1>
+            <Separator className="my-8" />
+            <div>
+              <Button variant="secondary">Generate A Password</Button>
+            </div>
+          </div>
+        </div>
+        <div className="h-full grid place-items-center w-1/2">
+          <Image
+            src={Phone}
+            width={300}
+            alt="phone"
+            className="relative top-20"
+          />
+        </div>
+      </section>
+      <section className="px-[15rem] py-[5rem] flex justify-between items-start">
+        <div className="flex gap-4 w-3/10 ">
+          <div className="bg-secondary rounded-md min-w-14 h-14 grid place-items-center">
+            <Check />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold">Easy to use.</h2>
+            <p className="text-secondary-foreground italic">
+              So easy to use, even your dog could do it.
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-4 w-3/10">
+          <div className="bg-secondary rounded-md min-w-14 h-14 grid place-items-center">
+            <Shield />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold">Guaranteed safety.</h2>
+            <p className="text-secondary-foreground italic">
+              Store your password in your vault and forget about it.
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-4 w-3/10">
+          <div className="bg-secondary rounded-md min-w-14 h-14 grid place-items-center">
+            <Hash />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold">Elite Passwords.</h2>
+            <p className="text-secondary-foreground italic">
+              We create the best passwords.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
