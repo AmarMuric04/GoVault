@@ -23,10 +23,6 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
 
   const { user } = useAuthStore();
 
-  const handleFocus = (field) => {
-    setErrors((prev) => ({ ...prev, [field]: undefined }));
-  };
-
   const {
     mutate: checkPassword,
     isPending,
@@ -43,9 +39,9 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
       return data;
     },
     onSuccess: (data) => {
-      onSuccess(data);
-
       setOpen(false);
+      setPassword("");
+      onSuccess(data);
     },
     onError: (errorData) => {
       setErrors(errorData.errors || {});
@@ -57,6 +53,10 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
       open={open}
       onOpenChange={(isOpen) => {
         setOpen(isOpen);
+        if (!isOpen) {
+          setPassword("");
+          setErrors([]);
+        }
       }}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>

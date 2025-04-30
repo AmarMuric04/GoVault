@@ -27,6 +27,8 @@ The user has to enter their password to get that data.
 
 export default function VaultPage() {
   const { user } = useAuthStore();
+
+  console.log("Rendering vault page...");
   const { passwords, setPasswords } = usePasswordStore();
   const [showMoreInfo, setShowMoreInfo] = useState(false);
 

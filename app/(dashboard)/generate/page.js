@@ -22,6 +22,8 @@ import { AuthDialog } from "@/components/dialogs/auth-dialog";
 
 export default function GeneratePage() {
   const { user } = useAuthStore();
+  console.log("Rendering generate page...");
+
   const [length, setLength] = useState(20);
   const [config, setConfig] = useState({
     lowerCase: true,
@@ -153,7 +155,7 @@ export default function GeneratePage() {
           {!user && (
             <AuthDialog>
               <Button id="save-to-vault">Save to Vault</Button>
-            </AuthDialog> 
+            </AuthDialog>
           )}
           {user && (
             <>

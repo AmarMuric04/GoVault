@@ -49,7 +49,7 @@ export default function SettingsOptions() {
       </Button>
       <Button
         className="justify-start"
-        variant={mode === "close-account" ? "" : "link"}
+        variant={mode === "close-account" ? "outline" : "link"}
         asChild
       >
         <Link href="/settings/close-account">Close Account</Link>

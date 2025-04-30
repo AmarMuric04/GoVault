@@ -49,7 +49,10 @@ export default function SettingsForm({ children }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="col-span-3 my-5">
+    <form
+      onSubmit={handleSubmit}
+      className="col-span-3 my-5 flex flex-col items-start"
+    >
       {children}
       <Button id="save-changes" disabled={isPending || isSuccess}>
         {isPending && <Loader2 className="animate-spin" />}

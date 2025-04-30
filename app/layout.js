@@ -1,8 +1,9 @@
-import { Toaster } from "@/components/ui/sonner";
-import "./globals.css";
-import ReactQueryProvider from "@/providers/react-query";
+import { cookies } from "next/headers";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
+import ReactQueryProvider from "@/providers/react-query";
 import UserProvider from "@/providers/user-provider";
+import { Toaster } from "sonner";
+import "./globals.css";
 
 export const metadata = {
   icons: {
@@ -12,28 +13,15 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const user = await isAuthenticated();
+  const cookieStore = await cookies();
+  const theme = cookieStore.get("theme")?.value || "light";
 
   return (
-    <html lang="en" className="montserrat">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link
-          rel="icon"
-          href="/icon?<generated>"
-          type="image/<generated>"
-          sizes="<generated>"
-        />
-        <link
-          rel="apple-touch-icon"
-          href="/apple-icon?<generated>"
-          type="image/<generated>"
-          sizes="<generated>"
-        />
-      </head>
+    <html lang="en" className={`montserrat ${theme === "dark" ? "dark" : ""}`}>
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className="bg-background">
         <ReactQueryProvider>
-          <UserProvider user={user} />
+          <UserProvider />
           {children}
           <Toaster />
         </ReactQueryProvider>

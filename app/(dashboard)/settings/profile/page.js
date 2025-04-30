@@ -4,29 +4,30 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
+import SettingsForm from "@/components/form/settings-form";
 
 export default async function ProfilePage() {
   const user = await isAuthenticated();
 
   return (
-    <>
+    <SettingsForm>
       <h1 className="text-xl font-medium">Profile</h1>
       <p className="text-sm">This is how others will see you on the site.</p>
       <Separator className="my-4" />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-full">
         <AuthInput
           type="text"
           name="firstName"
           label="First Name"
+          defaultValue={user.firstName}
           placeholder="John"
-          className="border-zinc-900"
         />
         <AuthInput
           type="text"
           name="lastName"
+          defaultValue={user.lastName}
           label="Last Name"
           placeholder="Doe"
-          className="border-zinc-900"
         />
       </div>
       <Separator className="my-4" />
@@ -34,9 +35,9 @@ export default async function ProfilePage() {
         <AuthInput
           type="text"
           name="username"
+          defaultValue={user.username}
           label="Username"
           placeholder="@johndoe"
-          className="border-zinc-900"
         />
         <p className="text-sm text-muted-foreground">
           This is your public display name. It can be your real name or a
@@ -45,7 +46,6 @@ export default async function ProfilePage() {
       </div>
       <div className="mb-5 grid w-full gap-1.5">
         <AuthInput
-          className="border-zinc-900"
           type="email"
           name="email"
           label="Email"
@@ -61,14 +61,15 @@ export default async function ProfilePage() {
         <Label htmlFor="message-2">Bio</Label>
         <Textarea
           name="bio"
-          className="border-zinc-900 max-h-40"
+          className="max-h-40"
           placeholder="Your bio..."
           id="message-2"
+          defaultValue={user.bio}
         />
         <p className="text-sm text-muted-foreground">
           You can @mention other users and organizations to link to them.
         </p>
       </div>
-    </>
+    </SettingsForm>
   );
 }

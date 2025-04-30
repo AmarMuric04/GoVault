@@ -1,5 +1,5 @@
 import { isAuthenticated } from "@/lib/actions/auth.actions";
-import Header from "@/components/dashboard/header";
+import Header from "@/components/header";
 import Sidebar from "@/components/dashboard/sidebar";
 import StoreUser from "@/components/store-user";
 import { redirect } from "next/navigation";

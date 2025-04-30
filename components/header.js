@@ -1,13 +1,16 @@
 import Image from "next/image";
 import Pfp from "@/public/psw-pfp.jpg";
-import { NotificationsDropdown } from "../dropdowns/notifications-dropdown";
+import { NotificationsDropdown } from "./dropdowns/notifications-dropdown";
 import { Bell, Settings } from "lucide-react";
-import { ProfilePopover } from "../dropdowns/profile-dropdown";
-import HoverTitle from "../hover-title";
+import { ProfilePopover } from "./dropdowns/profile-dropdown";
+import HoverTitle from "./hover-title";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "./ui/button";
 import { Bot } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { Separator } from "./ui/separator";
+import { ThemeToggle } from "./theme-toggle";
 
 export default async function Header() {
   const user = await isAuthenticated();
@@ -18,7 +21,7 @@ export default async function Header() {
         {user ? "Welcome back!" : "Enjoy your stay!"}
       </h1>
       {user && (
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-4 items-center h-8">
           {/* <NotificationsDropdown>
             <HoverTitle title="Click to see notifications">
               <button>
@@ -30,6 +33,9 @@ export default async function Header() {
           {/* <button>
           <Mail size={25} />
         </button> */}
+
+          <ThemeToggle />
+          <Separator orientation="vertical" className="mx-1 h-6" />
           <Link
             href="https://github.com/AmarMuric04/GoBot"
             className="hover:bg-primary/20 p-2 transition-all"
@@ -46,19 +52,19 @@ export default async function Header() {
               <Settings size={18} />
             </HoverTitle>
           </Link>
+          <Separator orientation="vertical" className="mx-1 h-6" />
           <ProfilePopover>
-            <Image
-              src={Pfp}
-              alt="User's profile picture"
-              w={100}
-              h={100}
-              className="rounded-full w-10 h-10 cursor-pointer"
-            />
+            <Avatar className="bg-primary cursor-pointer">
+              <AvatarImage src={user.picture} />
+              <AvatarFallback>{user.email[0].toUpperCase()}</AvatarFallback>
+            </Avatar>
           </ProfilePopover>
         </div>
       )}
       {!user && (
         <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Separator orientation="vertical" className="mx-1 h-6" />
           <Button asChild variant="link">
             <Link href="/auth?mode=signin">Sign In</Link>
           </Button>

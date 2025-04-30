@@ -1,19 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
+import SettingsForm from "@/components/form/settings-form";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
+import useAuthStore from "@/store/useAuthStore";
 
 export default function AccountPage() {
-  const [notificationType, setNotificationType] = useState("comfortable");
-  const [passwordEmails, setPasswordEmails] = useState(false);
-  const [securityEmails, setSecurityEmails] = useState(false);
+  const { user } = useAuthStore();
+
+  console.log(user);
+  const [notificationType, setNotificationType] = useState(
+    user.notificationType
+  );
+  const [passwordEmails, setPasswordEmails] = useState(user.passwordEmails);
+  const [securityEmails, setSecurityEmails] = useState(user.securityEmails);
 
   return (
-    <>
+    <SettingsForm>
       <h1 className="text-xl font-medium">Notifications</h1>
       <p className="text-sm text-gray-400">
         Configure how you receive notifications.
@@ -28,15 +35,15 @@ export default function AccountPage() {
           className="my-5"
         >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="default" id="r1" />
+            <RadioGroupItem value="critical" id="r1" />
             <Label htmlFor="r1">Critical passwords</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="comfortable" id="r2" />
+            <RadioGroupItem value="bad" id="r2" />
             <Label htmlFor="r2">Bad passwords</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="compact" id="r3" />
+            <RadioGroupItem value="compromised" id="r3" />
             <Label htmlFor="r3">Compromised passwords</Label>
           </div>
         </RadioGroup>
@@ -82,6 +89,6 @@ export default function AccountPage() {
         name="securityEmails"
         value={securityEmails ? "true" : "false"}
       />
-    </>
+    </SettingsForm>
   );
 }

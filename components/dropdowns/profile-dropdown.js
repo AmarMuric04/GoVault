@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export async function ProfilePopover({ children }) {
   const user = await isAuthenticated();
@@ -26,16 +27,13 @@ export async function ProfilePopover({ children }) {
             </p>
           </div>
           <div className="flex gap-2 items-center cursor-pointer">
-            <Image
-              src={Pfp}
-              alt="User's profile picture"
-              w={100}
-              h={100}
-              className="rounded-full w-13 h-13"
-            />
+            <Avatar className="bg-primary">
+              <AvatarImage src={user?.picture || ""} />
+              <AvatarFallback>{user.email[0].toUpperCase()}</AvatarFallback>
+            </Avatar>
             <div>
-              <h1 className="font-medium">Amar, Muric</h1>
-              <h2 className="text-sm text-primary">{user.email}</h2>
+              <h1 className="font-medium text-sm">Amar, Muric</h1>
+              <h2 className="text-xs text-primary">{user.email}</h2>
             </div>
           </div>
           <section className="text-sm flex flex-col">

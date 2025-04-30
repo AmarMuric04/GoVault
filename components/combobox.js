@@ -34,9 +34,13 @@ const languages = [
   },
 ];
 
-export function LanguageCombobox() {
+export function LanguageCombobox({ val }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+
+  React.useEffect(() => {
+    setValue(val || null);
+  }, [val]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
