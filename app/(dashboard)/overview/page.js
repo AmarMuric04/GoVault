@@ -14,8 +14,6 @@ import { RectangleEllipsis, ThumbsUp, ShieldX, Ruler } from "lucide-react";
 export default async function OverviewPage() {
   const user = await isAuthenticated();
 
-  console.log("Rendering overview page...");
-
   if (!user) return <Locked />;
 
   const generalPasswordStats = await getPasswordStatisticsByUserId();
