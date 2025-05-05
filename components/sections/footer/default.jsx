@@ -15,11 +15,10 @@ export default function FooterSection({
   copyright = "© 2025 Amar Muric. All rights reserved",
 
   policies = [
-    { text: "Privacy Policy", href: "https://www.launchuicomponents.com/" },
-    { text: "Terms of Service", href: "https://www.launchuicomponents.com/" },
+    { text: "Privacy Policy", href: "/" },
+    { text: "Terms of Service", href: "/" },
   ],
 
-  showModeToggle = true,
   className,
 }) {
   const columns = links.map((link) => ({

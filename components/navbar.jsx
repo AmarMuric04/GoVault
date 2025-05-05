@@ -36,25 +36,13 @@ import {
 import Image from "next/image";
 
 const Navbar = async ({
-  logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://shadcnblocks.com/images/block/logos/shadcnblockscom-icon.svg",
-    alt: "logo",
-    title: "Shadcnblocks.com",
-  },
-
   menu = [
-    { title: "Home", url: "#" },
+    { title: "Home", url: "/" },
     {
       title: "Dashboard",
-      url: "#",
+      url: "/generate",
     },
   ],
-
-  auth = {
-    login: { title: "Signin", url: "/signin" },
-    signup: { title: "Sign up", url: "/signup" },
-  },
 }) => {
   const user = await isAuthenticated();
 
