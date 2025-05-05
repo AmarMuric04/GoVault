@@ -14,7 +14,7 @@ export default async function DashboardLayout({ children }) {
       <Sidebar />
       <main className="relative w-full flex flex-col h-screen max-h-screen overflow-hidden">
         <Header />
-        <section className="p-2 pt-10 md:p-10 flex flex-col mb-20 md:mb-0 md:ml-10 h-9/10 max-h-9/10 text-white">
+        <section className="p-2 pt-10 md:p-10 flex flex-col pb-20 md:pb-0 md:ml-10 h-9/10 max-h-9/10 text-white">
           {children}
         </section>
         <MobileNavigation />
