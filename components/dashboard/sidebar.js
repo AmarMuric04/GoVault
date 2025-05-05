@@ -11,7 +11,7 @@ export default function Sidebar({ user }) {
         width={150}
         height={50}
         alt="App's Logo"
-        className="self-center pt-12"
+        className="self-center pt-12 bg-white p-2 rounded-md"
       />
       <nav className="w-full">
         <SidebarLink href="/overview">

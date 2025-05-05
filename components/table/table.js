@@ -14,7 +14,7 @@ import { Info, Plus } from "lucide-react";
 export function VaultTable({ items, showMoreInfo }) {
   return (
     <>
-      <Table className="max-h-full">
+      <Table className="max-h-full transition-all">
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px] text-white">Source</TableHead>
