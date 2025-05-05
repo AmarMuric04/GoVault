@@ -52,15 +52,12 @@ const Navbar = async ({
         {/* Desktop Menu */}
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
-            {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <Image
-                src={Logo}
-                height={35}
-                alt="govault"
-                className="bg-white rounded-md p-2"
-              />
-            </a>
+            <Image
+              src={Logo}
+              height={35}
+              alt="govault"
+              className="bg-white rounded-md p-2"
+            />
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -120,14 +117,12 @@ const Navbar = async ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <Image
-                src={Logo}
-                alt="govault"
-                height={35}
-                className="bg-white rounded-md p-2"
-              />
-            </a>
+            <Image
+              src={Logo}
+              alt="govault"
+              height={35}
+              className="bg-white rounded-md p-2"
+            />
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -137,14 +132,12 @@ const Navbar = async ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <Image
-                        src={Logo}
-                        alt="govault"
-                        height={35}
-                        className="bg-white rounded-md p-2"
-                      />
-                    </a>
+                    <Image
+                      src={Logo}
+                      alt="govault"
+                      height={35}
+                      className="bg-white rounded-md p-2"
+                    />
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
