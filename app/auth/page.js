@@ -16,7 +16,7 @@ export default async function AuthPage({ searchParams }) {
 
   return (
     <main className="w-screen h-screen grid place-items-center">
-      <section className="bg-accent text-foreground border-1 w-1/4 px-12 pb-8 rounded-md">
+      <section className="bg-accent text-foreground border-1 w-[500px] h-screen md:h-auto px-12 pb-8 rounded-md">
         <Image
           width={150}
           height={50}

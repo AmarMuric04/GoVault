@@ -17,9 +17,10 @@ export default async function Header() {
 
   return (
     <header className="bg-accent text-foreground border-1 flex flex-grow h-[75px] max-h-[75px] items-center justify-between px-10">
-      <h1 className="font-bold text-xl montserrat">
+      <h1 className="font-bold text-xl montserrat hidden lg:block">
         {user ? "Welcome back!" : "Enjoy your stay!"}
       </h1>
+      <p className="lg:hidden"></p>
       {user && (
         <div className="flex gap-4 items-center h-8">
           {/* <NotificationsDropdown>

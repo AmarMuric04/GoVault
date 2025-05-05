@@ -136,14 +136,14 @@ export default function GeneratePage() {
   ];
 
   return (
-    <div className="grid grid-cols-3 grid-rows-10 gap-10 p-6 max-h-full h-full overflow-hidden">
-      <Container className="col-span-3 row-span-4 relative">
+    <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 xl:grid-rows-10 grid-rows-30 gap-10 p-6 2xl:max-h-full h-full 2xl:overflow-hidden overflow-y-scroll">
+      <Container className="col-span-1 xl:col-span-2 2xl:col-span-3 row-span-8 md:row-span-6 xl:row-span-4 relative">
         <h1 className="text-2xl font-semibold mb-4 border-b-1 border-zinc-900 p-4">
           Generate password
         </h1>
-        <div className="px-4 py-10 flex justify-center gap-4 items-center">
+        <div className="px-4 py-10 flex flex-col md:flex-row justify-center gap-4 items-center">
           <input
-            className="kode-mono text-[4rem] px-4 border-b-4 border-zinc-900"
+            className="sm:text-[1.5rem] md:text-[1.7rem] xl:text-[3rem] px-4 border-b-4 border-zinc-900"
             value={password}
             onChange={(e) => {
               const userPwd = e.target.value;
@@ -152,55 +152,60 @@ export default function GeneratePage() {
               setStrength(getPasswordStrength(userPwd));
             }}
           />
-          {!user && (
-            <AuthDialog>
-              <Button id="save-to-vault">Save to Vault</Button>
-            </AuthDialog>
-          )}
-          {user && (
-            <>
-              {isEditing ? (
-                <EditPasswordDialog password={password} passwordId={isEditing}>
-                  <Button id="save-changes">Save Changes</Button>
-                </EditPasswordDialog>
-              ) : (
-                <CreatePasswordDialog password={password}>
-                  <Button id="save-to-vault">Save to Vault</Button>
-                </CreatePasswordDialog>
-              )}
-            </>
-          )}
-          <HoverTitle title={<p>Copy to clipboard</p>}>
-            <button
-              id="copy"
-              onClick={handleCopy}
-              className="p-2 rounded-full hover:bg-white/10 transition-all group"
-            >
-              <Copy
-                size={25}
-                className="group-hover:scale-120 transition-all"
-              />
-            </button>
-          </HoverTitle>
-          <HoverTitle title={<p>Get a new password</p>}>
-            <button
-              id="regenerate"
-              onClick={handleRegenerate}
-              className="p-2 rounded-full hover:bg-white/10 transition-all group"
-            >
-              <RefreshCcw
-                size={25}
-                className="group-hover:scale-120 transition-all"
-              />
-            </button>
-          </HoverTitle>
+          <div className="flex gap-2 items-center">
+            {!user && (
+              <AuthDialog>
+                <Button id="save-to-vault">Save to Vault</Button>
+              </AuthDialog>
+            )}
+            {user && (
+              <>
+                {isEditing ? (
+                  <EditPasswordDialog
+                    password={password}
+                    passwordId={isEditing}
+                  >
+                    <Button id="save-changes">Save Changes</Button>
+                  </EditPasswordDialog>
+                ) : (
+                  <CreatePasswordDialog password={password}>
+                    <Button id="save-to-vault">Save to Vault</Button>
+                  </CreatePasswordDialog>
+                )}
+              </>
+            )}
+            <HoverTitle title={<p>Copy to clipboard</p>}>
+              <button
+                id="copy"
+                onClick={handleCopy}
+                className="p-2 rounded-full hover:bg-white/10 transition-all group"
+              >
+                <Copy
+                  size={25}
+                  className="group-hover:scale-120 transition-all"
+                />
+              </button>
+            </HoverTitle>
+            <HoverTitle title={<p>Get a new password</p>}>
+              <button
+                id="regenerate"
+                onClick={handleRegenerate}
+                className="p-2 rounded-full hover:bg-white/10 transition-all group"
+              >
+                <RefreshCcw
+                  size={25}
+                  className="group-hover:scale-120 transition-all"
+                />
+              </button>
+            </HoverTitle>
+          </div>
         </div>
         <div
           className={`h-2 transition-all absolute left-0 bottom-0 ${strengthClasses}`}
         ></div>
       </Container>
 
-      <Container className="col-span-1 row-span-3">
+      <Container className="col-span-1 xl:row-span-3 row-span-6">
         <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
           Modify visual experience
         </h1>
@@ -232,7 +237,7 @@ export default function GeneratePage() {
         </RadioGroup>
       </Container>
 
-      <Container className="col-span-1 row-span-1 gap-2 items-center justify-center flex-row">
+      <Container className="col-span-1 xl:row-span-2 2xl:row-span-1 row-span-3 gap-2 items-center justify-center flex-row">
         <div className="w-1/2">
           <Slider
             value={[length]}
@@ -260,9 +265,9 @@ export default function GeneratePage() {
         />
       </Container>
 
-      <div className="col-span-1 row-span-6"></div>
+      <div className="col-span-1 2xl:row-span-6 row-span-0 hidden 2xl:flex"></div>
 
-      <Container className="col-span-1 row-span-5">
+      <Container className="col-span-1 xl:row-span-5 row-span-10">
         <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
           Strength checker
         </h1>
@@ -307,7 +312,7 @@ export default function GeneratePage() {
         </ul>
       </Container>
 
-      <Container className="col-span-1 row-span-3">
+      <Container className="col-span-1 xl:row-span-4 2xl:row-span-3 row-span-6">
         <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
           Manually choose
         </h1>
