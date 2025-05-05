@@ -54,11 +54,16 @@ const Feature17 = ({
   return (
     <section className="py-32">
       <div className="container mx-auto max-w-screen-xl">
-        <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-lime-100 text-lime-800 dark:bg-lime-900/30 dark:text-lime-400">
-          <Container className="w-4 h-4 mr-2" />
-          <span>{subheading}</span>
+        <div className="flex flex-col items-center text-center md:items-start md:text-start">
+          <div className="inline-flex justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-lime-100 text-lime-800 dark:bg-lime-900/30 dark:text-lime-400">
+            <Container className="w-4 h-4 mr-2" />
+            <span>{subheading}</span>
+          </div>
+          <h2 className="text-3xl font-medium md:pl-5 lg:text-4xl">
+            {heading}
+          </h2>
         </div>
-        <h2 className="text-3xl font-medium md:pl-5 lg:text-4xl">{heading}</h2>
+
         <div className="mx-auto mt-14 grid gap-x-20 gap-y-8 md:grid-cols-2 md:gap-y-6 lg:mt-20">
           {features.map((feature, idx) => (
             <div className="flex gap-6 rounded-lg md:block md:p-5" key={idx}>

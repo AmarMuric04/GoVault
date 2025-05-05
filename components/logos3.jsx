@@ -69,7 +69,7 @@ const Logos3 = ({
 }) => {
   return (
     <section className="py-20 pb-48 container mx-auto max-w-screen-xl flex flex-col">
-      <div className="container flex flex-col">
+      <div className="container flex flex-col items-center text-center md:items-start md:text-start">
         <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
           <Computer className="w-4 h-4 mr-2" />
           <span>{subheading}</span>

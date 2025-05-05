@@ -11,9 +11,9 @@ const Hero = () => {
       <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-violet-600/20 blur-3xl transform -translate-y-1/2 rounded-full z-0" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tr from-emerald-500/20 blur-3xl transform translate-x-1/3 translate-y-1/3 rounded-full z-0" />
       <div className="container relative z-10 px-4 py-16 mx-auto lg:py-24 max-w-screen-xl mt-20">
-        <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 items-center text-center md:items-start md:text-start">
           {/* Left column - Content */}
-          <div className="flex flex-col max-w-xl">
+          <div className="flex flex-col max-w-xl items-center text-center md:items-start md:text-start">
             <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400">
               <Shield className="w-4 h-4 mr-2" />
               <span>Bank-level encryption</span>
@@ -34,7 +34,7 @@ const Hero = () => {
               military-grade encryption while making access effortless.
             </p>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4 mb-8 items-center text-center md:items-start md:text-start">
               <div className="flex items-start">
                 <CheckCircle className="flex-shrink-0 w-5 h-5 mt-1 mr-3 text-white" />
                 <p className="text-white">

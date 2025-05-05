@@ -31,7 +31,7 @@ const Stats8 = ({
   return (
     <section className="py-32 flex justify-center">
       <div className="container mx-auto max-w-screen-xl">
-        <div className="container flex flex-col">
+        <div className="container flex flex-col items-center text-center md:items-start md:text-start">
           <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">
             <Calculator className="w-4 h-4 mr-2" />
             <span>{subheading}</span>
@@ -45,7 +45,10 @@ const Stats8 = ({
         </div>
         <div className="mt-14 grid gap-x-5 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
-            <div key={stat.id} className="flex flex-col gap-5 md:p-5">
+            <div
+              key={stat.id}
+              className="flex flex-col gap-5 md:p-5 items-center text-center md:items-start md:text-start"
+            >
               <div className="text-6xl font-bold">{stat.value}</div>
               <p>{stat.label}</p>
             </div>

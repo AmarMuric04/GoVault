@@ -5,7 +5,7 @@ import { Marquee3D } from "./magicui/marquee3d";
 export default function ContentSection() {
   return (
     <section className="py-16 md:py-32">
-      <div className="container mx-auto max-w-screen-xl space-y-8 px-6 md:space-y-16">
+      <div className="container mx-auto max-w-screen-xl space-y-8 px-6 md:space-y-16 items-center text-center md:items-start md:text-start">
         <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
           <User className="w-4 h-4 mr-2" />
           <span>Testimonials</span>
@@ -14,7 +14,7 @@ export default function ContentSection() {
           Hear what our users are saying.
         </h2>
         <div className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:gap-24">
-          <div className="relative space-y-4 max-w-xl">
+          <div className="relative space-y-4 max-w-xl items-center text-center md:items-start md:text-start">
             <p className="text-muted-foreground">
               Our community spans developers, creators, and businesses.{" "}
               <span className="text-accent-foreground font-bold">

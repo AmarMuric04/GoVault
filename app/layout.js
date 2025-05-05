@@ -15,13 +15,14 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   const cookieStore = await cookies();
   const theme = cookieStore.get("theme")?.value || "light";
+  const user = await isAuthenticated();
 
   return (
     <html lang="en" className={`montserrat ${theme === "dark" ? "dark" : ""}`}>
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className="bg-background">
         <ReactQueryProvider>
-          <UserProvider />
+          <UserProvider user={user} />
           {children}
           <Toaster />
         </ReactQueryProvider>
