@@ -11,6 +11,7 @@ import { Bot } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import { ThemeToggle } from "./theme-toggle";
+import { Chat } from "./ai-chat";
 
 export default async function Header() {
   const user = await isAuthenticated();
@@ -23,6 +24,16 @@ export default async function Header() {
       <p className="lg:hidden"></p>
       {user && (
         <div className="flex gap-4 items-center h-8">
+          <Chat
+            title="GoVault AI Agent"
+            description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
+            placeholder="Ask something..."
+            configKey="default"
+          >
+            <button>
+              <Bot />
+            </button>
+          </Chat>
           {/* <NotificationsDropdown>
             <HoverTitle title="Click to see notifications">
               <button>
@@ -64,6 +75,16 @@ export default async function Header() {
       )}
       {!user && (
         <div className="flex items-center gap-2">
+          <Chat
+            title="GoVault AI Agent"
+            description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
+            placeholder="Ask something..."
+            configKey="default"
+          >
+            <button>
+              <Bot />
+            </button>
+          </Chat>
           <ThemeToggle />
           <Separator orientation="vertical" className="mx-1 h-6" />
           <Button asChild variant="link">

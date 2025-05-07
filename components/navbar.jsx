@@ -1,4 +1,5 @@
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Chat } from "./ai-chat";
 import Logo from "@/public/TheLogo.png";
 
 import { Settings } from "lucide-react";
@@ -69,6 +70,16 @@ const Navbar = async ({
           <div className="flex gap-2">
             {user && (
               <div className="flex gap-4 items-center h-8">
+                <Chat
+                  title="GoVault AI Agent"
+                  description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
+                  placeholder="Ask something..."
+                  configKey="default"
+                >
+                  <button>
+                    <Bot />
+                  </button>
+                </Chat>
                 <ThemeToggle />
                 <Separator orientation="vertical" className="mx-1 h-6" />
                 <Link
@@ -100,6 +111,16 @@ const Navbar = async ({
             )}
             {!user && (
               <div className="flex items-center gap-2">
+                <Chat
+                  title="GoVault AI Agent"
+                  description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
+                  placeholder="Ask something..."
+                  configKey="default"
+                >
+                  <button>
+                    <Bot />
+                  </button>
+                </Chat>
                 <ThemeToggle />
                 <Separator orientation="vertical" className="mx-1 h-6" />
                 <Button asChild variant="link">
@@ -150,6 +171,16 @@ const Navbar = async ({
                   </Accordion>
                   {user && (
                     <div className="flex gap-4 items-center h-8">
+                      <Chat
+                        title="GoVault AI Agent"
+                        description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
+                        placeholder="Ask something..."
+                        configKey="default"
+                      >
+                        <button>
+                          <Bot />
+                        </button>
+                      </Chat>
                       <ThemeToggle />
                       <Separator orientation="vertical" className="mx-1 h-6" />
                       <Link
@@ -181,6 +212,16 @@ const Navbar = async ({
                   )}
                   {!user && (
                     <div className="flex items-center gap-2">
+                      <Chat
+                        title="GoVault AI Agent"
+                        description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
+                        placeholder="Ask something..."
+                        configKey="default"
+                      >
+                        <button>
+                          <Bot />
+                        </button>
+                      </Chat>
                       <ThemeToggle />
                       <Separator orientation="vertical" className="mx-1 h-6" />
                       <Button asChild variant="link">
