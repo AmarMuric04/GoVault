@@ -145,11 +145,28 @@ const Navbar = async ({
               className="bg-white rounded-md p-2"
             />
             <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
+              <div className="flex gap-2 items-center">
+                <Chat
+                  title="GoVault AI Agent"
+                  description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
+                  placeholder="Ask something..."
+                  configKey="default"
+                  pos={{
+                    side: "bottom",
+                    align: "center",
+                  }}
+                >
+                  <button>
+                    <Bot />
+                  </button>
+                </Chat>
+                <ThemeToggle />
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Menu className="size-4" />
+                  </Button>
+                </SheetTrigger>
+              </div>
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
@@ -171,17 +188,6 @@ const Navbar = async ({
                   </Accordion>
                   {user && (
                     <div className="flex gap-4 items-center h-8">
-                      <Chat
-                        title="GoVault AI Agent"
-                        description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
-                        placeholder="Ask something..."
-                        configKey="default"
-                      >
-                        <button>
-                          <Bot />
-                        </button>
-                      </Chat>
-                      <ThemeToggle />
                       <Separator orientation="vertical" className="mx-1 h-6" />
                       <Link
                         href="https://github.com/AmarMuric04/GoBot"
@@ -211,18 +217,7 @@ const Navbar = async ({
                     </div>
                   )}
                   {!user && (
-                    <div className="flex items-center gap-2">
-                      <Chat
-                        title="GoVault AI Agent"
-                        description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
-                        placeholder="Ask something..."
-                        configKey="default"
-                      >
-                        <button>
-                          <Bot />
-                        </button>
-                      </Chat>
-                      <ThemeToggle />
+                    <div className="flex flex-col gap-2">
                       <Separator orientation="vertical" className="mx-1 h-6" />
                       <Button asChild variant="link">
                         <Link href="/auth?mode=signin">Sign In</Link>
