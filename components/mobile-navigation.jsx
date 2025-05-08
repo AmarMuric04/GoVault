@@ -5,9 +5,9 @@ import { ChartArea, CirclePlus, Settings, Vault } from "lucide-react";
 
 export default function MobileNavigation() {
   return (
-    <div className="xl:hidden bg-accent absolute bottom-0 left-0 right-0 h-[50px] max-h-[50px]">
+    <div className="xl:hidden bg-accent absolute bottom-0 left-0 right-0">
       <nav className="w-full flex">
-        <SidebarLink href="/overview" className="w-1/4">
+        <SidebarLink href="/overview" className="w-1/4 flex-col">
           <ChartArea size={22} />
           <p className="hidden sm:block">Overview</p>
         </SidebarLink>

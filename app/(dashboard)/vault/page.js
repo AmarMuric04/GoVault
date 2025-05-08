@@ -85,13 +85,16 @@ export default function VaultPage() {
           <div className="flex gap-4 items-center">
             <Button variant="outline">
               <FileUp />
-              Export
+              <p className="hidden lg:block">Export</p>
             </Button>
 
             <CreatePasswordDialog>
               <Button className="flex gap-2 items-center">
                 <Plus />
-                Add a new password
+                <p className="flex gap-2 items-center">
+                  <span>Add </span>
+                  <span className="hidden lg:inline-block">a new password</span>
+                </p>
               </Button>
             </CreatePasswordDialog>
           </div>

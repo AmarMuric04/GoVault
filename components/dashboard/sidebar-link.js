@@ -11,7 +11,7 @@ export default function SidebarLink({ href, children, className }) {
   return (
     <Button
       asChild
-      className={`my-1 font-medium transition-all rounded-sm
+      className={`lg:my-1 font-medium transition-all rounded-sm
         ${isActive ? "" : ""} `}
       variant={isActive ? "" : "link"}
     >
@@ -19,7 +19,9 @@ export default function SidebarLink({ href, children, className }) {
         href={href}
         className={`${className || ""} flex items-center justify-center`}
       >
-        <div className="w-1/2 flex gap-6 items-center">{children}</div>
+        <div className="w-1/2 flex lg:gap-6 items-center flex-col lg:flex-row text-sm lg:text-md">
+          {children}
+        </div>
       </Link>
     </Button>
   );

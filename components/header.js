@@ -29,6 +29,10 @@ export default async function Header() {
             description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
             placeholder="Ask something..."
             configKey="default"
+            pos={{
+              side: "bottom",
+              align: "center",
+            }}
           >
             <button>
               <Bot />
@@ -80,6 +84,10 @@ export default async function Header() {
             description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
             placeholder="Ask something..."
             configKey="default"
+            pos={{
+              side: "bottom",
+              align: "center",
+            }}
           >
             <button>
               <Bot />
