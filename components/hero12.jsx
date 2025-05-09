@@ -56,11 +56,7 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-transparent text-white"
-              >
+              <Button size="lg" variant="secondary">
                 Join Us
               </Button>
               <Button variant="link" size="lg" className="h-12 px-8 text-white">

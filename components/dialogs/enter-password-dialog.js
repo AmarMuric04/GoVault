@@ -74,6 +74,7 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
         <div className="grid gap-4 py-4">
           <AuthInput
             name="password"
+            type="password"
             label="My password is"
             errors={errors}
             placeholder="Enter your password"

@@ -4,11 +4,35 @@ import { getIndividualFullPasswordInfo } from "@/lib/actions/password/password.a
 import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
 import usePasswordStore from "@/store/usePasswordStore";
 import { copyToClipboard } from "@/utility/copy-text";
-import { Copy, Dot, Eye, EyeOff, Hash } from "lucide-react";
+import { Check, Copy, Dot, Eye, EyeOff, Hash } from "lucide-react";
 import { toast } from "sonner";
+import HoverTitle from "@/components/hover-title";
+import { useEffect, useRef, useState } from "react";
 
 export default function Password({ password, showPassword, setShowPassword }) {
   const { showIndividualPassword } = usePasswordStore();
+  const [copied, setCopied] = useState(false);
+  let copiedTimeout = useRef(null);
+
+  useEffect(() => {
+    if (copied) {
+      copiedTimeout.current = setTimeout(() => {
+        setCopied(false);
+      }, 5000);
+    }
+
+    return () => {
+      clearTimeout(copiedTimeout.current);
+    };
+  }, [copied]);
+
+  useEffect(() => {
+    setShowPassword(password.password);
+
+    return () => {
+      setShowPassword(false);
+    };
+  }, [password]);
 
   const handleShowPassword = async (userId, psw) => {
     return await getIndividualFullPasswordInfo(userId, psw, password._id);
@@ -25,10 +49,22 @@ export default function Password({ password, showPassword, setShowPassword }) {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex items-center kode-mono min-w-48 w-48 max-w-48 overflow-auto">
-        {showPassword
-          ? password.password
-          : new Array(15).fill(0).map((e, index) => <Hash key={index} />)}
+      <div className="flex items-center min-w-48 w-48 max-w-48 overflow-auto">
+        {showPassword ? (
+          <HoverTitle title="Copy password">
+            <p
+              className="cursor-pointer"
+              onClick={() => {
+                copyToClipboard(password.password);
+                toast.success("Copied to clipboard!");
+              }}
+            >
+              {password.password}
+            </p>
+          </HoverTitle>
+        ) : (
+          new Array(15).fill(0).map((e, index) => <Hash key={index} />)
+        )}
       </div>
       <div className="flex items-center gap-2">
         {!showPassword && (
@@ -56,31 +92,60 @@ export default function Password({ password, showPassword, setShowPassword }) {
           </button>
         )}
         {!showPassword && (
-          <PasswordDialog
-            action={handleShowPassword}
-            onSuccess={(data) => {
-              copyToClipboard(data.password);
-              toast.success("Copied to clipboard!");
-            }}
-          >
-            <button className="group p-2 rounded-full hover:bg-white/10 transition-all">
-              <Copy
-                size={15}
-                className="group-hover:scale-110 transition-all"
-              />
-            </button>
-          </PasswordDialog>
+          <>
+            {copied && (
+              <button className="group p-2 rounded-full hover:bg-white/10 transition-all">
+                <Check
+                  size={15}
+                  className="group-hover:scale-110 transition-all"
+                />
+              </button>
+            )}
+            {!copied && (
+              <PasswordDialog
+                action={handleShowPassword}
+                onSuccess={(data) => {
+                  copyToClipboard(data.password);
+                  setCopied(true);
+                  toast.success("Copied to clipboard!");
+                }}
+              >
+                <button className="group p-2 rounded-full hover:bg-white/10 transition-all">
+                  <Copy
+                    size={15}
+                    className="group-hover:scale-110 transition-all"
+                  />
+                </button>
+              </PasswordDialog>
+            )}
+          </>
         )}
         {showPassword && (
-          <button
-            onClick={() => {
-              copyToClipboard(password.password);
-              toast.success("Copied to clipboard!");
-            }}
-            className="group p-2 rounded-full hover:bg-white/10 transition-all"
-          >
-            <Copy size={15} className="group-hover:scale-110 transition-all" />
-          </button>
+          <>
+            {copied && (
+              <button className="group p-2 rounded-full hover:bg-white/10 transition-all">
+                <Check
+                  size={15}
+                  className="group-hover:scale-110 transition-all"
+                />
+              </button>
+            )}
+            {!copied && (
+              <button
+                onClick={() => {
+                  copyToClipboard(password.password);
+                  setCopied(true);
+                  toast.success("Copied to clipboard!");
+                }}
+                className="group p-2 rounded-full hover:bg-white/10 transition-all"
+              >
+                <Copy
+                  size={15}
+                  className="group-hover:scale-110 transition-all"
+                />
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
