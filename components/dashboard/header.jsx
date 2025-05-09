@@ -1,16 +1,13 @@
-import { Book, Brain, Menu, Sunset, Trees, Zap } from "lucide-react";
-import { Chat } from "./ai-chat";
-import Logo from "@/public/TheLogo.png";
-
-import { Settings } from "lucide-react";
-import { ProfilePopover } from "./dropdowns/profile-dropdown";
-import HoverTitle from "./hover-title";
+import { Chat } from "../ai-chat";
+import { Brain, Menu, Settings } from "lucide-react";
+import { ProfilePopover } from "../dropdowns/profile-dropdown";
+import HoverTitle from "../hover-title";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
 import Link from "next/link";
 import { Bot } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-import { Separator } from "./ui/separator";
-import { ThemeToggle } from "./theme-toggle";
+import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
+import { Separator } from "../ui/separator";
+import { ThemeToggle } from "../theme-toggle";
 
 import {
   Accordion,
@@ -34,33 +31,27 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Image from "next/image";
 
-const Navbar = async ({
+const Header = async ({
   menu = [
-    { title: "Home", url: "/" },
+    { title: "Overview", url: "/overview" },
     {
-      title: "Dashboard",
-      url: "/generate",
+      title: "Vault",
+      url: "/vault",
     },
+    { title: "Generate", url: "/generate" },
+    { title: "Settings", url: "/settings" },
   ],
 }) => {
   const user = await isAuthenticated();
 
   return (
-    <section className="py-4 flex justify-center">
+    <section className="py-4 flex justify-center bg-muted text-foreground">
       <div className="container">
         {/* Desktop Menu */}
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             <h1 className="text-xl">GoVault</h1>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
           </div>
           <div className="flex gap-2 items-center">
             {user && (
@@ -117,18 +108,21 @@ const Navbar = async ({
                   description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
                   placeholder="Ask something..."
                   configKey="default"
+                  pos={{
+                    side: "bottom",
+                    align: "center",
+                  }}
                 >
-                  <button>
-                    <Bot />
-                  </button>
+                  <div className="hover:bg-primary/20 p-2 transition-all">
+                    <HoverTitle title="Get Help from the AI">
+                      <Brain size={18} />
+                    </HoverTitle>
+                  </div>
                 </Chat>
                 <ThemeToggle />
                 <Separator orientation="vertical" className="mx-1 h-6" />
                 <Button asChild variant="link">
                   <Link href="/auth?mode=signin">Sign In</Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/auth?mode=signup">Sign Up</Link>
                 </Button>
               </div>
             )}
@@ -139,12 +133,7 @@ const Navbar = async ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Image
-              src={Logo}
-              alt="govault"
-              height={35}
-              className="bg-white rounded-md p-2"
-            />
+            <h1 className="text-xl">GoVault</h1>
             <Sheet>
               <div className="flex gap-2 items-center">
                 <Chat
@@ -164,6 +153,22 @@ const Navbar = async ({
                   </div>
                 </Chat>
                 <ThemeToggle />
+                <Separator
+                  orientation="vertical"
+                  className="mx-2 bg-background"
+                />
+                {user && (
+                  <div className="flex gap-4 items-center h-8">
+                    <ProfilePopover>
+                      <Avatar className="bg-primary cursor-pointer">
+                        <AvatarImage src={user.picture} />
+                        <AvatarFallback>
+                          {user.email[0].toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </ProfilePopover>
+                  </div>
+                )}
                 <SheetTrigger asChild>
                   <Button variant="outline" size="icon">
                     <Menu className="size-4" />
@@ -172,14 +177,7 @@ const Navbar = async ({
               </div>
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
-                  <SheetTitle>
-                    <Image
-                      src={Logo}
-                      alt="govault"
-                      height={35}
-                      className="bg-white rounded-md p-2"
-                    />
-                  </SheetTitle>
+                  <SheetTitle>GoVault</SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
                   <Accordion
@@ -189,36 +187,6 @@ const Navbar = async ({
                   >
                     {menu.map((item) => renderMobileMenuItem(item))}
                   </Accordion>
-                  {user && (
-                    <div className="flex gap-4 items-center h-8">
-                      <Separator orientation="vertical" className="mx-1 h-6" />
-                      <Link
-                        href="https://github.com/AmarMuric04/GoBot"
-                        className="hover:bg-primary/20 p-2 transition-all"
-                      >
-                        <HoverTitle title="Check out GoBot">
-                          <Bot size={18} />
-                        </HoverTitle>
-                      </Link>
-                      <Link
-                        href="/settings"
-                        className="hover:bg-primary/20 p-2 transition-all"
-                      >
-                        <HoverTitle title="Settings">
-                          <Settings size={18} />
-                        </HoverTitle>
-                      </Link>
-                      <Separator orientation="vertical" className="mx-1 h-6" />
-                      <ProfilePopover>
-                        <Avatar className="bg-primary cursor-pointer">
-                          <AvatarImage src={user.picture} />
-                          <AvatarFallback>
-                            {user.email[0].toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                      </ProfilePopover>
-                    </div>
-                  )}
                   {!user && (
                     <div className="flex flex-col gap-2">
                       <Separator orientation="vertical" className="mx-1 h-6" />
@@ -310,4 +278,4 @@ const SubMenuLink = ({ item }) => {
   );
 };
 
-export { Navbar };
+export { Header };

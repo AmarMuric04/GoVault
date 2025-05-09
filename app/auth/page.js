@@ -2,8 +2,7 @@ import { isAuthenticated } from "@/lib/actions/auth.actions";
 import AuthForm from "@/components/form/auth-form";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import Logo from "@/public/TheLogo.png";
-import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
 
 export default async function AuthPage({ searchParams }) {
   const params = await searchParams;
@@ -15,15 +14,19 @@ export default async function AuthPage({ searchParams }) {
   if (user) return redirect("/");
 
   return (
-    <main className="w-screen h-screen grid place-items-center">
-      <section className="bg-accent text-foreground border-1 w-9/10 lg:w-[500px] h-screen md:h-auto px-12 pb-8 rounded-md">
-        <Image
-          width={150}
-          height={50}
-          src={Logo}
-          alt="logo"
-          className="pt-5 pb-14"
-        />
+    <main className="w-screen h-screen grid place-items-center relative overflow-hidden">
+      <div className="bg-primary w-[200vw] h-[100vh] absolute top-1/2 -translate-y-[200px] z-0 -rotate-15 left-0"></div>
+      <section className="relative z-50 bg-muted text-foreground border-1 w-9/10 lg:w-[500px] h-screen md:h-auto px-12 py-8 rounded-md">
+        <Link
+          className="group hover:underline underline-offset-2 text-primary flex items-center gap-2 py-2 text-sm"
+          href="/generate"
+        >
+          <ArrowLeft
+            size={16}
+            className="group-hover:-translate-x-4 transition-all"
+          />
+          Go to dashboard
+        </Link>
         <h1 className="text-4xl font-bold">
           {mode === "signin" ? "Sign In" : "Sign Up"}
         </h1>

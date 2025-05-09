@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import { Check, CircleX, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const INITIAL_VALUES = {
   email: "",
@@ -41,6 +42,9 @@ export default function AuthForm({ mode }) {
     },
     onSuccess: (data) => {
       setUser(data);
+
+      toast.succes("Authentication successful! Redirecting...");
+
       router.push("/overview");
     },
     onError: (errorData) => {

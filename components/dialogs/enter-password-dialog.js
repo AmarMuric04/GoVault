@@ -48,6 +48,10 @@ export function PasswordDialog({ children, action, onSuccess = () => {} }) {
     },
   });
 
+  const handleFocus = (field) => {
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
   return (
     <Dialog
       open={open}

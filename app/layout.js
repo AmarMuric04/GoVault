@@ -18,9 +18,9 @@ export default async function RootLayout({ children }) {
   const user = await isAuthenticated();
 
   return (
-    <html lang="en" className={`montserrat ${theme === "dark" ? "dark" : ""}`}>
+    <html lang="en" className={`${theme === "dark" ? "dark" : ""}`}>
       <link rel="icon" href="/favicon.ico" sizes="any" />
-      <body className="bg-background">
+      <body className="bg-background inter">
         <ReactQueryProvider>
           <UserProvider user={user} />
           {children}

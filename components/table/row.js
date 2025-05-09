@@ -61,7 +61,7 @@ export default function Row({ showMoreInfo, password }) {
       <TableCell className="text-right">
         <div className="flex gap-2 items-center justify-end w-full">
           <EditPasswordDialog passwordId={password._id}>
-            <Button>
+            <Button variant="outline">
               <Edit />
             </Button>
           </EditPasswordDialog>

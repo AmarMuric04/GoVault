@@ -17,10 +17,8 @@ export default async function Header() {
   const user = await isAuthenticated();
 
   return (
-    <header className="bg-accent text-foreground border-1 flex flex-grow h-[75px] max-h-[75px] min-h-[75px] items-center justify-between px-10">
-      <h1 className="font-bold text-xl montserrat hidden lg:block">
-        {user ? "Welcome back!" : "Enjoy your stay!"}
-      </h1>
+    <header className="bg-muted text-foreground flex flex-grow h-[75px] max-h-[75px] min-h-[75px] items-center justify-between px-10">
+      <h1 className="font-bold text-xl hidden lg:block">Dashboard</h1>
       <p className="lg:hidden"></p>
       {user && (
         <div className="flex gap-4 items-center h-8">
@@ -97,9 +95,6 @@ export default async function Header() {
           <Separator orientation="vertical" className="mx-1 h-6" />
           <Button asChild variant="link">
             <Link href="/auth?mode=signin">Sign In</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/auth?mode=signup">Sign Up</Link>
           </Button>
         </div>
       )}

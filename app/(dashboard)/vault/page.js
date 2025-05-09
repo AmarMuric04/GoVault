@@ -102,7 +102,7 @@ export default function VaultPage() {
         <section className="w-full max-h-full overflow-auto h-full">
           {isLoading && (
             <div className="w-full h-full grid place-items-center">
-              <HashLoader color="#0118D8" size={40} />
+              <HashLoader className="text-primary" size={40} />
             </div>
           )}
           {!isLoading && (

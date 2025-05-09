@@ -28,7 +28,7 @@ export function ThemeToggle() {
       className="hover:bg-primary/20 p-2 transition-all"
     >
       <HoverTitle title="Change theme">
-        {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+        {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
       </HoverTitle>
     </button>
   );

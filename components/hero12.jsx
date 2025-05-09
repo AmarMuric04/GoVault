@@ -79,9 +79,7 @@ const Hero = () => {
             <div className="relative z-10 w-full max-w-md overflow-hidden bg-white rounded-xl shadow-2xl dark:bg-slate-800">
               {/* App header */}
               <div className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-2">
-                  <Image src={Logo} alt="govault" height={30} />
-                </div>
+                <h1 className="text-sm">Dashboard</h1>
                 <div className="flex space-x-1">
                   <div className="w-3 h-3 bg-white/20 rounded-full"></div>
                   <div className="w-3 h-3 bg-white/20 rounded-full"></div>

@@ -5,8 +5,6 @@ import {
   FooterContent,
 } from "../../ui/footer";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import Logo from "@/public/TheLogo.png";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function FooterSection({
@@ -32,12 +30,7 @@ export default function FooterSection({
         <Footer className="w-full border-t-1 border-foreground/10">
           <FooterContent className="flex justify-between flex-wrap gap-4 md:gap-12">
             <FooterColumn>
-              <Image
-                src={Logo}
-                alt="govault"
-                height={35}
-                className="bg-white rounded-md p-2"
-              />
+              <h1 className="text-xl">GoVault</h1>
             </FooterColumn>
             <div className="flex gap-12 flex-wrap">
               {columns.map((link, index) => (
