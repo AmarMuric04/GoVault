@@ -5,7 +5,7 @@ import { ChartArea, CirclePlus, Settings, Vault } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-export default function Sidebar() {
+export default function Sidebar({ user }) {
   return (
     <aside className="bg-muted max-w-72 w-72 h-screen flex-col justify-between hidden xl:flex">
       <nav className="w-full mt-[75px] flex flex-col">
@@ -29,9 +29,11 @@ export default function Sidebar() {
           <Settings size={20} />
           Settings
         </SidebarLink>
-        <Button className="w-2/3 ml-4 mt-8" asChild>
-          <Link href="/auth?mode=signup">Create account +</Link>
-        </Button>
+        {!user && (
+          <Button className="w-2/3 ml-4 mt-8" asChild>
+            <Link href="/auth?mode=signup">Create account +</Link>
+          </Button>
+        )}
       </nav>
 
       <p className="text-zinc-800 text-xs mx-auto">
