@@ -38,7 +38,7 @@ export function ChatMessage({ message }) {
 
       {isUser && (
         <Avatar className="h-8 w-8 shrink-0 items-center justify-center bg-accent">
-          <User className="h-4 w-4 bg-accent-foreground" />
+          <User className="h-4 w-4 text-accent-foreground" />
         </Avatar>
       )}
     </div>
