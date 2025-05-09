@@ -1,53 +1,45 @@
-import {
-  Container,
-  DollarSign,
-  MessagesSquare,
-  PersonStanding,
-  Timer,
-  Zap,
-  ZoomIn,
-} from "lucide-react";
+import { Key, ShieldCheck, Lock, Globe, Share2, Users } from "lucide-react";
 
 const Feature17 = ({
-  heading = "Our Core Features",
-  subheading = "Features",
+  heading = "Password Manager Features",
+  subheading = "Core Features",
 
   features = [
     {
-      title: "Performance",
+      title: "End-to-End Encryption",
       description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, accusantium quam. Temporibus quae quos deserunt!",
-      icon: <Timer className="size-4 md:size-6" />,
+        "Keep your passwords and sensitive data secure with 256-bit AES encryption.",
+      icon: <Lock className="size-4 md:size-6" />,
     },
     {
-      title: "Innovation",
+      title: "Password Generation",
       description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, accusantium quam. Temporibus quae quos deserunt!",
-      icon: <Zap className="size-4 md:size-6" />,
+        "Generate complex, unbreakable passwords for maximum security.",
+      icon: <Key className="size-4 md:size-6" />,
     },
     {
-      title: "Quality",
+      title: "Secure Sharing",
       description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, accusantium quam. Temporibus quae quos deserunt!",
-      icon: <ZoomIn className="size-4 md:size-6" />,
+        "Safely share passwords with trusted contacts without compromising security.",
+      icon: <Share2 className="size-4 md:size-6" />,
     },
     {
-      title: "Accessibility",
+      title: "Breach Monitoring",
       description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, accusantium quam. Temporibus quae quos deserunt!",
-      icon: <PersonStanding className="size-4 md:size-6" />,
+        "Get notified if any of your saved passwords appear in a known data breach.",
+      icon: <ShieldCheck className="size-4 md:size-6" />,
     },
     {
-      title: "Affordability",
+      title: "Cross-Device Sync",
       description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, accusantium quam. Temporibus quae quos deserunt!",
-      icon: <DollarSign className="size-4 md:size-6" />,
+        "Access your passwords on all your devices seamlessly and securely.",
+      icon: <Globe className="size-4 md:size-6" />,
     },
     {
-      title: "Customer Support",
+      title: "Team Management",
       description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, accusantium quam. Temporibus quae quos deserunt!",
-      icon: <MessagesSquare className="size-4 md:size-6" />,
+        "Manage shared credentials and permissions for your team with ease.",
+      icon: <Users className="size-4 md:size-6" />,
     },
   ],
 }) => {
@@ -55,8 +47,8 @@ const Feature17 = ({
     <section className="py-32">
       <div className="container mx-auto max-w-screen-xl">
         <div className="flex flex-col items-center text-center md:items-start md:text-start">
-          <div className="inline-flex justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-lime-100 text-lime-800 dark:bg-lime-900/30 dark:text-lime-400">
-            <Container className="w-4 h-4 mr-2" />
+          <div className="inline-flex justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+            <Lock className="w-4 h-4 mr-2" />
             <span>{subheading}</span>
           </div>
           <h2 className="text-3xl font-medium md:pl-5 lg:text-4xl">

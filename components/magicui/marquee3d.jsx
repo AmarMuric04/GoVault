@@ -4,22 +4,52 @@ import { Marquee } from "./marquee";
 
 const reviews = [
   {
-    name: "Jack",
-    username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
-    img: "https://avatar.vercel.sh/jack",
+    name: "Alice",
+    username: "@secureAlice",
+    body: "This password manager is a lifesaver. I never have to worry about forgetting a password again.",
+    img: "https://avatar.vercel.sh/alice",
   },
   {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: "https://avatar.vercel.sh/jill",
+    name: "Bob",
+    username: "@encryptionBob",
+    body: "The encryption is top-notch, and the interface is super user-friendly. 10/10.",
+    img: "https://avatar.vercel.sh/bob",
   },
   {
-    name: "John",
-    username: "@john",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/john",
+    name: "Charlie",
+    username: "@cyberCharlie",
+    body: "Finally, a password manager I can trust. Breach alerts and strong password generation are a must-have.",
+    img: "https://avatar.vercel.sh/charlie",
+  },
+  {
+    name: "Dana",
+    username: "@digitalDana",
+    body: "I love the seamless syncing across all my devices. I feel much more secure now.",
+    img: "https://avatar.vercel.sh/dana",
+  },
+  {
+    name: "Eve",
+    username: "@encryptedEve",
+    body: "This app is the perfect combination of security and ease of use. I can't imagine going back.",
+    img: "https://avatar.vercel.sh/eve",
+  },
+  {
+    name: "Frank",
+    username: "@fortifiedFrank",
+    body: "Managing team credentials has never been this easy. A must-have for any business.",
+    img: "https://avatar.vercel.sh/frank",
+  },
+  {
+    name: "Grace",
+    username: "@guardianGrace",
+    body: "Password breach alerts saved me from a major headache. Highly recommend.",
+    img: "https://avatar.vercel.sh/grace",
+  },
+  {
+    name: "Hank",
+    username: "@hardenedHank",
+    body: "Love the password generator. It's a real time-saver and keeps my accounts secure.",
+    img: "https://avatar.vercel.sh/hank",
   },
 ];
 
@@ -84,11 +114,6 @@ export function Marquee3D() {
           ))}
         </Marquee>
       </div>
-
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-background"></div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background"></div>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
     </div>
   );
 }

@@ -1,30 +1,30 @@
-import { ArrowRight, Calculator } from "lucide-react";
+import { Lock, Key } from "lucide-react";
 
 const Stats8 = ({
-  subheading = "Statistics",
-  heading = "Platform performance insights",
-  description = "Ensuring stability and scalability for all users",
+  subheading = "Password Manager Insights",
+  heading = "Security and Storage at a Glance",
+  description = "Track the security and efficiency of your stored credentials",
 
   stats = [
     {
       id: "stat-1",
-      value: "250%+",
-      label: "average growth in user engagement",
+      value: "1.2M+",
+      label: "passwords securely stored",
     },
     {
       id: "stat-2",
-      value: "$2.5m",
-      label: "annual savings per enterprise partner",
+      value: "98%",
+      label: "average password strength score",
     },
     {
       id: "stat-3",
-      value: "200+",
-      label: "integrations with top industry platforms",
+      value: "10k+",
+      label: "auto-generated secure passwords",
     },
     {
       id: "stat-4",
-      value: "99.9%",
-      label: "customer satisfaction over the last year",
+      value: "256-bit",
+      label: "encryption for maximum security",
     },
   ],
 }) => {
@@ -32,8 +32,8 @@ const Stats8 = ({
     <section className="py-32 flex justify-center">
       <div className="container mx-auto max-w-screen-xl">
         <div className="container flex flex-col items-center text-center md:items-start md:text-start">
-          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">
-            <Calculator className="w-4 h-4 mr-2" />
+          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-sm font-medium rounded-full w-fit bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+            <Key className="w-4 h-4 mr-2" />
             <span>{subheading}</span>
           </div>
           <h2 className="text-3xl font-medium md:pl-5 lg:text-4xl">

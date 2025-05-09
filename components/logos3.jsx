@@ -18,52 +18,78 @@ const Logos3 = ({
 
   logos = [
     {
+      id: "javascript",
+      description: "Javascript",
+      image: "https://www.vectorlogo.zone/logos/javascript/javascript-icon.svg",
+      className: "h-18 my-4 w-auto",
+    },
+    {
       id: "react",
       description: "React",
-      image:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg",
-      className: "h-12 w-auto",
+      image: "https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg",
+      className: "h-18 my-4 w-auto",
     },
     {
       id: "nextjs",
       description: "Next.js",
-      image:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-wordmark.svg",
-      className: "h-12 w-auto",
+      image: "https://www.vectorlogo.zone/logos/nextjs/nextjs-icon.svg",
+      className: "h-18 my-4 w-auto",
     },
     {
       id: "tailwind",
       description: "Tailwind CSS",
       image:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain-wordmark.svg",
-      className: "h-30 w-auto",
+        "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
+      className: "h-18 my-4 w-auto",
     },
     {
       id: "mongodb",
       description: "MongoDB",
-      image:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original-wordmark.svg",
-      className: "h-12 w-auto",
-    },
-    {
-      id: "nodejs",
-      description: "Node.js",
-      image:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original-wordmark.svg",
-      className: "h-12 w-auto",
-    },
-    {
-      id: "express",
-      description: "Express.js",
-      image:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original-wordmark.svg",
-      className: "h-12 w-auto",
+      image: "https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg",
+      className: "h-18 my-4 w-auto",
     },
     {
       id: "vercel",
       description: "Vercel",
-      image: "https://shadcnblocks.com/images/block/logos/vercel-wordmark.svg",
-      className: "h-7 w-auto",
+      image: "https://www.vectorlogo.zone/logos/vercel/vercel-icon.svg",
+      className: "h-18 my-4 w-auto",
+    },
+    {
+      id: "nextauth",
+      description: "NextAuth.js",
+      image: "https://next-auth.js.org/img/logo/logo-sm.png",
+      className: "h-18 my-4 w-auto",
+    },
+    {
+      id: "typescript",
+      description: "TypeScript",
+      image:
+        "https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg",
+      className: "h-18 my-4 w-auto",
+    },
+    {
+      id: "html",
+      description: "HTML5",
+      image: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg",
+      className: "h-18 my-4 w-auto",
+    },
+    {
+      id: "css",
+      description: "CSS3",
+      image: "https://www.vectorlogo.zone/logos/w3_css/w3_css-icon~old.svg",
+      className: "h-18 my-4 w-auto",
+    },
+    {
+      id: "prettier",
+      description: "Prettier",
+      image: "https://prettier.io/icon.png",
+      className: "h-18 my-4 w-auto",
+    },
+    {
+      id: "eslint",
+      description: "ESLint",
+      image: "https://www.vectorlogo.zone/logos/eslint/eslint-icon.svg",
+      className: "h-18 my-4 w-auto",
     },
   ],
 }) => {
@@ -77,7 +103,7 @@ const Logos3 = ({
         <h2 className="text-3xl font-medium md:pl-5 lg:text-4xl">{heading}</h2>
       </div>
       <div className="pt-10 md:pt-16 lg:pt-20">
-        <div className="relative mx-auto flex items-center justify-center lg:max-w-screen-xl overflow-hidden bg-white p-2 rounded-md">
+        <div className="relative mx-auto flex items-center justify-center lg:max-w-screen-xl overflow-hidden bg-accent p-2 rounded-md">
           <Carousel
             opts={{ loop: true }}
             plugins={[AutoScroll({ playOnInit: true })]}
