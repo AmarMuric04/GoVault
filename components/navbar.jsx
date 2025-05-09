@@ -117,10 +117,16 @@ const Navbar = async ({
                   description="Welcome to the GoVault AI Agent Chat! I can help you navigate around the website, give suggestions and more!"
                   placeholder="Ask something..."
                   configKey="default"
+                  pos={{
+                    side: "bottom",
+                    align: "center",
+                  }}
                 >
-                  <button>
-                    <Bot />
-                  </button>
+                  <div className="hover:bg-primary/20 p-2 transition-all">
+                    <HoverTitle title="Get Help from the AI">
+                      <Brain size={18} />
+                    </HoverTitle>
+                  </div>
                 </Chat>
                 <ThemeToggle />
                 <Separator orientation="vertical" className="mx-1 h-6" />
