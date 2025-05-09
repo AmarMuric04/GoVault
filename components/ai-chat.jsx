@@ -92,7 +92,7 @@ export function Chat({
         >
           <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-r from-primary to-slate-900 flex items-center justify-center">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-r from-primary to-primary/50 flex items-center justify-center">
                 <Sparkles className="h-4 w-4 text-white" />
               </div>
               <h2 className="font-semibold">{title}</h2>
@@ -110,7 +110,7 @@ export function Chat({
           <div className="flex-1 p-4 overflow-y-auto" ref={scrollAreaRef}>
             {messages.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-8">
-                <div className="h-8 w-8 p-1 lg:p-0 lg:h-16 lg:w-16 rounded-full bg-gradient-to-r from-primary to-slate-900 flex items-center justify-center mb-4">
+                <div className="h-8 w-8 p-1 lg:p-0 lg:h-16 lg:w-16 rounded-full bg-gradient-to-r from-primary to-primary/50 flex items-center justify-center mb-4">
                   <Sparkles className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">
@@ -126,7 +126,7 @@ export function Chat({
 
                 {isLoading && (
                   <div className="flex items-start gap-3 animate-pulse">
-                    <Avatar className="items-center justify-center bg-gradient-to-r from-primary to-slate-900">
+                    <Avatar className="items-center justify-center bg-gradient-to-r from-primary to-primary/50">
                       <Bot className="h-4 w-4 text-foreground" />
                     </Avatar>
                     <div className="bg-accent rounded-2xl p-3 max-w-[80%]">
@@ -158,7 +158,7 @@ export function Chat({
                 <Button
                   type="submit"
                   size="icon"
-                  className="text-foreground absolute right-2 bottom-2 h-8 w-8 bg-gradient-to-r from-primary to-slate-900 rounded-full"
+                  className="text-foreground absolute right-2 bottom-2 h-8 w-8 bg-gradient-to-r from-primary to-primary/50 rounded-full"
                   disabled={isLoading || !input.trim()}
                 >
                   <Send className="h-4 w-4" />

@@ -14,7 +14,7 @@ export function ChatMessage({ message }) {
       )}
     >
       {!isUser && (
-        <Avatar className="h-8 w-8 shrink-0 items-center justify-center bg-gradient-to-r from-purple-500 to-teal-400">
+        <Avatar className="h-8 w-8 shrink-0 items-center justify-center bg-gradient-to-r from-primary to-primary/50">
           <Bot className="h-4 w-4 text-white" />
         </Avatar>
       )}
@@ -23,8 +23,8 @@ export function ChatMessage({ message }) {
         className={cn(
           "max-w-[80%] break-words rounded-2xl px-3 py-1",
           isUser
-            ? "bg-gradient-to-r from-purple-500 to-teal-400 text-white"
-            : "bg-gray-100 dark:bg-gray-700 dark:text-gray-100"
+            ? "bg-gradient-to-r from-primary to-primary/50 text-white"
+            : "bg-accent text-accent-foreground"
         )}
       >
         {isUser ? (
@@ -37,8 +37,8 @@ export function ChatMessage({ message }) {
       </div>
 
       {isUser && (
-        <Avatar className="h-8 w-8 shrink-0 items-center justify-center bg-gray-200 dark:bg-gray-600">
-          <User className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+        <Avatar className="h-8 w-8 shrink-0 items-center justify-center bg-accent">
+          <User className="h-4 w-4 bg-accent-foreground" />
         </Avatar>
       )}
     </div>
