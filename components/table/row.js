@@ -39,7 +39,7 @@ export default function Row({ showMoreInfo, password }) {
             </div>
           )}
           <div className="flex gap-2 items-center">
-            <div className="h-8 w-8 bg-background glass-5 rounded-sm grid place-items-center text-1xl">
+            <div className="h-8 w-8 bg-accent glass-4 rounded-sm grid place-items-center text-1xl">
               {password.source[0].toUpperCase()}
             </div>
             <p>{password.source}</p>
