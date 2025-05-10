@@ -23,7 +23,7 @@ const AreaChart = memo(({ data }) => {
           type="monotone"
           dataKey="value"
           name="Total passwords"
-          stroke="#0118D8"
+          stroke="#facc15"
           fill="#ffffff40"
           dot={{ r: 0 }}
           strokeWidth={2}

@@ -32,14 +32,14 @@ const BarChart = memo(({ data }) => {
         <Legend />
         <Bar
           dataKey="Your passwords"
-          fill="#0118D8"
-          activeBar={<Rectangle fill="#0118D8" stroke="#0118D8" />}
+          fill="#faaa15"
+          activeBar={<Rectangle fill="#faaa15" stroke="#faaa15" />}
           barSize={20}
         />
         <Bar
           dataKey="Others' passwords"
-          fill="#1B56FD"
-          activeBar={<Rectangle fill="#1B56FD" stroke="#1B56FD" />}
+          fill="#facc15"
+          activeBar={<Rectangle fill="#facc15" stroke="#facc15" />}
           barSize={20}
         />
       </RechartsBarChart>

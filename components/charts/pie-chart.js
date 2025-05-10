@@ -61,7 +61,7 @@ const PieChart = memo(({ data }) => {
           stroke="black"
           label={renderCustomizedLabel}
           outerRadius={80}
-          fill="#8884d8"
+          fill="#fff"
           dataKey="value"
         >
           {data?.map((entry, index) => (
