@@ -20,7 +20,7 @@ export async function POST(req) {
   try {
     const result = await new Promise((resolve, reject) => {
       cloudinary.uploader
-        .upload_stream({}, (err, result) => {
+        .upload({}, (err, result) => {
           if (err) return reject(err);
           resolve(result);
         })
