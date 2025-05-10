@@ -19,26 +19,12 @@ export default async function OverviewPage() {
   const generalPasswordStats = await getPasswordStatisticsByUserId();
 
   return (
-    <div className="grid grid-cols-4 grid-rows-7 gap-10 p-6 max-h-full overflow-hidden">
+    <div className="grid grid-cols-4 grid-rows-7 gap-10 p-6 h-full max-h-full overflow-hidden">
       <SmallContainer
         mainStat={generalPasswordStats.totalPasswords}
         description="Total Passwords"
         icon={<RectangleEllipsis />}
-      />
-      <SmallContainer
-        mainStat={`${generalPasswordStats.positivePercentage.toFixed(2)}%`}
-        description="Positive passwords"
-        icon={<ThumbsUp />}
-      />
-      <SmallContainer
-        mainStat={generalPasswordStats.compromisedCount}
-        description="Compromised"
-        icon={<ShieldX />}
-      />
-      <SmallContainer
-        mainStat={`${generalPasswordStats.averagePasswordLength.toFixed(2)}`}
-        description="Avg. password length"
-        icon={<Ruler />}
+        positive={generalPasswordStats.totalPasswords > 15}
       />
 
       <Suspense
@@ -69,6 +55,24 @@ export default async function OverviewPage() {
         <h1 className="text-4xl font-medium">4,923</h1>
         <p className="text-sm text-gray-100">Active Users</p>
       </div>
+      <SmallContainer
+        mainStat={`${generalPasswordStats.positivePercentage.toFixed(2)}%`}
+        description="Positive passwords"
+        icon={<ThumbsUp />}
+        positive={generalPasswordStats.positivePercentage > 80}
+      />
+      <SmallContainer
+        mainStat={generalPasswordStats.compromisedCount}
+        description="Compromised"
+        icon={<ShieldX />}
+        positive={generalPasswordStats.compromisedCount < 1}
+      />
+      <SmallContainer
+        mainStat={`${generalPasswordStats.averagePasswordLength.toFixed(2)}`}
+        description="Avg. password length"
+        icon={<Ruler />}
+        positive={generalPasswordStats.averagePasswordLength > 16}
+      />
     </div>
   );
 }

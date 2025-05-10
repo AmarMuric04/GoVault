@@ -1,5 +1,5 @@
 import { Chat } from "../ai-chat";
-import { Brain, Menu, Settings } from "lucide-react";
+import { Brain, ChevronLeft, Menu, Settings } from "lucide-react";
 import { ProfilePopover } from "../dropdowns/profile-dropdown";
 import HoverTitle from "../hover-title";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
@@ -40,7 +40,7 @@ const Header = async ({
       url: "/vault",
     },
     { title: "Generate", url: "/generate" },
-    { title: "Settings", url: "/settings" },
+    { title: "Settings", url: "/settings/profile" },
   ],
 }) => {
   const user = await isAuthenticated();
@@ -49,7 +49,7 @@ const Header = async ({
     <section className="py-4 flex justify-center bg-muted text-foreground">
       <div className="container">
         {/* Desktop Menu */}
-        <nav className="hidden justify-between lg:flex">
+        <nav className="hidden justify-between xl:flex">
           <div className="flex items-center gap-6">
             <h1 className="text-xl">GoVault</h1>
           </div>
@@ -83,7 +83,7 @@ const Header = async ({
                   </HoverTitle>
                 </Link>
                 <Link
-                  href="/settings"
+                  href="/settings/profile"
                   className="hover:bg-primary/20 p-2 transition-all"
                 >
                   <HoverTitle title="Settings">
@@ -130,7 +130,7 @@ const Header = async ({
         </nav>
 
         {/* Mobile Menu */}
-        <div className="block lg:hidden">
+        <div className="px-4 block xl:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <h1 className="text-xl">GoVault</h1>
@@ -198,6 +198,11 @@ const Header = async ({
                       </Button>
                     </div>
                   )}
+                  <Button asChild>
+                    <Link href="/">
+                      <ChevronLeft /> Back home
+                    </Link>
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>

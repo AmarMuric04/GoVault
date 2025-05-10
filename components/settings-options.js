@@ -11,7 +11,7 @@ export default function SettingsOptions() {
   const mode = segments.pop();
 
   return (
-    <nav className="flex flex-col gap-2 text-sm w-full my-5">
+    <nav className="flex flex-wrap lg:flex-col gap-2 text-sm w-full">
       <Button
         className="justify-start"
         variant={mode === "profile" ? "" : "link"}

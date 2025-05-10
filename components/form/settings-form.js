@@ -51,7 +51,7 @@ export default function SettingsForm({ children }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="col-span-3 my-5 flex flex-col items-start"
+      className="flex flex-col items-start w-full overflow-y-auto"
     >
       {children}
       <Button id="save-changes" disabled={isPending || isSuccess}>

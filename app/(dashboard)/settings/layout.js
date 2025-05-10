@@ -17,12 +17,15 @@ export default async function SettingsPage({ children }) {
       <h1 className="font-bold text-2xl">Settings</h1>
       <p>Manage your account settings and set e-mail preferences.</p>
       <Separator className="my-4" />
-      <main className="grid grid-cols-6 w-full gap-5">
-        <aside className="col-span-1 flex">
+      <main className="flex flex-col lg:flex-row w-full gap-5 flex-grow overflow-y-auto">
+        <aside className="w-full lg:w-1/5 flex">
           <SettingsOptions />
-          <Separator orientation="vertical" className="mx-4" />
+          <Separator orientation="vertical" className="mx-4 hidden lg:block" />
         </aside>
-        {children}
+        <Separator orientation="horizontal" className="my-4 block lg:hidden" />
+        <div className="w-full lg:w-1/2 h-full col-span-3 overflow-y-auto">
+          {children}
+        </div>
       </main>
     </Container>
   );

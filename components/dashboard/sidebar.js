@@ -1,7 +1,13 @@
 import Image from "next/image";
 import SidebarLink from "./sidebar-link";
 import Logo from "@/public/TheLogo.png";
-import { ChartArea, CirclePlus, Settings, Vault } from "lucide-react";
+import {
+  ChartArea,
+  ChevronLeft,
+  CirclePlus,
+  Settings,
+  Vault,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
@@ -25,13 +31,21 @@ export default function Sidebar({ user }) {
           <MdOutlineSecurity size={20} />
           <p>Security</p>
         </SidebarLink> */}
-        <SidebarLink href="/settings">
+        <SidebarLink href="/settings/profile">
           <Settings size={20} />
           Settings
         </SidebarLink>
         {!user && (
           <Button className="w-2/3 ml-4 mt-8" asChild>
             <Link href="/auth?mode=signup">Create account +</Link>
+          </Button>
+        )}
+        {user && (
+          <Button className="w-2/3 ml-4 mt-8" asChild>
+            <Link href="/">
+              <ChevronLeft />
+              Back home
+            </Link>
           </Button>
         )}
       </nav>
