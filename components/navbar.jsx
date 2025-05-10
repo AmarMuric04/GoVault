@@ -81,7 +81,9 @@ const Navbar = async ({
                     </HoverTitle>
                   </div>
                 </Chat>
-                <ThemeToggle />
+                <HoverTitle title="Change theme">
+                  <ThemeToggle />
+                </HoverTitle>
                 <Separator orientation="vertical" className="mx-1 h-6" />
                 <Link
                   href="https://github.com/AmarMuric04/GoBot"
@@ -141,16 +143,9 @@ const Navbar = async ({
           </div>
         </nav>
 
-        {/* Mobile Menu */}
-        <div className="block lg:hidden">
+        <div className="block lg:hidden px-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Image
-              src={Logo}
-              alt="govault"
-              height={35}
-              className="bg-white rounded-md p-2"
-            />
+            <h1 classNAme="text-xl">GoVault</h1>
             <Sheet>
               <div className="flex gap-2 items-center">
                 <Chat
@@ -170,6 +165,19 @@ const Navbar = async ({
                   </div>
                 </Chat>
                 <ThemeToggle />
+                <Separator orientation="vertical" className="mx-1 h-6" />
+                {user && (
+                  <div className="flex gap-4 items-center h-8">
+                    <ProfilePopover>
+                      <Avatar className="bg-primary cursor-pointer">
+                        <AvatarImage src={user.picture} />
+                        <AvatarFallback>
+                          {user.email[0].toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </ProfilePopover>
+                  </div>
+                )}
                 <SheetTrigger asChild>
                   <Button variant="outline" size="icon">
                     <Menu className="size-4" />
@@ -179,12 +187,7 @@ const Navbar = async ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <Image
-                      src={Logo}
-                      alt="govault"
-                      height={35}
-                      className="bg-white rounded-md p-2"
-                    />
+                    <h1 className="text-xl">GoVault</h1>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
@@ -195,36 +198,6 @@ const Navbar = async ({
                   >
                     {menu.map((item) => renderMobileMenuItem(item))}
                   </Accordion>
-                  {user && (
-                    <div className="flex gap-4 items-center h-8">
-                      <Separator orientation="vertical" className="mx-1 h-6" />
-                      <Link
-                        href="https://github.com/AmarMuric04/GoBot"
-                        className="hover:bg-primary/20 p-2 transition-all"
-                      >
-                        <HoverTitle title="Check out GoBot">
-                          <Bot size={18} />
-                        </HoverTitle>
-                      </Link>
-                      <Link
-                        href="/settings"
-                        className="hover:bg-primary/20 p-2 transition-all"
-                      >
-                        <HoverTitle title="Settings">
-                          <Settings size={18} />
-                        </HoverTitle>
-                      </Link>
-                      <Separator orientation="vertical" className="mx-1 h-6" />
-                      <ProfilePopover>
-                        <Avatar className="bg-primary cursor-pointer">
-                          <AvatarImage src={user.picture} />
-                          <AvatarFallback>
-                            {user.email[0].toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                      </ProfilePopover>
-                    </div>
-                  )}
                   {!user && (
                     <div className="flex flex-col gap-2">
                       <Separator orientation="vertical" className="mx-1 h-6" />

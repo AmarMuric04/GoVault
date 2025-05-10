@@ -4,6 +4,7 @@ import ReactQueryProvider from "@/providers/react-query";
 import UserProvider from "@/providers/user-provider";
 import { Toaster } from "sonner";
 import "./globals.css";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 export const metadata = {
   icons: {
@@ -14,17 +15,23 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const cookieStore = await cookies();
-  const theme = cookieStore.get("theme")?.value || "light";
   const user = await isAuthenticated();
 
   return (
-    <html lang="en" className={`${theme === "dark" ? "dark" : ""}`}>
+    <html lang="en" suppressHydrationWarning>
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className="bg-background inter">
         <ReactQueryProvider>
-          <UserProvider user={user} />
-          {children}
-          <Toaster />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <UserProvider user={user} />
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </ReactQueryProvider>
       </body>
     </html>
