@@ -6,6 +6,7 @@ import {
 } from "../../ui/footer";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { FooterModeToggle } from "@/components/footer-mode-toggle";
 
 export default function FooterSection({
   links = ["Generate", "Vault", "Dashboard"],
@@ -54,7 +55,7 @@ export default function FooterSection({
                   {policy.text}
                 </a>
               ))}
-              <ThemeToggle />
+              <FooterModeToggle />
             </div>
           </FooterBottom>
         </Footer>
