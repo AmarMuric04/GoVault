@@ -145,7 +145,7 @@ const Navbar = async ({
 
         <div className="block lg:hidden px-4">
           <div className="flex items-center justify-between">
-            <h1 classNAme="text-xl">GoVault</h1>
+            <h1 className="text-xl">GoVault</h1>
             <Sheet>
               <div className="flex gap-2 items-center">
                 <Chat
