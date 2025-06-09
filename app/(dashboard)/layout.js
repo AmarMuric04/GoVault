@@ -1,11 +1,5 @@
 import { isAuthenticated } from "@/lib/actions/auth.actions";
-import { Header } from "@/components/dashboard/header";
-import Sidebar from "@/components/dashboard/sidebar";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { AppHeader } from "@/components/dashboard/app-header";
 
@@ -20,7 +14,7 @@ export default async function DashboardLayout({ children }) {
           "--header-height": "calc(var(--spacing) * 12)",
         }}
       >
-        <AppSidebar />
+        <AppSidebar user={user} />
         <SidebarInset>
           <AppHeader />
           <div className="flex flex-1 flex-col">
