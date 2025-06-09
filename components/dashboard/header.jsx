@@ -1,4 +1,4 @@
-import { Chat } from "../ai-chat";
++import { Chat } from "../ai-chat";
 import { Brain, ChevronLeft, Menu, Settings } from "lucide-react";
 import { ProfilePopover } from "../dropdowns/profile-dropdown";
 import HoverTitle from "../hover-title";

@@ -3,64 +3,81 @@
 import { useEffect, useRef, useState } from "react";
 import { PasswordDialog } from "@/components/dialogs/enter-password-dialog";
 import { editNotes } from "@/lib/actions/password/password.actions";
-import { ChevronRight, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Check, Edit, X } from "lucide-react";
 
 export default function Notes({ password }) {
   const [isEditing, setIsEditing] = useState(false);
-
-  const [newNotes, setNewNotes] = useState(password.notes);
-  const [shownNotes, setShownNotes] = useState(password.notes);
-
-  const input = useRef(null);
+  const [newNotes, setNewNotes] = useState(password.notes || "");
+  const [shownNotes, setShownNotes] = useState(password.notes || "");
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (isEditing) {
-      input.current.focus();
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
     }
+    if (!isEditing) {
+      setNewNotes(shownNotes);
+    }
+  }, [isEditing, shownNotes]);
 
-    if (!isEditing) setNewNotes(shownNotes);
-  }, [isEditing]);
-
-  const handleEditPassword = async (userId, psw) => {
+  const handleEditNotes = async (userId, psw) => {
     return await editNotes(psw, newNotes, password._id);
   };
 
-  return (
-    <>
-      {isEditing && (
-        <div className="w-full flex items-center gap-4">
-          <input
-            ref={input}
-            className="flex-grow"
-            onChange={(e) => setNewNotes(e.target.value)}
-            value={newNotes}
-          />
-          <div className="flex gap-2 items-center">
-            <button onClick={() => setIsEditing(false)}>
-              <X size={15} />
-            </button>
-            <PasswordDialog
-              action={handleEditPassword}
-              onSuccess={() => {
-                setShownNotes(newNotes || "No notes");
-                setIsEditing(false);
-              }}
-            >
-              <button className="bg-[#ee6711] hover:bg-[#ee671190] p-1 rounded-full">
-                <ChevronRight size={15} />
-              </button>
-            </PasswordDialog>
-          </div>
+  const handleCancel = () => {
+    setNewNotes(shownNotes);
+    setIsEditing(false);
+  };
+
+  if (isEditing) {
+    return (
+      <div className="flex items-center gap-2 w-full">
+        <Input
+          ref={inputRef}
+          value={newNotes}
+          onChange={(e) => setNewNotes(e.target.value)}
+          placeholder="Add notes..."
+          className="flex-1"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") handleCancel();
+          }}
+        />
+        <div className="flex items-center gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 w-8 p-0"
+            onClick={handleCancel}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <PasswordDialog
+            action={handleEditNotes}
+            onSuccess={() => {
+              setShownNotes(newNotes || "");
+              setIsEditing(false);
+            }}
+          >
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <Check className="h-4 w-4" />
+            </Button>
+          </PasswordDialog>
         </div>
-      )}
-      {!isEditing && (
-        <button
-          className="w-full h-full text-start flex items-center"
-          onClick={() => setIsEditing(true)}
-        >
-          <p className="w-full items-center">{shownNotes || "\u00A0"}</p>
-        </button>
-      )}
-    </>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="flex items-center gap-2 cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors group w-full"
+      onClick={() => setIsEditing(true)}
+    >
+      <span className="flex-1 text-sm truncate">
+        {shownNotes || "Add notes..."}
+      </span>
+      <Edit className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+    </div>
   );
 }

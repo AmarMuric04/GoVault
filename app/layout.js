@@ -14,7 +14,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const cookieStore = await cookies();
   const user = await isAuthenticated();
 
   return (

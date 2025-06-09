@@ -1,30 +1,40 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import Container from "@/components/container";
 import { generatePassword } from "@/utility/password/password-generator";
 import { getPasswordStrength } from "@/utility/password/password-strength";
 import { copyToClipboard } from "@/utility/copy-text";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { CreatePasswordDialog } from "@/components/dialogs/create-password-dialog";
 import { EditPasswordDialog } from "@/components/dialogs/edit-password-dialog";
-import { Button } from "@/components/ui/button";
-import HoverTitle from "@/components/hover-title";
-import { useSearchParams } from "next/navigation";
-import { Copy, Info, RefreshCcw } from "lucide-react";
-import useAuthStore from "@/store/useAuthStore";
 import { AuthDialog } from "@/components/dialogs/auth-dialog";
+import useAuthStore from "@/store/useAuthStore";
 
-export default function GeneratePage() {
+import {
+  Copy,
+  RefreshCcw,
+  Shield,
+  Settings,
+  Zap,
+  Eye,
+  EyeOff,
+  Info,
+} from "lucide-react";
+
+export default function PasswordGeneratorPage() {
   const { user } = useAuthStore();
-  console.log("Rendering generate page...");
-
   const [length, setLength] = useState(20);
+  const [showPassword, setShowPassword] = useState(true);
   const [config, setConfig] = useState({
     lowerCase: true,
     upperCase: true,
@@ -32,7 +42,6 @@ export default function GeneratePage() {
     digits: true,
   });
 
-  console.log(!!user, user);
   const [password, setPassword] = useState(() => generatePassword(20, config));
   const [strength, setStrength] = useState(getPasswordStrength(password));
 
@@ -74,24 +83,46 @@ export default function GeneratePage() {
         </div>
         {isEditing ? (
           <EditPasswordDialog password={password} passwordId={isEditing}>
-            <Button id="save-changes">Save Changes</Button>
+            <Button size="sm">Save Changes</Button>
           </EditPasswordDialog>
         ) : (
           <CreatePasswordDialog password={password}>
-            <Button id="save-to-vault">Save to Vault</Button>
+            <Button size="sm">Save to Vault</Button>
           </CreatePasswordDialog>
         )}
       </div>
     );
   }, [password, isEditing]);
 
-  const strengthClasses =
-    {
-      Bad: "w-1/4 bg-red-400",
-      Dubious: "w-1/2 bg-orange-400",
-      Good: "w-3/4 bg-lime-400",
-      Great: "w-full bg-green-400",
-    }[strength] || "w-4 bg-red-600";
+  const getStrengthColor = (strength) => {
+    switch (strength) {
+      case "Great":
+        return "bg-green-500";
+      case "Good":
+        return "bg-lime-500";
+      case "Dubious":
+        return "bg-orange-500";
+      case "Bad":
+        return "bg-red-500";
+      default:
+        return "bg-red-600";
+    }
+  };
+
+  const getStrengthWidth = (strength) => {
+    switch (strength) {
+      case "Great":
+        return "w-full";
+      case "Good":
+        return "w-3/4";
+      case "Dubious":
+        return "w-1/2";
+      case "Bad":
+        return "w-1/4";
+      default:
+        return "w-1/12";
+    }
+  };
 
   const presets = [
     {
@@ -103,7 +134,7 @@ export default function GeneratePage() {
         digits: false,
         symbols: false,
       },
-      tooltip: "Only letters",
+      description: "Only letters - easier to communicate verbally",
     },
     {
       label: "Easy to read",
@@ -114,13 +145,18 @@ export default function GeneratePage() {
         digits: true,
         symbols: false,
       },
-      tooltip: "Letters and digits",
+      description: "Letters and numbers - no confusing symbols",
     },
     {
-      label: "All Characters",
+      label: "Maximum security",
       value: "all-character",
-      config: { upperCase: true, lowerCase: true, digits: true, symbols: true },
-      tooltip: "Everything included",
+      config: {
+        upperCase: true,
+        lowerCase: true,
+        digits: true,
+        symbols: true,
+      },
+      description: "All character types for strongest security",
     },
   ];
 
@@ -129,210 +165,304 @@ export default function GeneratePage() {
   };
 
   const manualOptions = [
-    { label: "Uppercase", key: "upperCase" },
-    { label: "Lowercase", key: "lowerCase" },
-    { label: "Digits", key: "digits" },
-    { label: "Symbols", key: "symbols" },
+    { label: "Uppercase letters (A-Z)", key: "upperCase" },
+    { label: "Lowercase letters (a-z)", key: "lowerCase" },
+    { label: "Numbers (0-9)", key: "digits" },
+    { label: "Symbols (!@#$%)", key: "symbols" },
   ];
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 xl:grid-rows-10 grid-rows-30 gap-10 p-6 2xl:max-h-full h-full 2xl:overflow-hidden overflow-y-scroll">
-      <Container className="col-span-1 xl:col-span-2 2xl:col-span-3 row-span-8 md:row-span-6 xl:row-span-4 relative">
-        <h1 className="text-2xl font-semibold mb-4 border-b-1 border-zinc-900 p-4">
-          Generate password
-        </h1>
-        <div className="px-4 py-10 flex flex-col md:flex-row justify-center gap-4 items-center">
-          <input
-            className="sm:text-[1.5rem] md:text-[1.7rem] xl:text-[3rem] px-4 border-b-4 border-zinc-900"
-            value={password}
-            onChange={(e) => {
-              const userPwd = e.target.value;
-              setPassword(userPwd);
-              setLength(userPwd.length);
-              setStrength(getPasswordStrength(userPwd));
-            }}
-          />
-          <div className="flex gap-2 items-center">
-            {!user && (
-              <AuthDialog>
-                <Button id="save-to-vault">Save to Vault</Button>
-              </AuthDialog>
-            )}
-            {user && (
-              <>
-                {isEditing ? (
-                  <EditPasswordDialog
-                    password={password}
-                    passwordId={isEditing}
-                  >
-                    <Button id="save-changes">Save Changes</Button>
-                  </EditPasswordDialog>
-                ) : (
-                  <CreatePasswordDialog password={password}>
-                    <Button id="save-to-vault">Save to Vault</Button>
-                  </CreatePasswordDialog>
-                )}
-              </>
-            )}
-            <HoverTitle title={<p>Copy to clipboard</p>}>
-              <button
-                id="copy"
-                onClick={handleCopy}
-                className="p-2 rounded-full hover:bg-white/10 transition-all group"
-              >
-                <Copy
-                  size={25}
-                  className="group-hover:scale-120 transition-all"
-                />
-              </button>
-            </HoverTitle>
-            <HoverTitle title={<p>Get a new password</p>}>
-              <button
-                id="regenerate"
-                onClick={handleRegenerate}
-                className="p-2 rounded-full hover:bg-white/10 transition-all group"
-              >
-                <RefreshCcw
-                  size={25}
-                  className="group-hover:scale-120 transition-all"
-                />
-              </button>
-            </HoverTitle>
-          </div>
-        </div>
-        <div
-          className={`h-2 transition-all absolute left-0 bottom-0 ${strengthClasses}`}
-        ></div>
-      </Container>
-
-      <Container className="col-span-1 xl:row-span-3 row-span-6">
-        <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
-          Modify visual experience
-        </h1>
-        <RadioGroup
-          defaultValue="easy-to-say"
-          className="px-10 py-4 flex flex-col justify-between h-full"
-        >
-          {presets.map(({ label, value, config: presetConfig, tooltip }) => (
-            <div
-              key={value}
-              onClick={() => handlePresetChange(presetConfig)}
-              className="flex items-center space-x-2 cursor-pointer"
-            >
-              <RadioGroupItem
-                checked={
-                  config.upperCase === presetConfig.upperCase &&
-                  config.lowerCase === presetConfig.lowerCase &&
-                  config.digits === presetConfig.digits &&
-                  config.symbols === presetConfig.symbols
+    <div className="min-h-screen p-4">
+      <div className="max-w-6xl mx-auto space-y-6">
+        {/* Main Password Display */}
+        <Card className="shadow-lg border-2">
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Generated Password
+              </CardTitle>
+              <Badge
+                variant={
+                  strength === "Great"
+                    ? "default"
+                    : strength === "Good"
+                    ? "secondary"
+                    : "destructive"
                 }
-                value={value}
+                className="text-sm"
+              >
+                {strength} Strength
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => {
+                  const userPwd = e.target.value;
+                  setPassword(userPwd);
+                  setLength(userPwd.length);
+                  setStrength(getPasswordStrength(userPwd));
+                }}
+                className="text-lg font-mono pr-12 h-14"
+                placeholder="Your generated password will appear here"
               />
-              <Label>{label}</Label>
-              <HoverTitle title={<p>{tooltip}</p>}>
-                <Info size={16} />
-              </HoverTitle>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute right-2 top-1/2 -translate-y-1/2"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </Button>
             </div>
-          ))}
-        </RadioGroup>
-      </Container>
 
-      <Container className="col-span-1 xl:row-span-2 2xl:row-span-1 row-span-3 gap-2 items-center justify-center flex-row">
-        <div className="w-1/2">
-          <Slider
-            value={[length]}
-            max={30}
-            step={1}
-            onValueChange={(value) => {
-              const newLen = Number(value[0]);
-              setLength(newLen);
-              updatePassword(newLen, config);
-            }}
-          />
-        </div>
-        <input
-          className="w-12"
-          type="number"
-          step={1}
-          max={30}
-          min={0}
-          value={length}
-          onChange={(e) => {
-            const newLen = Number(e.target.value);
-            setLength(newLen);
-            updatePassword(newLen, config);
-          }}
-        />
-      </Container>
-
-      <div className="col-span-1 2xl:row-span-6 row-span-0 hidden 2xl:flex"></div>
-
-      <Container className="col-span-1 xl:row-span-5 row-span-10">
-        <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
-          Strength checker
-        </h1>
-        <ul className="px-10 py-8 flex flex-col justify-between h-full">
-          {[
-            {
-              label: "A critical password",
-              tooltip: "Unacceptably bad password",
-              strengthBar: "bg-red-600 w-2",
-            },
-            {
-              label: "A bad password",
-              tooltip: "Too short and/or not complex enough",
-              strengthBar: "bg-red-400 w-1/4",
-            },
-            {
-              label: "A dubious password",
-              tooltip: "Not complex enough",
-              strengthBar: "bg-orange-400 w-1/2",
-            },
-            {
-              label: "A good password",
-              tooltip: "Acceptable password",
-              strengthBar: "bg-lime-400 w-3/4",
-            },
-            {
-              label: "A great password",
-              tooltip: "A password to cherish",
-              strengthBar: "bg-green-400 w-full",
-            },
-          ].map((item, index) => (
-            <li key={index} className="flex gap-2 flex-col">
-              <div className="flex gap-2 items-center">
-                <p>{item.label}</p>
-                <HoverTitle title={item.tooltip}>
-                  <Info size={16} />
-                </HoverTitle>
+            {/* Strength Indicator */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Password Strength</span>
+                <span className="font-medium">{strength}</span>
               </div>
-              <div className={`h-1 ${item.strengthBar}`}></div>
-            </li>
-          ))}
-        </ul>
-      </Container>
-
-      <Container className="col-span-1 xl:row-span-4 2xl:row-span-3 row-span-6">
-        <h1 className="font-semibold mb-4 border-b-1 border-zinc-900 px-4 py-2">
-          Manually choose
-        </h1>
-        <div className="px-10 py-4 flex flex-col justify-between h-full">
-          {manualOptions.map(({ label, key }) => (
-            <div
-              key={key}
-              onClick={() =>
-                setConfig((prev) => ({ ...prev, [key]: !prev[key] }))
-              }
-              className="flex items-center space-x-2 cursor-pointer"
-            >
-              <Checkbox checked={config[key]} />
-              <label className="text-sm font-medium leading-none cursor-pointer">
-                {label}
-              </label>
+              <div className="w-full bg-muted rounded-full h-2">
+                <div
+                  className={`h-2 rounded-full transition-all duration-300 ${getStrengthColor(
+                    strength
+                  )} ${getStrengthWidth(strength)}`}
+                />
+              </div>
             </div>
-          ))}
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-2 pt-2">
+              <Button
+                onClick={handleRegenerate}
+                className="flex-1 min-w-[120px]"
+              >
+                <RefreshCcw className="h-4 w-4 mr-2" />
+                Regenerate
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleCopy}
+                className="flex-1 min-w-[120px]"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy
+              </Button>
+              {!user ? (
+                <AuthDialog>
+                  <Button variant="secondary" className="flex-1 min-w-[120px]">
+                    Save to Vault
+                  </Button>
+                </AuthDialog>
+              ) : (
+                <>
+                  {isEditing ? (
+                    <EditPasswordDialog
+                      password={password}
+                      passwordId={isEditing}
+                    >
+                      <Button
+                        variant="secondary"
+                        className="flex-1 min-w-[120px]"
+                      >
+                        Save Changes
+                      </Button>
+                    </EditPasswordDialog>
+                  ) : (
+                    <CreatePasswordDialog password={password}>
+                      <Button
+                        variant="secondary"
+                        className="flex-1 min-w-[120px]"
+                      >
+                        Save to Vault
+                      </Button>
+                    </CreatePasswordDialog>
+                  )}
+                </>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* Password Length */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Password Length</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center gap-4">
+                <div className="flex-1">
+                  <Slider
+                    value={[length]}
+                    max={50}
+                    min={4}
+                    step={1}
+                    onValueChange={(value) => {
+                      const newLen = Number(value[0]);
+                      setLength(newLen);
+                      updatePassword(newLen, config);
+                    }}
+                    className="w-full"
+                  />
+                </div>
+                <Input
+                  type="number"
+                  value={length}
+                  onChange={(e) => {
+                    const newLen = Number(e.target.value);
+                    if (newLen >= 4 && newLen <= 50) {
+                      setLength(newLen);
+                      updatePassword(newLen, config);
+                    }
+                  }}
+                  className="w-20"
+                  min={4}
+                  max={50}
+                />
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Recommended: 12+ characters for strong security
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Quick Presets */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Quick Presets</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup className="space-y-3">
+                {presets.map(
+                  ({ label, value, config: presetConfig, description }) => (
+                    <div
+                      key={value}
+                      onClick={() => handlePresetChange(presetConfig)}
+                      className="flex items-start space-x-3 cursor-pointer p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                    >
+                      <RadioGroupItem
+                        checked={
+                          config.upperCase === presetConfig.upperCase &&
+                          config.lowerCase === presetConfig.lowerCase &&
+                          config.digits === presetConfig.digits &&
+                          config.symbols === presetConfig.symbols
+                        }
+                        value={value}
+                        className="mt-0.5"
+                      />
+                      <div className="space-y-1">
+                        <Label className="font-medium cursor-pointer">
+                          {label}
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          {description}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                )}
+              </RadioGroup>
+            </CardContent>
+          </Card>
         </div>
-      </Container>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* Character Options */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Settings className="h-5 w-5" />
+                Character Types
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {manualOptions.map(({ label, key }) => (
+                  <div
+                    key={key}
+                    onClick={() =>
+                      setConfig((prev) => ({ ...prev, [key]: !prev[key] }))
+                    }
+                    className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                  >
+                    <Checkbox checked={config[key]} />
+                    <Label className="cursor-pointer font-medium">
+                      {label}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Strength Guide */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Info className="h-5 w-5" />
+                Strength Guide
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {[
+                  {
+                    level: "Critical",
+                    color: "bg-red-600",
+                    width: "w-1/12",
+                    desc: "Unacceptably weak",
+                  },
+                  {
+                    level: "Bad",
+                    color: "bg-red-500",
+                    width: "w-1/4",
+                    desc: "Too short or simple",
+                  },
+                  {
+                    level: "Dubious",
+                    color: "bg-orange-500",
+                    width: "w-1/2",
+                    desc: "Needs improvement",
+                  },
+                  {
+                    level: "Good",
+                    color: "bg-lime-500",
+                    width: "w-3/4",
+                    desc: "Acceptable security",
+                  },
+                  {
+                    level: "Great",
+                    color: "bg-green-500",
+                    width: "w-full",
+                    desc: "Excellent security",
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">{item.level}</span>
+                      <span className="text-muted-foreground">{item.desc}</span>
+                    </div>
+                    <div className="w-full bg-muted rounded-full h-2">
+                      <div
+                        className={`h-2 rounded-full ${item.color} ${item.width}`}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }

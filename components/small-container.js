@@ -1,27 +1,75 @@
-import { Ellipsis } from "lucide-react";
-import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, AlertTriangle, Info } from "lucide-react";
 
 export default function SmallContainer({
   mainStat,
   description,
   icon,
   positive,
+  trend = "neutral",
+  color = "blue",
 }) {
+  const colorClasses = {
+    blue: "from-blue-500 to-blue-600",
+    green: "from-green-500 to-green-600",
+    red: "from-red-500 to-red-600",
+    purple: "from-purple-500 to-purple-600",
+    orange: "from-orange-500 to-orange-600",
+  };
+
+  const getTrendIcon = () => {
+    if (positive === true)
+      return <CheckCircle className="h-4 w-4 text-green-500" />;
+    if (positive === false)
+      return <AlertTriangle className="h-4 w-4 text-red-500" />;
+    return <Info className="h-4 w-4 text-blue-500" />;
+  };
+
+  const getTrendColor = () => {
+    if (positive === true)
+      return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
+    if (positive === false)
+      return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400";
+    return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400";
+  };
+
+  const getTrendText = () => {
+    if (positive === true) return "Good";
+    if (positive === false) return "Needs attention";
+    return "Neutral";
+  };
+
   return (
-    <section className="text-foreground shadow-md border-1 p-1 rounded-md flex gap-4 items-center pr-10 relative flex-grow col-span-1 row-span-1">
-      <div className="bg-background rounded-md h-full aspect-square grid place-items-center">
-        {icon}
-      </div>
-      <div className="flex flex-col">
-        <h1 className="font-bold text-2xl">{mainStat}</h1>
-        <p>{description}</p>
-      </div>
-      {positive && (
-        <p className="text-primary-foreground absolute bg-lime-400 bottom-full right-0 translate-y-1/2 rounded-full text-xs px-2">
-          Well done!
-        </p>
-      )}
-    </section>
+    <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-200 group">
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div
+            className={`bg-gradient-to-r ${colorClasses[color]} p-3 rounded-lg text-white group-hover:scale-110 transition-transform duration-200`}
+          >
+            {icon}
+          </div>
+          <Badge className={getTrendColor()} variant="secondary">
+            <div className="flex items-center gap-1">
+              {getTrendIcon()}
+              <span className="text-xs">{getTrendText()}</span>
+            </div>
+          </Badge>
+        </div>
+
+        <div className="space-y-1">
+          <div className="text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-200">
+            {mainStat}
+          </div>
+          <div className="text-sm text-muted-foreground font-medium">
+            {description}
+          </div>
+        </div>
+
+        {/* Subtle background decoration */}
+        <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-gradient-to-br from-primary/5 to-primary/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500" />
+      </CardContent>
+    </Card>
   );
 }
+0;

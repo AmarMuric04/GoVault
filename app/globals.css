@@ -178,11 +178,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-button {
-  cursor: pointer;
-}
-
-*::-webkit-scrollbar {
-  display: none;
-}
